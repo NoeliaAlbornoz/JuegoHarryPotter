@@ -1,5 +1,5 @@
 package app.poderes;
 
-public class Cavelnimicum extends HechizoDefenza{
+public class Cavelnimicum extends HechizoDefenza {
 
 }

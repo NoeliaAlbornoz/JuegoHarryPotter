@@ -1,5 +1,5 @@
 package app.poderes;
 
-public class Metamorfosis extends Poder{
+public class Metamorfosis extends Poder {
 
 }

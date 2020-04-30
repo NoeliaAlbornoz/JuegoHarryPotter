@@ -1,5 +1,5 @@
 package app.artefactos;
 
-public class CapaInvisibilidad extends Artefacto{
+public class CapaInvisibilidad extends Artefacto {
 
 }

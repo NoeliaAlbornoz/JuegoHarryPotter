@@ -1,5 +1,5 @@
 package app.artefactos;
 
-public class VaritaSauco extends Varita{
+public class VaritaSauco extends Varita {
 
 }

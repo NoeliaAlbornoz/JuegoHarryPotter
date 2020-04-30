@@ -1,5 +1,5 @@
 package app.poderes;
 
-public class HechizoAtaque extends Hechizo{
+public class HechizoAtaque extends Hechizo {
 
 }

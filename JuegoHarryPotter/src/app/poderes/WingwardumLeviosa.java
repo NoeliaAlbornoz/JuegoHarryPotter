@@ -1,5 +1,5 @@
 package app.poderes;
 
-public class WingwardumLeviosa extends HechizoOcio{
+public class WingwardumLeviosa extends HechizoOcio {
 
 }

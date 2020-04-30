@@ -1,5 +1,5 @@
 package app.poderes;
 
-public class ParseTongue extends Poder{
+public class ParseTongue extends Poder {
 
 }
