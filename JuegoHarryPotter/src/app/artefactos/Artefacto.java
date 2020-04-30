@@ -2,7 +2,9 @@ package app.artefactos;
 
 import app.poderes.Poder;
 
-public class Artefacto {
+import app.IEsMagico;
+
+public class Artefacto implements IEsMagico {
 
     private String nombre;
     private double amplificadorDeDanio;
@@ -39,6 +41,18 @@ public class Artefacto {
 
     public void setPoder(Poder poder) {
         this.poder = poder;
+    }
+
+    @Override
+    public boolean esInvisibleAMuggles() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean esInvisible() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }
