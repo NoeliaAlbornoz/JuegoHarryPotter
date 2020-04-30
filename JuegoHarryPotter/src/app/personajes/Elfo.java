@@ -2,7 +2,6 @@ package app.personajes;
 
 import java.util.List;
 
-import app.IEsMagico;
 import app.IHaceMagia;
 import app.artefactos.Artefacto;
 import app.poderes.Hechizo;
