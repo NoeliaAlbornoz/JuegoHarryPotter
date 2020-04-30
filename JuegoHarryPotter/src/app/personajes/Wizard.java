@@ -8,7 +8,6 @@ import app.artefactos.Artefacto;
 import app.poderes.Hechizo;
 import app.poderes.Poder;
 import app.transportes.Escoba;
-
 public class Wizard extends Persona implements IHaceMagia{
 
     private int energiaMagica;
