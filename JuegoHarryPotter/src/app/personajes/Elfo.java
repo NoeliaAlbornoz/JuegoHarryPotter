@@ -1,5 +1,6 @@
 package app.personajes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.IHaceMagia;
@@ -11,7 +12,7 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     private int energiaMagica;
     private Artefacto artefacto;
-    private List<Hechizo> hechizos;
+    private List<Hechizo> hechizos = new ArrayList<>();
 
     public int getEnergiaMagica() {
         return energiaMagica;
