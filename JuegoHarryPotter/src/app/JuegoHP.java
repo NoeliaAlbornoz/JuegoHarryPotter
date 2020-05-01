@@ -39,6 +39,7 @@ public class JuegoHP {
         this.aprenderSegunPersonaje(jugador1, h);
 
         while (jugador1.estaVivo() && jugador2.estaVivo()) {
+
             bannerAtacarConHechizos();
 
             Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
@@ -50,6 +51,7 @@ public class JuegoHP {
     }
 
     public void inicializarPersonajes() {
+        
         Wizard wizard = new Wizard();
         wizard.setNombre("Harry Potter");
         wizard.setEnergiaMagica(150);
