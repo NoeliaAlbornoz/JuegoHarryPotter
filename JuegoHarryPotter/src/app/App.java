@@ -7,6 +7,9 @@ public class App {
 
         bannerLogoBienvenida();
 
+        juego.inicializarJuego();
+        
+
         bannerDespedida();
 
     }
