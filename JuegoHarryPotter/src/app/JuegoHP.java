@@ -38,7 +38,10 @@ public class JuegoHP {
 
         this.aprenderSegunPersonaje(jugador1, h);
 
+        bannerAtacarConHechizos();
+
     }
+
 
     public void inicializarPersonajes() {
         Wizard wizard = new Wizard();
