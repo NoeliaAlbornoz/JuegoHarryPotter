@@ -31,7 +31,7 @@ public abstract class Personaje {
     }
 
     public  boolean estaVivo(){
-        return true;
+        return salud > 0 ;
     }
 
 }

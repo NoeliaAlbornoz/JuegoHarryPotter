@@ -38,14 +38,16 @@ public class JuegoHP {
 
         this.aprenderSegunPersonaje(jugador1, h);
 
-        bannerAtacarConHechizos();
+        while (jugador1.estaVivo() && jugador2.estaVivo()) {
+            bannerAtacarConHechizos();
 
-        Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
+            Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
 
-        this.atacarSegunPersonaje(jugador1, hechizo, jugador2);
+            this.atacarSegunPersonaje(jugador1, hechizo, jugador2);
+
+        }
 
     }
-
 
     public void inicializarPersonajes() {
         Wizard wizard = new Wizard();
@@ -147,7 +149,7 @@ public class JuegoHP {
 
         } else if (jugador1 instanceof Elfo) {
 
-        } 
+        }
 
     }
 
