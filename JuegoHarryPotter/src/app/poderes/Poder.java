@@ -5,6 +5,10 @@ public class Poder {
     private String nombre;
     private String descripcion;
 
+    public Poder( String nombre){
+        this.nombre = nombre;
+    }
+
     public String getNombre() {
         return nombre;
     }
