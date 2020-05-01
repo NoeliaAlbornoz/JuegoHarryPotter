@@ -14,13 +14,20 @@ public class JuegoHP {
 
     public static Scanner Teclado = new Scanner(System.in);
 
-    public List<Personaje> personaje = new ArrayList<>();
+    public List<Personaje> personajes = new ArrayList<>();
 
     public List<Hechizo> hechizos = new ArrayList<>();
 
     public void inicializarJuego() {
         this.inicializarPersonajes();
         this.inicializarHechizos();
+
+    }
+
+    public void start() {
+        Personaje jugador1 = this.seleccionarPersonaje();
+        Personaje jugador2 = this.seleccionarPersonaje();
+        bannerAprenderHechizos();
 
     }
 
@@ -41,7 +48,7 @@ public class JuegoHP {
         escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
 
         wizard.setEscoba(escoba);
-        this.personaje.add(wizard);
+        this.personajes.add(wizard);
 
         wizard = new Wizard();
         wizard.setNombre("Ron Weasley");
@@ -58,7 +65,7 @@ public class JuegoHP {
         escoba.setNombre(" Nimbus 2000 ");
         escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
         wizard.setEscoba(escoba);
-        this.personaje.add(wizard);
+        this.personajes.add(wizard);
 
     }
 
@@ -79,6 +86,20 @@ public class JuegoHP {
         hechizo.setEsOscuro(false);
 
         this.hechizos.add(hechizo);
+    }
+
+    public Personaje seleccionarPersonaje() {
+        int i = 0;
+
+        System.out.print("Elegir personaje: ");
+        for (Personaje per : this.personajes) {
+            System.out.print(" " + (++i) + " - " + per.getNombre());
+        }
+
+        System.out.println();
+        i = Teclado.nextInt();
+        return this.personajes.get(--i);
+
     }
 
     public static void bannerAprenderHechizos() {
