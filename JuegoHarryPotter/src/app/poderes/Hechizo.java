@@ -5,7 +5,11 @@ public class Hechizo extends Poder {
     private boolean esOscuro;
     private int nivelDanio;
     private int nivelCuracion;
-    private int energiaMgica;
+    private int energiaMagica;
+
+    public Hechizo(String nombre) {
+        super(nombre);
+    }
 
     public boolean isEsOscuro() {
         return esOscuro;
@@ -31,12 +35,12 @@ public class Hechizo extends Poder {
         this.nivelCuracion = nivelCuracion;
     }
 
-    public int getEnergiaMgica() {
-        return energiaMgica;
+    public int getEnergiaMagica() {
+        return energiaMagica;
     }
 
-    public void setEnergiaMgica(int energiaMgica) {
-        this.energiaMgica = energiaMgica;
+    public void setEnergiaMagica(int energiaMgica) {
+        this.energiaMagica = energiaMgica;
     }
 
 }

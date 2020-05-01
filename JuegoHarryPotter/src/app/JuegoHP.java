@@ -20,6 +20,8 @@ public class JuegoHP {
 
     public void inicializarJuego() {
         this.inicializarPersonajes();
+        this.inicializarHechizos();
+
     }
 
     public void inicializarPersonajes() {
@@ -58,6 +60,25 @@ public class JuegoHP {
         wizard.setEscoba(escoba);
         this.personaje.add(wizard);
 
+    }
+
+    public void inicializarHechizos() {
+
+        Hechizo hechizo = new Hechizo("Wingwardum Leviosa");
+        hechizo.setDescripcion("Wingwardum Leviosa es un hechizo que permite levitar objetos o pequeños seres vivos.");
+        hechizo.setEnergiaMagica(20);
+        hechizo.setNivelDanio(20);
+        hechizo.setEsOscuro(false);
+
+        this.hechizos.add(hechizo);
+
+        hechizo = new Hechizo("Sectumsempra");
+        hechizo.setDescripcion("La maldición Sectumsempra genera cortes profundos en la víctima.");
+        hechizo.setEnergiaMagica(50);
+        hechizo.setNivelDanio(50);
+        hechizo.setEsOscuro(false);
+
+        this.hechizos.add(hechizo);
     }
 
 }
