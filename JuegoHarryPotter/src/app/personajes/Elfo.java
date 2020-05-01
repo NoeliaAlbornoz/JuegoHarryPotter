@@ -39,31 +39,31 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     @Override
     public Poder getPoderInicial() {
-        // TODO Auto-generated method stub
+       
         return null;
     }
 
     @Override
     public void setPoder(Poder poder) {
-        // TODO Auto-generated method stub
+   
 
     }
 
     @Override
     public void aprender(Hechizo h) {
-        // TODO Auto-generated method stub
+      
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
-        // TODO Auto-generated method stub
+  
 
     }
 
     @Override
     public void atacar(Personaje personaje, String hechizo) {
-        // TODO Auto-generated method stub
+      
 
     }
 
