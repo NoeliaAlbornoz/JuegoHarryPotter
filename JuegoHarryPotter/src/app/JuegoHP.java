@@ -81,4 +81,18 @@ public class JuegoHP {
         this.hechizos.add(hechizo);
     }
 
+    public static void bannerAprenderHechizos() {
+
+        System.out.println("\n Debes aprender tus hechizos. ");
+        System.out.println("  ¿Cuál quieres entrenar?: \n");
+        System.out.println("Elegir hechizo: ");
+
+    }
+
+    public static void bannerAtacarConHechizos() {
+
+        System.out.println("\nDebes elegir un hechizo para atacar a tu oponente: \n");
+
+    }
+
 }
