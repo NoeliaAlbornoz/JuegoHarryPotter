@@ -40,6 +40,10 @@ public class JuegoHP {
 
         bannerAtacarConHechizos();
 
+        Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
+
+        this.atacarSegunPersonaje(jugador1, hechizo, jugador2);
+
     }
 
 
@@ -144,6 +148,36 @@ public class JuegoHP {
         } else if (jugador1 instanceof Elfo) {
 
         } 
+
+    }
+
+    public Hechizo seleccionarHechizoParaPelear(Personaje personaje) {
+
+        int i = 0;
+        Wizard wizi = null;
+
+        if (personaje instanceof Wizard) {
+            wizi = (Wizard) personaje;
+            for (Hechizo hechizo : wizi.getHechizos()) {
+                System.out.print(" " + (++i) + "-" + hechizo.getNombre());
+            }
+
+        }
+
+        System.out.println();
+
+        i = Teclado.nextInt();
+
+        return wizi.getHechizos().get(--i);
+
+    }
+
+    public void atacarSegunPersonaje(Personaje jugador1, Hechizo hechizo, Personaje jugador2) {
+
+        if (jugador1 instanceof Wizard) {
+            Wizard wizard = (Wizard) jugador1;
+            wizard.atacar(jugador2, hechizo);
+        }
 
     }
 
