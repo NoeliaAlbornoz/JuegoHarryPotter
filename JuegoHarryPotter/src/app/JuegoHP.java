@@ -51,7 +51,7 @@ public class JuegoHP {
     }
 
     public void inicializarPersonajes() {
-        
+
         Wizard wizard = new Wizard();
         wizard.setNombre("Harry Potter");
         wizard.setEnergiaMagica(150);
@@ -88,6 +88,24 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
+        wizard = new Wizard();
+        wizard.setNombre("Hermione Granger");
+        wizard.setEnergiaMagica(150);
+        wizard.setSalud(100);
+        wizard.setEdad(17);
+        wizard.setMagoOscuro(false);
+
+        poder = new Poder("Invisibilidad");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        wizard.setPoder(poder);
+
+        escoba = new Escoba();
+        escoba.setNombre(" Nimbus 2000 ");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        wizard.setEscoba(escoba);
+
+        this.personajes.add(wizard);
+
     }
 
     public void inicializarHechizos() {
@@ -104,6 +122,22 @@ public class JuegoHP {
         hechizo.setDescripcion("La maldición Sectumsempra genera cortes profundos en la víctima.");
         hechizo.setEnergiaMagica(50);
         hechizo.setNivelDanio(50);
+        hechizo.setEsOscuro(false);
+
+        this.hechizos.add(hechizo);
+
+        hechizo = new Hechizo("VulneraSanentur");
+        hechizo.setDescripcion("Hechizo sanador que corresponde al contrahechizo de la maldición sectumsempra.");
+        hechizo.setEnergiaMagica(30);
+        hechizo.setNivelDanio(30);
+        hechizo.setEsOscuro(false);
+
+        this.hechizos.add(hechizo);
+
+        hechizo = new Hechizo("Cavelnimicum");
+        hechizo.setDescripcion("Hechizo de protección, mantiene alejado a los enemigos.");
+        hechizo.setEnergiaMagica(25);
+        hechizo.setNivelDanio(25);
         hechizo.setEsOscuro(false);
 
         this.hechizos.add(hechizo);
