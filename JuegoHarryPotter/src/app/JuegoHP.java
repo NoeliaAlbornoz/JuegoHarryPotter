@@ -32,11 +32,12 @@ public class JuegoHP {
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
-        int jugada = 0;
+        int jugada = 1;
 
-        while (jugada < 8) {
+        while (jugada < 9) {
             if (jugada % 2 != 0) {
                 System.out.print("Jugador1");
+                System.out.println(jugador1.getNombre());
                 bannerAprenderHechizos();
 
                 Hechizo h = this.seleccionarHechizo();
@@ -45,6 +46,7 @@ public class JuegoHP {
 
             } else {
                 System.out.print("Jugador2");
+                System.out.println(jugador2.getNombre());
                 bannerAprenderHechizos();
 
                 Hechizo h = this.seleccionarHechizo();
@@ -64,7 +66,7 @@ public class JuegoHP {
                 jugador1 = jugador2;
                 jugador2 = aux;
 
-                System.out.println("\n" + jugador1.getNombre());
+                System.out.println(jugador1.getNombre());
 
                 bannerAtacarConHechizos();
 
@@ -78,7 +80,8 @@ public class JuegoHP {
                 jugador1 = jugador2;
                 jugador2 = aux;
 
-                System.out.println("\n" + jugador2.getNombre());
+                System.out.println(jugador2.getNombre());
+
                 bannerAtacarConHechizos();
 
                 Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador2);
@@ -86,6 +89,16 @@ public class JuegoHP {
                 this.atacarSegunPersonaje(jugador2, hechizo, jugador1);
 
             }
+
+        }
+
+        if (jugador1.estaVivo()) {
+
+            System.out.println("Felicidades!!! " + jugador1.getNombre() + " ha ganado la Copa de la Casa con una salud restante de " + jugador1.getSalud() + " puntos!");
+
+        } else {
+
+            System.out.println("Felicidades!!! " + jugador2.getNombre() + " ha ganado la Copa de la Casa con una salud restante de " + jugador2.getSalud() + " puntos!");
 
         }
 
