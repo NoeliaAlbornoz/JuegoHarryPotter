@@ -32,19 +32,60 @@ public class JuegoHP {
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
-        bannerAprenderHechizos();
+        int jugada = 0;
 
-        Hechizo h = this.seleccionarHechizo();
+        while (jugada < 8) {
+            if (jugada % 2 != 0) {
+                System.out.print("Jugador1");
+                bannerAprenderHechizos();
 
-        this.aprenderSegunPersonaje(jugador1, h);
+                Hechizo h = this.seleccionarHechizo();
+
+                this.aprenderSegunPersonaje(jugador1, h);
+
+            } else {
+                System.out.print("Jugador2");
+                bannerAprenderHechizos();
+
+                Hechizo h = this.seleccionarHechizo();
+
+                this.aprenderSegunPersonaje(jugador2, h);
+            }
+            jugada++;
+        }
+
+        jugada = 0;
 
         while (jugador1.estaVivo() && jugador2.estaVivo()) {
 
-            bannerAtacarConHechizos();
+            if (jugada % 2 != 0) {
 
-            Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
+                Personaje aux = jugador1;
+                jugador1 = jugador2;
+                jugador2 = aux;
 
-            this.atacarSegunPersonaje(jugador1, hechizo, jugador2);
+                System.out.println("\n" + jugador1.getNombre());
+
+                bannerAtacarConHechizos();
+
+                Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
+
+                this.atacarSegunPersonaje(jugador1, hechizo, jugador2);
+
+            } else {
+
+                Personaje aux = jugador1;
+                jugador1 = jugador2;
+                jugador2 = aux;
+
+                System.out.println("\n" + jugador2.getNombre());
+                bannerAtacarConHechizos();
+
+                Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador2);
+
+                this.atacarSegunPersonaje(jugador2, hechizo, jugador1);
+
+            }
 
         }
 
