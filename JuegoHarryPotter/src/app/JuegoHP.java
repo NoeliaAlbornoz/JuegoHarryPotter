@@ -106,6 +106,24 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
+        wizard = new Wizard();
+        wizard.setNombre("Ginny Weasley");
+        wizard.setEnergiaMagica(150);
+        wizard.setSalud(100);
+        wizard.setEdad(16);
+        wizard.setMagoOscuro(false);
+
+        poder = new Poder("Invisibilidad");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        wizard.setPoder(poder);
+
+        escoba = new Escoba();
+        escoba.setNombre(" Nimbus 2000 ");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        wizard.setEscoba(escoba);
+
+        this.personajes.add(wizard);
+
     }
 
     public void inicializarHechizos() {
