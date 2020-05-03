@@ -33,7 +33,8 @@ public class JuegoHP {
 
         Personaje jugador1 = this.seleccionarPersonaje();
 
-        System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.println(
+                "------------------------------------------------------------------------------------------------------------------------\n");
 
         bannerJugador2();
 
@@ -42,10 +43,11 @@ public class JuegoHP {
         int jugada = 1;
 
         while (jugada < 9) {
-            
+
             if (jugada % 2 != 0) {
 
-                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.println(
+                        "------------------------------------------------------------------------------------------------------------------------\n");
 
                 bannerJugador1();
 
@@ -53,13 +55,12 @@ public class JuegoHP {
 
                 bannerAprenderHechizos();
 
-                Hechizo hechizo = this.seleccionarHechizo();
-
-                this.aprenderSegunPersonaje(jugador1, hechizo);
+                this.iniciarAprendizajeDeHechizos(jugador1);
 
             } else {
 
-                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.println(
+                        "------------------------------------------------------------------------------------------------------------------------\n");
 
                 bannerJugador2();
 
@@ -67,9 +68,7 @@ public class JuegoHP {
 
                 bannerAprenderHechizos();
 
-                Hechizo hechizo = this.seleccionarHechizo();
-
-                this.aprenderSegunPersonaje(jugador2, hechizo);
+                this.iniciarAprendizajeDeHechizos(jugador2);
             }
 
             jugada++;
@@ -82,7 +81,8 @@ public class JuegoHP {
 
             if (jugada % 2 != 0) {
 
-                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.println(
+                        "-------------------------------------------------------------------------------------------------------------------\n");
 
                 bannerJugador1();
 
@@ -90,13 +90,12 @@ public class JuegoHP {
 
                 bannerAtacarConHechizos();
 
-                Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador1);
-
-                this.atacarSegunPersonaje(jugador1, hechizo, jugador2);
+                this.iniciarAtaqueConHechizos(jugador1, jugador2);
 
             } else {
 
-                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+                System.out.println(
+                        "-------------------------------------------------------------------------------------------------------------------\n");
 
                 bannerJugador2();
 
@@ -104,9 +103,7 @@ public class JuegoHP {
 
                 bannerAtacarConHechizos();
 
-                Hechizo hechizo = this.seleccionarHechizoParaPelear(jugador2);
-
-                this.atacarSegunPersonaje(jugador2, hechizo, jugador1);
+                this.iniciarAtaqueConHechizos(jugador2, jugador1);
 
             }
 
@@ -116,7 +113,8 @@ public class JuegoHP {
 
         if (jugador1.estaVivo()) {
 
-            System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+            System.out.println(
+                    "-------------------------------------------------------------------------------------------------------------------\n");
 
             this.mostrarPropiedadesJugador(jugador1, jugador2);
 
@@ -125,7 +123,8 @@ public class JuegoHP {
 
         } else {
 
-            System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+            System.out.println(
+                    "-------------------------------------------------------------------------------------------------------------------\n");
 
             this.mostrarPropiedadesJugador(jugador1, jugador2);
 
@@ -136,7 +135,7 @@ public class JuegoHP {
 
     }
 
-    public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2){
+    public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2) {
 
         System.out.print(jugador1.getNombre() + " Salud " + jugador1.getSalud() + " | ");
 
@@ -345,16 +344,31 @@ public class JuegoHP {
 
     }
 
-    public void bannerJugador1(){
+    public void bannerJugador1() {
 
         System.out.println("JUGADOR 1 \n");
 
     }
 
-    public void bannerJugador2(){
+    public void bannerJugador2() {
 
         System.out.println("JUGADOR 2 \n");
 
+    }
+
+    public void iniciarAprendizajeDeHechizos(Personaje jugador){
+
+        Hechizo hechizo = this.seleccionarHechizo();
+
+        this.aprenderSegunPersonaje(jugador, hechizo);
+
+    }
+
+    public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado){
+
+        Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
+
+        this.atacarSegunPersonaje(jugadorAtacante, hechizo, jugadorAtacado);
     }
 
 }
