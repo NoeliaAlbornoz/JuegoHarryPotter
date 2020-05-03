@@ -22,6 +22,7 @@ public class JuegoHP {
     public void inicializarJuego() {
 
         this.inicializarPersonajes();
+
         this.inicializarHechizos();
 
     }
@@ -35,36 +36,43 @@ public class JuegoHP {
         int jugada = 1;
 
         while (jugada < 9) {
+            
             if (jugada % 2 != 0) {
+
                 System.out.print("Jugador1");
+
                 System.out.println(jugador1.getNombre());
+
                 bannerAprenderHechizos();
 
-                Hechizo h = this.seleccionarHechizo();
+                Hechizo hechizo = this.seleccionarHechizo();
 
-                this.aprenderSegunPersonaje(jugador1, h);
+                this.aprenderSegunPersonaje(jugador1, hechizo);
 
             } else {
+
                 System.out.print("Jugador2");
+
                 System.out.println(jugador2.getNombre());
+
                 bannerAprenderHechizos();
 
-                Hechizo h = this.seleccionarHechizo();
+                Hechizo hechizo = this.seleccionarHechizo();
 
-                this.aprenderSegunPersonaje(jugador2, h);
+                this.aprenderSegunPersonaje(jugador2, hechizo);
             }
+
             jugada++;
+
         }
 
-        jugada = 0;
+        jugada = 1;
 
         while (jugador1.estaVivo() && jugador2.estaVivo()) {
 
             if (jugada % 2 != 0) {
 
-                Personaje aux = jugador1;
-                jugador1 = jugador2;
-                jugador2 = aux;
+                System.out.print("Jugador1");
 
                 System.out.println(jugador1.getNombre());
 
@@ -76,9 +84,7 @@ public class JuegoHP {
 
             } else {
 
-                Personaje aux = jugador1;
-                jugador1 = jugador2;
-                jugador2 = aux;
+                System.out.print("Jugador2");
 
                 System.out.println(jugador2.getNombre());
 
@@ -90,15 +96,19 @@ public class JuegoHP {
 
             }
 
+            jugada++;
+
         }
 
         if (jugador1.estaVivo()) {
 
-            System.out.println("Felicidades!!! " + jugador1.getNombre() + " ha ganado la Copa de la Casa con una salud restante de " + jugador1.getSalud() + " puntos!");
+            System.out.println("Felicidades!!! " + jugador1.getNombre()
+                    + " ha ganado la Copa de la Casa con una salud restante de " + jugador1.getSalud() + " puntos!");
 
         } else {
 
-            System.out.println("Felicidades!!! " + jugador2.getNombre() + " ha ganado la Copa de la Casa con una salud restante de " + jugador2.getSalud() + " puntos!");
+            System.out.println("Felicidades!!! " + jugador2.getNombre()
+                    + " ha ganado la Copa de la Casa con una salud restante de " + jugador2.getSalud() + " puntos!");
 
         }
 
