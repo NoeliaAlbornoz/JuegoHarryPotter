@@ -102,7 +102,7 @@ public class Wizard extends Persona implements IHaceMagia{
 
     public void disminuirEnergiaMagica(int energiaMagica, Hechizo hechizo){
 
-        int energiaMagicaResultante = hechizo.getEnergiaMagica() - hechizo.getEnergiaMagica();
+        int energiaMagicaResultante = this.energiaMagica - hechizo.getEnergiaMagica();
 
         this.setEnergiaMagica(energiaMagicaResultante);
 
