@@ -20,6 +20,8 @@ public class JuegoHP {
 
     public List<Hechizo> hechizos = new ArrayList<>();
 
+    public TrenExpresoHowards tren;
+
     public void inicializarJuego() {
 
         this.inicializarPersonajes();
@@ -41,7 +43,7 @@ public class JuegoHP {
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
-        this.iniciarMiniJuego(jugador1);
+        this.arrancarTren(jugador1, tren, jugador2);
 
         int jugada = 1;
 
@@ -355,7 +357,7 @@ public class JuegoHP {
 
     public void bannerJugador2() {
 
-        System.out.println("JUGADOR 2 \n");
+        System.out.println("\nJUGADOR 2 \n");
 
     }
 
@@ -374,9 +376,45 @@ public class JuegoHP {
         this.atacarSegunPersonaje(jugadorAtacante, hechizo, jugadorAtacado);
     }
 
-    public void iniciarMiniJuego(Personaje personaje){
+    public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren){
 
-        TrenExpresoHowards tren = new TrenExpresoHowards();
+        int dado = jugador.tirarDado();
+
+        System.out.print(dado + " ");
+
+        tren.setVelocidad(dado);
+
+        if (tren.esInvisibleAMuggles()) {
+
+            int masSalud = tren.getAmplificadorDeSalud() + 1;
+
+            int saludIncrementada = jugador.getSalud() + masSalud;
+
+            jugador.setSalud(saludIncrementada);
+
+            System.out.print(jugador.getNombre() + " Salud " + jugador.getSalud() + " ");
+
+        } else if (tren.esInvisible()) {
+
+            int masSalud = tren.getAmplificadorDeSalud() + 1;
+
+            int saludIncrementada = jugador.getSalud() + masSalud;
+
+            jugador.setSalud(saludIncrementada);
+
+            System.out.print(jugador.getNombre() + " Salud " + jugador.getSalud() + " ");
+
+        } else {
+
+            System.out.print(" Mala suerte " + jugador.getNombre() + " Salud " + jugador.getSalud() + " ");
+
+        }
+
+    }
+
+    public void arrancarTren(Personaje jugador1, TrenExpresoHowards tren, Personaje jugador2){
+
+        tren = new TrenExpresoHowards();
 
         tren.setNombre("Tren Expreso Howards. ");
 
@@ -389,64 +427,12 @@ public class JuegoHP {
 
         bannerJugador1();
 
-        int dado = personaje.tirarDado();
+        this.iniciarMiniJuego(jugador1, tren);
 
-        System.out.print(dado);
+        bannerJugador2();
 
-        tren.setVelocidad(dado);
-
-        if (tren.esInvisibleAMuggles()) {
-
-            int masSalud = tren.getAmplificadorDeSalud() + 1;
-
-            int saludIncrementada = personaje.getSalud() + masSalud;
-
-            personaje.setSalud(saludIncrementada);
-
-            System.out.print(personaje.getNombre() + " Salud " + personaje.getSalud());
-        } else if (tren.esInvisible()) {
-
-            int masSalud = tren.getAmplificadorDeSalud() + 1;
-
-            int saludIncrementada = personaje.getSalud() + masSalud;
-
-            personaje.setSalud(saludIncrementada);
-
-            System.out.print(personaje.getNombre() + " Salud " + personaje.getSalud());
-        } else {
-            System.out.print(" Mala suerte " + personaje.getNombre() + " Salud " + personaje.getSalud());
-        }
-
-        /*bannerJugador2();
-
-        dado = personaje.tirarDado();
-
-        tren.setVelocidad(dado);
-
-        if( tren.esInvisibleAMuggles()){
-
-            int masSalud = tren.getAmplificadorDeSalud() + 1;
-
-            int saludIncrementada = personaje.getSalud() + masSalud;
-
-            personaje.setSalud(saludIncrementada);
-
-            System.out.print( personaje.getNombre() + " Salud " + personaje.getSalud());
-        }
-        else if(tren.esInvisible()){
-
-            int masSalud = tren.getAmplificadorDeSalud() + 1;
-
-            int saludIncrementada = personaje.getSalud() + masSalud;
-
-            personaje.setSalud(saludIncrementada);
-
-            System.out.print( personaje.getNombre() + " Salud " + personaje.getSalud());
-        }
-        else{
-            System.out.print(" Mala suerte " + personaje.getNombre() + " Salud " + personaje.getSalud());
-        }*/
-
+        this.iniciarMiniJuego(jugador2, tren);
+        
     }
 
 }
