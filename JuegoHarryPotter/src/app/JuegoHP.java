@@ -157,9 +157,9 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        Poder poder = new Poder("ParseTongue");
-        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
-        wizard.setPoder(poder);
+        Poder poderInicial = new Poder("ParseTongue");
+        poderInicial.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        wizard.setPoder(poderInicial);
 
         Escoba escoba = new Escoba();
         escoba.setNombre("Nimbus 2000");
@@ -175,9 +175,9 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poder = new Poder("Metamorfosis");
-        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poder);
+        poderInicial = new Poder("Metamorfosis");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        wizard.setPoder(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -193,9 +193,9 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        wizard.setPoder(poder);
+        poderInicial = new Poder("Invisibilidad");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        wizard.setPoder(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -211,9 +211,9 @@ public class JuegoHP {
         wizard.setEdad(16);
         wizard.setMagoOscuro(false);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        wizard.setPoder(poder);
+        poderInicial = new Poder("Invisibilidad");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        wizard.setPoder(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -229,9 +229,9 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poder = new Poder("Metamorfosis");
-        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poder);
+        poderInicial = new Poder("Metamorfosis");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        wizard.setPoder(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -247,9 +247,9 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poder = new Poder("Metamorfosis");
-        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poder);
+        poderInicial = new Poder("Metamorfosis");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        wizard.setPoder(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -265,9 +265,9 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poder = new Poder("Metamorfosis");
-        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poder);
+        poderInicial = new Poder("Metamorfosis");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        wizard.setPoder(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
