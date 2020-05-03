@@ -6,14 +6,14 @@ public class TrenExpresoHowards extends Transporte implements IEsMagico{
 
     @Override
     public boolean esInvisibleAMuggles() {
-        // TODO Auto-generated method stub
-        return false;
+
+        return getVelocidad() <= 3;
     }
 
     @Override
     public boolean esInvisible() {
-        // TODO Auto-generated method stub
-        return false;
+
+        return getVelocidad() == 10;
     }
 
 }
