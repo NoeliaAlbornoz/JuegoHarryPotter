@@ -34,4 +34,12 @@ public abstract class Personaje {
         return salud > 0 ;
     }
 
+    public void disminuirSalud(int danio){
+
+        int saludRestante = this.getSalud() - danio;
+
+        this.setSalud(saludRestante);
+
+    }
+
 }
