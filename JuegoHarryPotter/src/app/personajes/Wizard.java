@@ -77,30 +77,34 @@ public class Wizard extends Persona implements IHaceMagia{
         this.hechizos.add(h);
 
         System.out.println("Has aprendido el hechizo " + h.getNombre());
-        System.out.println("Tu hechizo tiene un nivel de daño de " + h.getNivelDanio());
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
 
-        this.energiaMagica -= hechizo.getEnergiaMagica();
-        int energiaRestante = hechizo.getEnergiaMagica() - hechizo.getEnergiaMagica();
-        hechizo.setEnergiaMagica(energiaRestante);
-        int saludRestante = personaje.getSalud() - hechizo.getNivelDanio();
-        personaje.setSalud(saludRestante);
+        this.disminuirEnergiaMagica(energiaMagica, hechizo);
 
-        System.out.println("Has atacado con " + hechizo.getNombre());
-        System.out.println("Te quedan " + this.energiaMagica + " puntos de energía mágica.");
-        System.out.println("Te quedan " + hechizo.getEnergiaMagica() + " puntos de energía mágica del hechizo.");
-        System.out.println("Se descuentan de tu enemigo " + hechizo.getNivelDanio() + " puntos de vida.");
-        System.out.println("Tu enemigo ahora tiene " + personaje.getSalud() + " puntos de salud restantes.");
+        personaje.disminuirSalud(hechizo.getNivelDanio());
+
+        this.atacar(personaje, hechizo.getNombre());
 
     }
 
     @Override
     public void atacar(Personaje personaje, String hechizo) {
-        // TODO Auto-generated method stub
+
+        System.out.println("Has atacado con " + hechizo);
+
+        System.out.println("Te quedan " + this.energiaMagica + " puntos de energía mágica.");
+
+    }
+
+    public void disminuirEnergiaMagica(int energiaMagica, Hechizo hechizo){
+
+        int energiaMagicaResultante = hechizo.getEnergiaMagica() - hechizo.getEnergiaMagica();
+
+        this.setEnergiaMagica(energiaMagicaResultante);
 
     }
 
