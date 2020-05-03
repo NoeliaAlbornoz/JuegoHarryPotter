@@ -46,6 +46,8 @@ public class App {
         System.out.println("2. El dado mágico te permite obtener números del 0 al 10.");
         System.out.println("3. Un hechizo oscuro te convertirá automáticamente en un mago oscuro y el nivel de daño/curación del hechizo se multiplicará por 2 (1 sola vez).");
         System.out.println("4. El juego termina cuando uno de los personajes está muerto. \n");
+
+        System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
         
     }
     
