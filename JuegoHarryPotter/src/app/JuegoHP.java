@@ -29,7 +29,13 @@ public class JuegoHP {
 
     public void start() {
 
+        bannerJugador1();
+
         Personaje jugador1 = this.seleccionarPersonaje();
+
+        System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+
+        bannerJugador2();
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
@@ -39,7 +45,9 @@ public class JuegoHP {
             
             if (jugada % 2 != 0) {
 
-                System.out.print("Jugador1");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+
+                bannerJugador1();
 
                 System.out.println(jugador1.getNombre());
 
@@ -51,7 +59,9 @@ public class JuegoHP {
 
             } else {
 
-                System.out.print("Jugador2");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+
+                bannerJugador2();
 
                 System.out.println(jugador2.getNombre());
 
@@ -72,9 +82,11 @@ public class JuegoHP {
 
             if (jugada % 2 != 0) {
 
-                System.out.print("Jugador1");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
 
-                System.out.println(jugador1.getNombre());
+                bannerJugador1();
+
+                this.mostrarPropiedadesJugador(jugador1, jugador2);
 
                 bannerAtacarConHechizos();
 
@@ -84,9 +96,11 @@ public class JuegoHP {
 
             } else {
 
-                System.out.print("Jugador2");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
 
-                System.out.println(jugador2.getNombre());
+                bannerJugador2();
+
+                this.mostrarPropiedadesJugador(jugador1, jugador2);
 
                 bannerAtacarConHechizos();
 
@@ -102,15 +116,31 @@ public class JuegoHP {
 
         if (jugador1.estaVivo()) {
 
-            System.out.println("Felicidades!!! " + jugador1.getNombre()
+            System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+
+            this.mostrarPropiedadesJugador(jugador1, jugador2);
+
+            System.out.println("\n!!!Felicidades!!! " + jugador1.getNombre()
                     + " ha ganado la Copa de la Casa con una salud restante de " + jugador1.getSalud() + " puntos!");
 
         } else {
 
-            System.out.println("Felicidades!!! " + jugador2.getNombre()
+            System.out.println("------------------------------------------------------------------------------------------------------------------------\n");
+
+            this.mostrarPropiedadesJugador(jugador1, jugador2);
+
+            System.out.println("\n!!!Felicidades!!! " + jugador2.getNombre()
                     + " ha ganado la Copa de la Casa con una salud restante de " + jugador2.getSalud() + " puntos!");
 
         }
+
+    }
+
+    public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2){
+
+        System.out.print(jugador1.getNombre() + " Salud " + jugador1.getSalud() + " | ");
+
+        System.out.println(jugador2.getNombre() + " Salud " + jugador2.getSalud());
 
     }
 
@@ -312,6 +342,18 @@ public class JuegoHP {
     public static void bannerAtacarConHechizos() {
 
         System.out.println("\nDebes elegir un hechizo para atacar a tu oponente: \n");
+
+    }
+
+    public void bannerJugador1(){
+
+        System.out.println("JUGADOR 1 \n");
+
+    }
+
+    public void bannerJugador2(){
+
+        System.out.println("JUGADOR 2 \n");
 
     }
 
