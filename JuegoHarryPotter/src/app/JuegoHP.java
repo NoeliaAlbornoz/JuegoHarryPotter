@@ -10,6 +10,7 @@ import app.personajes.Wizard;
 import app.poderes.Hechizo;
 import app.poderes.Poder;
 import app.transportes.Escoba;
+import app.transportes.TrenExpresoHowards;
 
 public class JuegoHP {
 
@@ -39,6 +40,8 @@ public class JuegoHP {
         bannerJugador2();
 
         Personaje jugador2 = this.seleccionarPersonaje();
+
+        this.iniciarMiniJuego(jugador1);
 
         int jugada = 1;
 
@@ -356,7 +359,7 @@ public class JuegoHP {
 
     }
 
-    public void iniciarAprendizajeDeHechizos(Personaje jugador){
+    public void iniciarAprendizajeDeHechizos(Personaje jugador) {
 
         Hechizo hechizo = this.seleccionarHechizo();
 
@@ -364,11 +367,86 @@ public class JuegoHP {
 
     }
 
-    public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado){
+    public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado) {
 
         Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
 
         this.atacarSegunPersonaje(jugadorAtacante, hechizo, jugadorAtacado);
+    }
+
+    public void iniciarMiniJuego(Personaje personaje){
+
+        TrenExpresoHowards tren = new TrenExpresoHowards();
+
+        tren.setNombre("Tren Expreso Howards. ");
+
+        tren.setDescripcion(
+                "Tira el dado mágico. Si sacas un 3 o número menor, el tren será invisible frente a muggles y ganas 1 punto de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.\n");
+
+        tren.setAmplificadorDeSalud(1);
+
+        System.out.print(tren.getNombre() + tren.getDescripcion());
+
+        bannerJugador1();
+
+        int dado = personaje.tirarDado();
+
+        System.out.print(dado);
+
+        tren.setVelocidad(dado);
+
+        if (tren.esInvisibleAMuggles()) {
+
+            int masSalud = tren.getAmplificadorDeSalud() + 1;
+
+            int saludIncrementada = personaje.getSalud() + masSalud;
+
+            personaje.setSalud(saludIncrementada);
+
+            System.out.print(personaje.getNombre() + " Salud " + personaje.getSalud());
+        } else if (tren.esInvisible()) {
+
+            int masSalud = tren.getAmplificadorDeSalud() + 1;
+
+            int saludIncrementada = personaje.getSalud() + masSalud;
+
+            personaje.setSalud(saludIncrementada);
+
+            System.out.print(personaje.getNombre() + " Salud " + personaje.getSalud());
+        } else {
+            System.out.print(" Mala suerte " + personaje.getNombre() + " Salud " + personaje.getSalud());
+        }
+
+        /*bannerJugador2();
+
+        dado = personaje.tirarDado();
+
+        tren.setVelocidad(dado);
+
+        if( tren.esInvisibleAMuggles()){
+
+            int masSalud = tren.getAmplificadorDeSalud() + 1;
+
+            int saludIncrementada = personaje.getSalud() + masSalud;
+
+            personaje.setSalud(saludIncrementada);
+
+            System.out.print( personaje.getNombre() + " Salud " + personaje.getSalud());
+        }
+        else if(tren.esInvisible()){
+
+            int masSalud = tren.getAmplificadorDeSalud() + 1;
+
+            int saludIncrementada = personaje.getSalud() + masSalud;
+
+            personaje.setSalud(saludIncrementada);
+
+            System.out.print( personaje.getNombre() + " Salud " + personaje.getSalud());
+        }
+        else{
+            System.out.print(" Mala suerte " + personaje.getNombre() + " Salud " + personaje.getSalud());
+        }*/
+
     }
 
 }
