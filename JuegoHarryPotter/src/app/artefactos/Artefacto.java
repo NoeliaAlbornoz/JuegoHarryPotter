@@ -10,7 +10,11 @@ public class Artefacto implements IEsMagico {
     private double amplificadorDeDanio;
     private double amplificadorDeCuracion;
     private Poder poder;
-
+    
+    public Artefacto(String nombre) {
+        this.nombre = nombre;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -54,5 +58,9 @@ public class Artefacto implements IEsMagico {
         
         return false;
     }
+
+
+
+    
 
 }
