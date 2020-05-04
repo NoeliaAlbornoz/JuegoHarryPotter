@@ -85,9 +85,11 @@ public class Wizard extends Persona implements IHaceMagia{
 
         this.disminuirEnergiaMagica(energiaMagica, hechizo);
 
-        personaje.disminuirSalud(hechizo.getNivelDanio());
+        personaje.disminuirSalud(hechizo, artefacto);
 
         this.atacar(personaje, hechizo.getNombre());
+
+        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de " + this.utilizarDanioDeArtefacto(hechizo, artefacto) + " puntos. " );
 
     }
 
