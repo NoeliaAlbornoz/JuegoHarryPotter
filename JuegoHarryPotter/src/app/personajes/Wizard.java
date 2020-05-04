@@ -83,6 +83,8 @@ public class Wizard extends Persona implements IHaceMagia{
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
 
+        this.confirmarHechizoOscuro(hechizo);
+
         this.disminuirEnergiaMagica(energiaMagica, hechizo);
 
         personaje.disminuirSalud(hechizo, artefacto);
@@ -90,6 +92,26 @@ public class Wizard extends Persona implements IHaceMagia{
         this.atacar(personaje, hechizo.getNombre());
 
         System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de " + this.utilizarDanioDeArtefacto(hechizo, artefacto) + " puntos. " );
+
+    }
+
+    public void confirmarHechizoOscuro(Hechizo hechizo){
+
+        if(hechizo.isEsOscuro()){
+
+            int nuevoDanio = hechizo.getNivelDanio() * 2;
+            hechizo.setNivelDanio(nuevoDanio);
+
+            int nuevoCuracion = hechizo.getNivelCuracion() * 2;
+            hechizo.setNivelCuracion(nuevoCuracion);
+
+            this.magoOscuro = true;
+
+            hechizo.setEsOscuro(false);
+
+            System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2." + this.getNombre() + " es ahora un mago oscuro.");
+
+        }
 
     }
 
