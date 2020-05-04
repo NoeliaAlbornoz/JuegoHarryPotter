@@ -314,7 +314,7 @@ public class JuegoHP {
         hechizo.setDescripcion("La maldición Sectumsempra genera cortes profundos en la víctima.");
         hechizo.setEnergiaMagica(7);
         hechizo.setNivelDanio(7);
-        hechizo.setEsOscuro(false);
+        hechizo.setEsOscuro(true);
         hechizo.setNivelCuracion(1);
 
         this.hechizos.add(hechizo);
