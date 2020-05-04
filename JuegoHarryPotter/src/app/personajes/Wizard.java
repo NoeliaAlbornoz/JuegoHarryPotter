@@ -8,7 +8,8 @@ import app.artefactos.Artefacto;
 import app.poderes.Hechizo;
 import app.poderes.Poder;
 import app.transportes.Escoba;
-public class Wizard extends Persona implements IHaceMagia{
+
+public class Wizard extends Persona implements IHaceMagia {
 
     private int energiaMagica;
     private List<Hechizo> hechizos = new ArrayList<>();
@@ -73,7 +74,7 @@ public class Wizard extends Persona implements IHaceMagia{
 
     @Override
     public void aprender(Hechizo h) {
-        
+
         this.hechizos.add(h);
 
         System.out.println("Has aprendido el hechizo " + h.getNombre());
@@ -89,15 +90,30 @@ public class Wizard extends Persona implements IHaceMagia{
 
         personaje.disminuirSalud(hechizo, artefacto);
 
+        this.aumentarSaludConCuracion(hechizo, artefacto);
+
         this.atacar(personaje, hechizo.getNombre());
 
-        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de " + this.utilizarDanioDeArtefacto(hechizo, artefacto) + " puntos. " );
+        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
+                + this.utilizarDanioDeArtefacto(hechizo, artefacto) + " puntos. ");
+
+        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera una curación adicional de "
+                + this.utilizarCuracionDeArtefacto(hechizo, artefacto) + " puntos. ");
 
     }
 
-    public void confirmarHechizoOscuro(Hechizo hechizo){
+    public void aumentarSaludConCuracion(Hechizo hechizo, Artefacto artefacto) {
 
-        if(hechizo.isEsOscuro()){
+        int saludAumentada = this.getSalud() + hechizo.getNivelCuracion()
+                + this.utilizarCuracionDeArtefacto(hechizo, artefacto);
+
+        this.setSalud(saludAumentada);
+
+    }
+
+    public void confirmarHechizoOscuro(Hechizo hechizo) {
+
+        if (hechizo.isEsOscuro()) {
 
             int nuevoDanio = hechizo.getNivelDanio() * 2;
             hechizo.setNivelDanio(nuevoDanio);
@@ -109,7 +125,8 @@ public class Wizard extends Persona implements IHaceMagia{
 
             hechizo.setEsOscuro(false);
 
-            System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2." + this.getNombre() + " es ahora un mago oscuro.");
+            System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2."
+                    + this.getNombre() + " es ahora un mago oscuro.");
 
         }
 
@@ -124,7 +141,7 @@ public class Wizard extends Persona implements IHaceMagia{
 
     }
 
-    public void disminuirEnergiaMagica(int energiaMagica, Hechizo hechizo){
+    public void disminuirEnergiaMagica(int energiaMagica, Hechizo hechizo) {
 
         int energiaMagicaResultante = this.energiaMagica - hechizo.getEnergiaMagica();
 
