@@ -3,6 +3,9 @@ package app.personajes;
 import java.util.Random;
 import java.util.Scanner;
 
+import app.artefactos.Artefacto;
+import app.poderes.Hechizo;
+
 public abstract class Personaje {
 
     public static Scanner Teclado = new Scanner(System.in);
@@ -39,9 +42,9 @@ public abstract class Personaje {
         return salud > 0;
     }
 
-    public void disminuirSalud(int danio) {
+    public void disminuirSalud(Hechizo hechizo, Artefacto artefacto) {
 
-        int saludRestante = this.getSalud() - danio;
+        int saludRestante = this.getSalud() - (hechizo.getNivelDanio() + this.utilizarDanioDeArtefacto(hechizo, artefacto));
 
         this.setSalud(saludRestante);
 
@@ -56,6 +59,15 @@ public abstract class Personaje {
 
         return rand.nextInt(10);
 
+    }
+
+    public int utilizarDanioDeArtefacto(Hechizo hechizo, Artefacto artefacto){
+        return (int) (hechizo.getNivelDanio() * artefacto.getAmplificadorDeDanio());
+        
+    }
+
+    public int utilizarCuracionDeArtefacto(Hechizo hechizo, Artefacto artefacto){
+        return (int) (hechizo.getNivelCuracion() * artefacto.getAmplificadorDeCuracion());
     }
 
 }
