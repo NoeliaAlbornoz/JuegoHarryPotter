@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import app.artefactos.Artefacto;
 import app.personajes.Elfo;
 import app.personajes.Personaje;
 import app.personajes.Wizard;
@@ -157,7 +158,7 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        Poder poderInicial = new Poder("ParseTongue");
+        Poder poderInicial = new Poder("Parse Tongue");
         poderInicial.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
         wizard.setPoder(poderInicial);
 
@@ -165,6 +166,16 @@ public class JuegoHP {
         escoba.setNombre("Nimbus 2000");
         escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
         wizard.setEscoba(escoba);
+
+        Poder poder = new Poder("Parse Tongue");
+        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+
+        Artefacto artefacto = new Artefacto("Horrocrux");
+        artefacto.setAmplificadorDeDanio(0.5);
+        artefacto.setAmplificadorDeCuracion(0.5);
+        artefacto.setPoder(poder);
+
+        wizard.setArtefacto(artefacto);
 
         this.personajes.add(wizard);
 
@@ -183,6 +194,16 @@ public class JuegoHP {
         escoba.setNombre(" Nimbus 2000 ");
         escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
         wizard.setEscoba(escoba);
+
+        poder = new Poder("Parse Tongue");
+        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+
+        artefacto = new Artefacto("Piedra de resurrección");
+        artefacto.setAmplificadorDeDanio(0.3);
+        artefacto.setAmplificadorDeCuracion(0.5);
+        artefacto.setPoder(poder);
+
+        wizard.setArtefacto(artefacto);
 
         this.personajes.add(wizard);
 
@@ -282,33 +303,37 @@ public class JuegoHP {
 
         Hechizo hechizo = new Hechizo("Wingwardum Leviosa");
         hechizo.setDescripcion("Wingwardum Leviosa es un hechizo que permite levitar objetos o pequeños seres vivos.");
-        hechizo.setEnergiaMagica(20);
-        hechizo.setNivelDanio(20);
+        hechizo.setEnergiaMagica(2);
+        hechizo.setNivelDanio(5);
         hechizo.setEsOscuro(false);
-
+        hechizo.setNivelCuracion(2);
+    
         this.hechizos.add(hechizo);
 
         hechizo = new Hechizo("Sectumsempra");
         hechizo.setDescripcion("La maldición Sectumsempra genera cortes profundos en la víctima.");
-        hechizo.setEnergiaMagica(50);
-        hechizo.setNivelDanio(50);
+        hechizo.setEnergiaMagica(7);
+        hechizo.setNivelDanio(7);
         hechizo.setEsOscuro(false);
+        hechizo.setNivelCuracion(1);
 
         this.hechizos.add(hechizo);
 
         hechizo = new Hechizo("VulneraSanentur");
         hechizo.setDescripcion("Hechizo sanador que corresponde al contrahechizo de la maldición sectumsempra.");
-        hechizo.setEnergiaMagica(30);
-        hechizo.setNivelDanio(30);
+        hechizo.setEnergiaMagica(4);
+        hechizo.setNivelDanio(2);
         hechizo.setEsOscuro(false);
+        hechizo.setNivelCuracion(4);
 
         this.hechizos.add(hechizo);
 
         hechizo = new Hechizo("Cavelnimicum");
         hechizo.setDescripcion("Hechizo de protección, mantiene alejado a los enemigos.");
-        hechizo.setEnergiaMagica(25);
-        hechizo.setNivelDanio(25);
+        hechizo.setEnergiaMagica(3);
+        hechizo.setNivelDanio(4);
         hechizo.setEsOscuro(false);
+        hechizo.setNivelCuracion(3);
 
         this.hechizos.add(hechizo);
     }
