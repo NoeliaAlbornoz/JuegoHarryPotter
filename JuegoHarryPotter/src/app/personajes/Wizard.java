@@ -113,7 +113,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
     public void confirmarHechizoOscuro(Hechizo hechizo) {
 
-        if (hechizo.isEsOscuro()) {
+        if (hechizo.isEsOscuro() && this.magoOscuro == false) {
 
             int nuevoDanio = hechizo.getNivelDanio() * 2;
             hechizo.setNivelDanio(nuevoDanio);
