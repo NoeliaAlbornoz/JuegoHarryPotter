@@ -2,6 +2,7 @@ package app.personajes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import app.IHaceMagia;
 import app.artefactos.Artefacto;
@@ -10,6 +11,8 @@ import app.poderes.Poder;
 import app.transportes.Escoba;
 
 public class Wizard extends Persona implements IHaceMagia {
+
+    public Random rand = new Random(System.nanoTime());
 
     private int energiaMagica;
     private List<Hechizo> hechizos = new ArrayList<>();
@@ -75,9 +78,139 @@ public class Wizard extends Persona implements IHaceMagia {
     @Override
     public void aprender(Hechizo h) {
 
+        this.jugarMinijuegos(h);
+
         this.hechizos.add(h);
 
         System.out.println("Has aprendido el hechizo " + h.getNombre());
+
+    }
+
+    private void jugarMinijuegos(Hechizo hechizo) {
+
+        Random rand = new Random(System.nanoTime());
+
+        int numero1 = rand.nextInt(100);
+        int numero2 = rand.nextInt(100);
+
+        switch (hechizo.getNombre()) {
+
+            case "Wingwardum Leviosa":
+
+                System.out.println(
+                        "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
+
+                System.out.print("Resolver: " + numero1 + "+" + numero2 + "= ");
+                int resultado = Teclado.nextInt();
+
+                if (resultado == numero1 + numero2) {
+
+                    this.energiaMagica++;
+
+                    System.out.println(
+                            "Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                } else {
+
+                    --this.energiaMagica;
+
+                    System.out.println(
+                            "Al profesor Flitwick de Encantamientos no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                }
+
+                break;
+
+            case "Sectumsempra":
+
+            System.out.println(
+                        "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
+
+                System.out.print("Resolver: " + numero1 + "-" + numero2 + "= ");
+                resultado = Teclado.nextInt();
+
+                if (resultado == numero1 - numero2) {
+
+                    this.energiaMagica++;
+
+                    System.out.println(
+                            "Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                } else {
+
+                    --this.energiaMagica;
+
+                    System.out.println(
+                            "Al profesor Snape de Defensa contra las Artes Oscuras no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                }
+
+                break;
+
+            case "Vulnera Sanentur":
+
+            System.out.println(
+                        "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
+
+                System.out.print("Resolver: " + numero1 + " * " + numero2 + "= ");
+                resultado = Teclado.nextInt();
+
+                if (resultado == numero1 * numero2) {
+
+                    this.energiaMagica++;
+
+                    System.out.println(
+                            "Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                } else {
+
+                    --this.energiaMagica;
+
+                    System.out.println(
+                            "Al profesor Snape de Defensa contra las Artes Oscuras no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                }
+
+                break;
+
+            case "Cavelnimicum":
+
+            int numero3 = rand.nextInt(100);
+
+            System.out.println(
+                        "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
+
+                System.out.print("Resolver: " + numero1 + " * " + numero2 + " + " + numero3 + "= ");
+                resultado = Teclado.nextInt();
+
+                if (resultado == numero1 * numero2 + numero3) {
+
+                    this.energiaMagica++;
+
+                    System.out.println(
+                            "Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                } else {
+
+                    --this.energiaMagica;
+
+                    System.out.println(
+                            "A la profesora McGonagall de Transformaciones no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
+                                    + this.energiaMagica);
+
+                }
+
+
+                break;
+
+        }
 
     }
 
