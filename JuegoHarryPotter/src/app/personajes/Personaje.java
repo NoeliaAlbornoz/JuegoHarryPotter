@@ -51,7 +51,7 @@ public abstract class Personaje {
     }
 
     public int tirarDado() {
-        System.out.print("Dado mágico: ");
+        System.out.print("Dado mágico: ingrese enter para arrojar el dado ");
 
         Random rand = new Random(System.nanoTime());
 
