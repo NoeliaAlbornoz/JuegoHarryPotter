@@ -30,6 +30,8 @@ public class JuegoHP {
 
         this.inicializarHechizos();
 
+        this.inicializarTransporte();
+
     }
 
     public void start() {
@@ -41,8 +43,7 @@ public class JuegoHP {
         System.out.println(
                 "------------------------------------------------------------------------------------------------------------------------\n");
 
-
-        System.out.println( "JUGADOR 2 ");
+        System.out.println("JUGADOR 2 ");
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
@@ -59,8 +60,6 @@ public class JuegoHP {
 
                 bannerJugador1(jugador1);
 
-                System.out.println(jugador1.getNombre());
-
                 bannerAprenderHechizos();
 
                 this.iniciarAprendizajeDeHechizos(jugador1);
@@ -71,8 +70,6 @@ public class JuegoHP {
                         "------------------------------------------------------------------------------------------------------------------------\n");
 
                 bannerJugador2(jugador2);
-
-                System.out.println(jugador2.getNombre());
 
                 bannerAprenderHechizos();
 
@@ -549,7 +546,7 @@ public class JuegoHP {
 
         int dado = jugador.tirarDado();
 
-        System.out.print(dado + " ");
+        System.out.print("Has sacado un " + dado);
 
         tren.setVelocidad(dado);
 
@@ -561,7 +558,8 @@ public class JuegoHP {
 
             jugador.setSalud(saludIncrementada);
 
-            System.out.print(jugador.getNombre() + " Salud " + jugador.getSalud() + " ");
+            System.out.print(", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
+                    + " puntos. \n");
 
         } else if (tren.esInvisible()) {
 
@@ -571,11 +569,13 @@ public class JuegoHP {
 
             jugador.setSalud(saludIncrementada);
 
-            System.out.print(jugador.getNombre() + " Salud " + jugador.getSalud() + " ");
+            System.out.print(". Gran trabajo " + jugador.getNombre() + "!!! Ahora salud es de " + jugador.getSalud()
+                    + " puntos. \n");
 
         } else {
 
-            System.out.print(" Mala suerte " + jugador.getNombre() + " Salud " + jugador.getSalud() + " ");
+            System.out.print(", mala suerte " + jugador.getNombre() + " tu salud aún es de " + jugador.getSalud()
+                    + " puntos. \n ");
 
         }
 
@@ -585,10 +585,10 @@ public class JuegoHP {
 
         tren = new TrenExpresoHowards();
 
-        tren.setNombre("Tren Expreso Howards. ");
+        tren.setNombre("\nTren Expreso Howards. ");
 
         tren.setDescripcion(
-                "Tira el dado mágico. Si sacas un 3 o número menor, el tren será invisible frente a muggles y ganas 1 punto de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.\n");
+                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 punto de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.\n");
 
         tren.setAmplificadorDeSalud(1);
 
@@ -601,6 +601,23 @@ public class JuegoHP {
         bannerJugador2(jugador2);
 
         this.iniciarMiniJuego(jugador2, tren);
+
+    }
+
+    public void inicializarTransporte() {
+        Escoba escoba = new Escoba();
+        escoba.setNombre("Saeta de Fuego");
+        escoba.setDescripcion(
+                "Es una escoba de nivel internacional, fue lanzada en 1993 y con el tiempo, acabó siendo utilizada en los equipos internacionales búlgaro e irlandés de quidditch.");
+        escoba.setVelocidad(150);
+        escoba.setAmplificadorDeSalud(3);
+
+        escoba = new Escoba();
+        escoba.setNombre("Barredora 11");
+        escoba.setDescripcion(
+                "Producida por la Compañía de Escobas Barredora durante 1995. Se hizo de roble español, con barniz anti-conjuros y una función de control integrado de la vibración.");
+        escoba.setVelocidad(150);
+        escoba.setAmplificadorDeSalud(3);
 
     }
 
@@ -620,13 +637,13 @@ public class JuegoHP {
 
     public void bannerJugador1(Personaje personaje) {
 
-        System.out.println("\nJUGADOR 1 " + personaje.getNombre()+ "\n");
+        System.out.println("\nJUGADOR 1 " + personaje.getNombre() + "\n");
 
     }
 
     public void bannerJugador2(Personaje personaje) {
 
-        System.out.println("\nJUGADOR 2 " + personaje.getNombre()+ "\n");
+        System.out.println("\nJUGADOR 2 " + personaje.getNombre() + "\n");
 
     }
 
