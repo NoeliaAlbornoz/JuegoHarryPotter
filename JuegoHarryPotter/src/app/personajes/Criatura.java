@@ -2,7 +2,7 @@ package app.personajes;
 
 import app.IEsMagico;
 
-public class Criatura extends Personaje implements IEsMagico{
+public abstract class Criatura extends Personaje implements IEsMagico{
 
     @Override
     public boolean esInvisibleAMuggles() {
