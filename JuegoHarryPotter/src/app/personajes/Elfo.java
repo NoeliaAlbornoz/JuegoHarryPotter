@@ -52,15 +52,45 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     @Override
     public void aprender(Hechizo h) {
-        
+
+        this.aumentarEnergiaMagicaElfo();
+
         this.hechizos.add(h);
 
         System.out.println("Has aprendido el hechizo " + h.getNombre());
 
     }
 
+    public void aumentarEnergiaMagicaElfo() {
+
+        System.out.println("Puedes saber la edad de tu elfo al tirar el dado mágico. Si su edad es mayor o igual a 2 pero menor a 5, ganas 1 punto de energía mágica.\n");
+        System.out.println("Si su edad es mayor o igual a 5 pero menor o igual a 10, ganas 3 puntos de energía mágica.\n");
+
+        this.setEdad(this.tirarDado());
+
+        if (this.esInvisibleAMuggles()) {
+
+            this.energiaMagica++;
+
+            System.out.println("Tu elfo tiene " + this.getEdad() + " años. Su energía mágica es de  " + this.getEnergiaMagica() + " puntos.");
+
+        } else if (this.esInvisible()) {
+
+            this.energiaMagica += 3;
+
+            System.out.println("Tu elfo tiene " + this.getEdad() + " años. Su energía mágica es de  " + this.getEnergiaMagica() + " puntos.");
+
+        } else {
+
+            System.out.println("Tu elfo es demasiado joven para poder aumentar su energía mágica.");
+        }
+
+    }
+
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
+
+        
 
         this.disminuirEnergiaMagica(energiaMagica, hechizo);
 
@@ -103,5 +133,6 @@ public class Elfo extends Criatura implements IHaceMagia {
         this.setEnergiaMagica(energiaMagicaResultante);
 
     }
+
 
 }
