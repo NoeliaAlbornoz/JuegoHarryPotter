@@ -44,14 +44,16 @@ public abstract class Personaje {
 
     public void disminuirSalud(Hechizo hechizo, Artefacto artefacto) {
 
-        int saludRestante = this.getSalud() - (hechizo.getNivelDanio() + this.utilizarDanioDeArtefacto(hechizo, artefacto));
+        int saludRestante = this.getSalud()
+                - (hechizo.getNivelDanio() + this.utilizarDanioDeArtefacto(hechizo, artefacto));
 
         this.setSalud(saludRestante);
 
     }
 
     public int tirarDado() {
-        System.out.print("Dado mágico: ingrese enter para arrojar el dado ");
+
+        System.out.print("Dado mágico: ingrese enter para arrojar el dado.");
 
         Random rand = new Random(System.nanoTime());
 
@@ -61,12 +63,12 @@ public abstract class Personaje {
 
     }
 
-    public int utilizarDanioDeArtefacto(Hechizo hechizo, Artefacto artefacto){
+    public int utilizarDanioDeArtefacto(Hechizo hechizo, Artefacto artefacto) {
         return (int) (hechizo.getNivelDanio() * artefacto.getAmplificadorDeDanio());
-        
+
     }
 
-    public int utilizarCuracionDeArtefacto(Hechizo hechizo, Artefacto artefacto){
+    public int utilizarCuracionDeArtefacto(Hechizo hechizo, Artefacto artefacto) {
         return (int) (hechizo.getNivelCuracion() * artefacto.getAmplificadorDeCuracion());
     }
 
