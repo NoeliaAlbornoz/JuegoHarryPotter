@@ -7,7 +7,7 @@ public class TrenExpresoHowards extends Transporte implements IEsMagico{
     @Override
     public boolean esInvisibleAMuggles() {
 
-        return getVelocidad() <= 3;
+        return getVelocidad() <= 5;
     }
 
     @Override
