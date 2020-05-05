@@ -368,13 +368,30 @@ public class JuegoHP {
         elfo.setNombre("Winky");
         elfo.setEnergiaMagica(145);
         elfo.setSalud(92);
-        elfo.setEdad(12);
+        elfo.setEdad(30);
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
         artefacto = new Artefacto("Varita de Sauco");
         artefacto.setAmplificadorDeDanio(0.3);
+        artefacto.setAmplificadorDeCuracion(0.5);
+        artefacto.setPoder(poder);
+        elfo.setArtefacto(artefacto);
+
+        this.personajes.add(elfo);
+
+        elfo = new Elfo();
+        elfo.setNombre("Dobby");
+        elfo.setEnergiaMagica(145);
+        elfo.setSalud(92);
+        elfo.setEdad(15);
+
+        poder = new Poder("Invisibilidad");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+
+        artefacto = new Artefacto("Horrocrux");
+        artefacto.setAmplificadorDeDanio(0.5);
         artefacto.setAmplificadorDeCuracion(0.5);
         artefacto.setPoder(poder);
         elfo.setArtefacto(artefacto);
@@ -522,6 +539,7 @@ public class JuegoHP {
     public void iniciarAprendizajeDeHechizos(Personaje jugador) {
 
         Hechizo hechizo = this.seleccionarHechizo();
+        bannerBonus();
         this.aprenderSegunPersonaje(jugador, hechizo);
     }
 
@@ -645,6 +663,11 @@ public class JuegoHP {
 
         System.out.println("\nJUGADOR 2 " + personaje.getNombre() + "\n");
 
+    }
+
+    public void bannerBonus(){
+
+        System.out.println("\nBONUS\n");
     }
 
 }
