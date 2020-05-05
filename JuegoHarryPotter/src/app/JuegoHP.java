@@ -40,12 +40,16 @@ public class JuegoHP {
 
         Personaje jugador1 = this.seleccionarPersonaje();
 
+        this.mostrarPoderInicial(jugador1);
+
         System.out.println(
                 "------------------------------------------------------------------------------------------------------------------------\n");
 
         System.out.println("JUGADOR 2 ");
 
         Personaje jugador2 = this.seleccionarPersonaje();
+
+        this.mostrarPoderInicial(jugador2);
 
         this.arrancarTren(jugador1, tren, jugador2);
 
@@ -159,7 +163,7 @@ public class JuegoHP {
 
         Poder poderInicial = new Poder("Parse Tongue");
         poderInicial.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         Escoba escoba = new Escoba();
         escoba.setNombre("Nimbus 2000");
@@ -186,7 +190,7 @@ public class JuegoHP {
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -213,7 +217,7 @@ public class JuegoHP {
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -240,7 +244,7 @@ public class JuegoHP {
 
         poderInicial = new Poder("Invisibilidad");
         poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -267,7 +271,7 @@ public class JuegoHP {
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -294,7 +298,7 @@ public class JuegoHP {
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -321,7 +325,7 @@ public class JuegoHP {
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2000 ");
@@ -338,15 +342,15 @@ public class JuegoHP {
         wizard.setArtefacto(artefacto);
 
         wizard = new Wizard();
-        wizard.setNombre("Profesora Sprout");
-        wizard.setEnergiaMagica(140);
-        wizard.setSalud(95);
-        wizard.setEdad(60);
+        wizard.setNombre("Cedric Diggory");
+        wizard.setEnergiaMagica(130);
+        wizard.setSalud(90);
+        wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
-        wizard.setPoder(poderInicial);
+        wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
         escoba.setNombre(" Nimbus 2001 ");
@@ -370,6 +374,10 @@ public class JuegoHP {
         elfo.setSalud(92);
         elfo.setEdad(30);
 
+        poderInicial = new Poder("Invisibilidad");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        elfo.setPoderInicial(poderInicial);
+
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
@@ -386,6 +394,10 @@ public class JuegoHP {
         elfo.setEnergiaMagica(145);
         elfo.setSalud(92);
         elfo.setEdad(15);
+
+        poderInicial = new Poder("Invisibilidad");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        elfo.setPoderInicial(poderInicial);
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
@@ -665,9 +677,24 @@ public class JuegoHP {
 
     }
 
-    public void bannerBonus(){
+    public void bannerBonus() {
 
         System.out.println("\nBONUS\n");
+    }
+
+    private void mostrarPoderInicial(Personaje jugador) {
+
+        if (jugador instanceof Wizard) {
+            Wizard wizi = (Wizard)jugador;
+            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
+                    + wizi.getPoderInicial().getNombre() + ": " + wizi.getPoderInicial().getDescripcion() + "\n");
+
+        } else if (jugador instanceof Elfo) {
+            Elfo elfi = (Elfo)jugador;
+            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
+                    + elfi.getPoderInicial().getNombre() + ": " + elfi.getPoderInicial().getDescripcion() + "\n");
+           
+        }
     }
 
 }
