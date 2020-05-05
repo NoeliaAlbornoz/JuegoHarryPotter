@@ -34,14 +34,15 @@ public class JuegoHP {
 
     public void start() {
 
-        bannerJugador1();
+        System.out.println("JUGADOR 1 ");
 
         Personaje jugador1 = this.seleccionarPersonaje();
 
         System.out.println(
                 "------------------------------------------------------------------------------------------------------------------------\n");
 
-        bannerJugador2();
+
+        System.out.println( "JUGADOR 2 ");
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
@@ -56,7 +57,7 @@ public class JuegoHP {
                 System.out.println(
                         "------------------------------------------------------------------------------------------------------------------------\n");
 
-                bannerJugador1();
+                bannerJugador1(jugador1);
 
                 System.out.println(jugador1.getNombre());
 
@@ -69,7 +70,7 @@ public class JuegoHP {
                 System.out.println(
                         "------------------------------------------------------------------------------------------------------------------------\n");
 
-                bannerJugador2();
+                bannerJugador2(jugador2);
 
                 System.out.println(jugador2.getNombre());
 
@@ -91,7 +92,7 @@ public class JuegoHP {
                 System.out.println(
                         "-------------------------------------------------------------------------------------------------------------------\n");
 
-                bannerJugador1();
+                bannerJugador1(jugador1);
 
                 this.mostrarPropiedadesJugador(jugador1, jugador2);
 
@@ -104,7 +105,7 @@ public class JuegoHP {
                 System.out.println(
                         "-------------------------------------------------------------------------------------------------------------------\n");
 
-                bannerJugador2();
+                bannerJugador2(jugador2);
 
                 this.mostrarPropiedadesJugador(jugador1, jugador2);
 
@@ -380,7 +381,7 @@ public class JuegoHP {
         artefacto.setAmplificadorDeCuracion(0.5);
         artefacto.setPoder(poder);
         elfo.setArtefacto(artefacto);
-        
+
         this.personajes.add(elfo);
 
     }
@@ -388,12 +389,13 @@ public class JuegoHP {
     public void inicializarHechizos() {
 
         WingwardumLeviosa wingwardumLeviosa = new WingwardumLeviosa("Wingwardum Leviosa");
-        wingwardumLeviosa.setDescripcion("Wingwardum Leviosa es un hechizo que permite levitar objetos o pequeños seres vivos.");
+        wingwardumLeviosa
+                .setDescripcion("Wingwardum Leviosa es un hechizo que permite levitar objetos o pequeños seres vivos.");
         wingwardumLeviosa.setEnergiaMagica(2);
         wingwardumLeviosa.setNivelDanio(5);
         wingwardumLeviosa.setNivelCuracion(2);
         wingwardumLeviosa.setEsOscuro(false);
-    
+
         this.hechizos.add(wingwardumLeviosa);
 
         SectumSempra sectumsempra = new SectumSempra("Sectumsempra");
@@ -406,7 +408,8 @@ public class JuegoHP {
         this.hechizos.add(sectumsempra);
 
         VulneraSanentur vulnerasanentur = new VulneraSanentur("Vulnera Sanentur");
-        vulnerasanentur.setDescripcion("Hechizo sanador que corresponde al contrahechizo de la maldición sectumsempra.");
+        vulnerasanentur
+                .setDescripcion("Hechizo sanador que corresponde al contrahechizo de la maldición sectumsempra.");
         vulnerasanentur.setEnergiaMagica(4);
         vulnerasanentur.setNivelDanio(2);
         vulnerasanentur.setNivelCuracion(4);
@@ -414,7 +417,7 @@ public class JuegoHP {
 
         this.hechizos.add(vulnerasanentur);
 
-        Cavelnimicum  cavelnimicum = new Cavelnimicum("Cavelnimicum");
+        Cavelnimicum cavelnimicum = new Cavelnimicum("Cavelnimicum");
         cavelnimicum.setDescripcion("Hechizo de protección, mantiene alejado a los enemigos.");
         cavelnimicum.setEnergiaMagica(3);
         cavelnimicum.setNivelDanio(4);
@@ -458,23 +461,33 @@ public class JuegoHP {
 
     }
 
-    public void aprenderSegunPersonaje(Personaje jugador1, Hechizo h) {
+    public void aprenderSegunPersonaje(Personaje jugadorAprendiz, Hechizo h) {
 
-        if (jugador1 instanceof Wizard) {
-            Wizard wizard = (Wizard) jugador1;
+        if (jugadorAprendiz instanceof Wizard) {
+            Wizard wizard = (Wizard) jugadorAprendiz;
             wizard.aprender(h);
 
-        } else if (jugador1 instanceof Elfo) {
+        } else if (jugadorAprendiz instanceof Elfo) {
+            Elfo elfo = (Elfo) jugadorAprendiz;
+            elfo.aprender(h);
 
         }
 
     }
 
-    public Hechizo seleccionarHechizoParaPelear(Personaje personaje) {
+    public void seleccionarHechizoParaPelear(Personaje personaje) {
 
+        if (personaje instanceof Wizard) {
+            this.seleccionarHechizoWizard(personaje);
+        } else if (personaje instanceof Elfo) {
+            this.seleccionarHechizoElfo(personaje);
+        }
+
+    }
+
+    public Hechizo seleccionarHechizoWizard(Personaje personaje) {
         int i = 0;
         Wizard wizi = null;
-
         if (personaje instanceof Wizard) {
             wizi = (Wizard) personaje;
             for (Hechizo hechizo : wizi.getHechizos()) {
@@ -482,7 +495,6 @@ public class JuegoHP {
             }
 
         }
-
         System.out.println();
 
         i = Teclado.nextInt();
@@ -491,32 +503,49 @@ public class JuegoHP {
 
     }
 
-    public void atacarSegunPersonaje(Personaje jugador1, Hechizo hechizo, Personaje jugador2) {
+    public Hechizo seleccionarHechizoElfo(Personaje personaje) {
 
-        if (jugador1 instanceof Wizard) {
-            Wizard wizard = (Wizard) jugador1;
-            wizard.atacar(jugador2, hechizo);
+        int i = 0;
+        Elfo elfi = null;
+        if (personaje instanceof Elfo) {
+            elfi = (Elfo) personaje;
+            for (Hechizo hechizo : elfi.getHechizos()) {
+                System.out.print(" " + (++i) + "-" + hechizo.getNombre());
+
+            }
         }
+        System.out.println();
+
+        i = Teclado.nextInt();
+
+        return elfi.getHechizos().get(--i);
 
     }
 
-    
     public void iniciarAprendizajeDeHechizos(Personaje jugador) {
 
         Hechizo hechizo = this.seleccionarHechizo();
-
         this.aprenderSegunPersonaje(jugador, hechizo);
-
     }
 
     public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado) {
 
-        Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
+        if (jugadorAtacante instanceof Wizard) {
+            Wizard wizard = (Wizard) jugadorAtacante;
+            Hechizo hechizo = this.seleccionarHechizoWizard(jugadorAtacante);
+            wizard.atacar(jugadorAtacado, hechizo);
+        }
 
-        this.atacarSegunPersonaje(jugadorAtacante, hechizo, jugadorAtacado);
+        else if (jugadorAtacante instanceof Elfo) {
+            Elfo elfo = (Elfo) jugadorAtacante;
+            Hechizo hechizo = this.seleccionarHechizoElfo(jugadorAtacante);
+            elfo.atacar(jugadorAtacado, hechizo);
+
+        }
+
     }
 
-    public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren){
+    public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren) {
 
         int dado = jugador.tirarDado();
 
@@ -552,7 +581,7 @@ public class JuegoHP {
 
     }
 
-    public void arrancarTren(Personaje jugador1, TrenExpresoHowards tren, Personaje jugador2){
+    public void arrancarTren(Personaje jugador1, TrenExpresoHowards tren, Personaje jugador2) {
 
         tren = new TrenExpresoHowards();
 
@@ -565,14 +594,14 @@ public class JuegoHP {
 
         System.out.print(tren.getNombre() + tren.getDescripcion());
 
-        bannerJugador1();
+        bannerJugador1(jugador1);
 
         this.iniciarMiniJuego(jugador1, tren);
 
-        bannerJugador2();
+        bannerJugador2(jugador2);
 
         this.iniciarMiniJuego(jugador2, tren);
-        
+
     }
 
     public static void bannerAprenderHechizos() {
@@ -589,15 +618,15 @@ public class JuegoHP {
 
     }
 
-    public void bannerJugador1() {
+    public void bannerJugador1(Personaje personaje) {
 
-        System.out.println("JUGADOR 1 \n");
+        System.out.println("\nJUGADOR 1 " + personaje.getNombre()+ "\n");
 
     }
 
-    public void bannerJugador2() {
+    public void bannerJugador2(Personaje personaje) {
 
-        System.out.println("\nJUGADOR 2 \n");
+        System.out.println("\nJUGADOR 2 " + personaje.getNombre()+ "\n");
 
     }
 
