@@ -183,7 +183,7 @@ public class JuegoHP {
         wizard.setNombre("Ron Weasley");
         wizard.setEnergiaMagica(130);
         wizard.setSalud(90);
-        wizard.setEdad(17);
+        wizard.setEdad(18);
         wizard.setMagoOscuro(false);
 
         poderInicial = new Poder("Metamorfosis");
@@ -265,7 +265,7 @@ public class JuegoHP {
         wizard.setEnergiaMagica(130);
         wizard.setSalud(90);
         wizard.setEdad(17);
-        wizard.setMagoOscuro(true);
+        wizard.setMagoOscuro(false);
 
         poderInicial = new Poder("Metamorfosis");
         poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
@@ -291,7 +291,7 @@ public class JuegoHP {
         wizard.setNombre("Luna Lovegood");
         wizard.setEnergiaMagica(130);
         wizard.setSalud(90);
-        wizard.setEdad(17);
+        wizard.setEdad(16);
         wizard.setMagoOscuro(false);
 
         poderInicial = new Poder("Metamorfosis");
