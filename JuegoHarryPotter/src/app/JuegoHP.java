@@ -679,21 +679,21 @@ public class JuegoHP {
 
     public void bannerBonus() {
 
-        System.out.println("\nBONUS\n");
+        System.out.println("\n***BONUS***\n");
     }
 
     private void mostrarPoderInicial(Personaje jugador) {
 
         if (jugador instanceof Wizard) {
-            Wizard wizi = (Wizard)jugador;
+            Wizard wizi = (Wizard) jugador;
             System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
                     + wizi.getPoderInicial().getNombre() + ": " + wizi.getPoderInicial().getDescripcion() + "\n");
 
         } else if (jugador instanceof Elfo) {
-            Elfo elfi = (Elfo)jugador;
+            Elfo elfi = (Elfo) jugador;
             System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
                     + elfi.getPoderInicial().getNombre() + ": " + elfi.getPoderInicial().getDescripcion() + "\n");
-           
+
         }
     }
 
