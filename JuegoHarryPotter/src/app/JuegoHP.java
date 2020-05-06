@@ -23,14 +23,12 @@ public class JuegoHP {
     public List<Personaje> personajes = new ArrayList<>();
     public List<Hechizo> hechizos = new ArrayList<>();
     public TrenExpresoHowards tren;
+    public Escoba escoba;
 
     public void inicializarJuego() {
 
         this.inicializarPersonajes();
-
         this.inicializarHechizos();
-
-        this.inicializarTransporte();
 
     }
 
@@ -101,6 +99,8 @@ public class JuegoHP {
 
                 this.iniciarAtaqueConHechizos(jugador1, jugador2);
 
+                this.comprarEscoba(escoba, jugador1, jugada);
+
             } else {
 
                 System.out.println(
@@ -114,6 +114,7 @@ public class JuegoHP {
 
                 this.iniciarAtaqueConHechizos(jugador2, jugador1);
 
+                this.comprarEscoba(escoba, jugador2, jugada);
             }
 
             jugada++;
@@ -605,20 +606,54 @@ public class JuegoHP {
 
     }
 
-    public void inicializarTransporte() {
-        Escoba escoba = new Escoba();
+    public void comprarEscoba(Escoba escoba, Personaje jugador, int jugada) {
+
+        int menosSalud = 0;
+        int masEnergiaMagica = 0;
+
+        escoba = new Escoba();
         escoba.setNombre("Saeta de Fuego");
         escoba.setDescripcion(
                 "Es una escoba de nivel internacional, fue lanzada en 1993 y con el tiempo, acabó siendo utilizada en los equipos internacionales búlgaro e irlandés de quidditch.");
         escoba.setVelocidad(150);
         escoba.setAmplificadorDeSalud(3);
 
-        escoba = new Escoba();
-        escoba.setNombre("Barredora 11");
-        escoba.setDescripcion(
-                "Producida por la Compañía de Escobas Barredora durante 1995. Se hizo de roble español, con barniz anti-conjuros y una función de control integrado de la vibración.");
-        escoba.setVelocidad(150);
-        escoba.setAmplificadorDeSalud(3);
+        if (jugador instanceof Wizard) {
+
+            Wizard wizi = (Wizard) jugador;
+
+            if (jugada == 3) {
+                System.out.print("Aca adentro va la descripcion");
+                int opcion = Teclado.nextInt();
+
+                if (opcion == 1) {
+
+                    if (escoba.esInvisible()) {
+                        menosSalud = wizi.getSalud() - 2;
+                        wizi.setSalud(menosSalud);
+
+                        masEnergiaMagica = wizi.getEnergiaMagica() + 2;
+                        wizi.setEnergiaMagica(masEnergiaMagica);
+
+                        System.out.print(" Has comprado la escoba " + escoba.getNombre()
+                                + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica()
+                                + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
+
+                    } else if (escoba.esInvisibleAMuggles()) {
+                        menosSalud = wizi.getSalud() - 1;
+                        wizi.setSalud(menosSalud);
+                        masEnergiaMagica = wizi.getEnergiaMagica() + 1;
+                        wizi.setEnergiaMagica(masEnergiaMagica);
+
+                        System.out.print(" Has comprado la escoba " + escoba.getNombre()
+                                + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica()
+                                + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
+
+                    }
+                }
+
+            }
+        }
 
     }
 
