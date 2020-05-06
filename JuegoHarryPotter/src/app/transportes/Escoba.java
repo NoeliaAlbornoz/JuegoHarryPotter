@@ -6,14 +6,12 @@ public class Escoba extends Transporte implements IEsMagico{
 
     @Override
     public boolean esInvisibleAMuggles() {
-        // TODO Auto-generated method stub
-        return false;
+        return getVelocidad() < 160;
     }
 
     @Override
     public boolean esInvisible() {
-        // TODO Auto-generated method stub
-        return false;
+        return getVelocidad() >= 160;
     }
 
 }
