@@ -582,7 +582,7 @@ public class JuegoHP {
 
         if (tren.esInvisibleAMuggles()) {
 
-            int masSalud = tren.getAmplificadorDeSalud() + 1;
+            int masSalud = tren.getAmplificadorDeSalud(); 
 
             int saludIncrementada = jugador.getSalud() + masSalud;
 
@@ -618,7 +618,7 @@ public class JuegoHP {
         tren.setNombre("\nTren Expreso Howards. ");
 
         tren.setDescripcion(
-                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 punto de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.\n");
+                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 puntos de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.\n");
 
         tren.setAmplificadorDeSalud(1);
 
