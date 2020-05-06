@@ -15,6 +15,12 @@ public class Elfo extends Criatura implements IHaceMagia {
     private List<Hechizo> hechizos = new ArrayList<>();
     private Poder poderInicial;
 
+    public Elfo(String nombre, int salud, int energiaMagica) {
+        super(nombre, salud);
+        this.energiaMagica = energiaMagica;
+        
+    }
+
     public int getEnergiaMagica() {
         return energiaMagica;
     }

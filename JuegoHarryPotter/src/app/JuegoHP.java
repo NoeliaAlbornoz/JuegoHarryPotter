@@ -154,10 +154,7 @@ public class JuegoHP {
 
     public void inicializarPersonajes() {
 
-        Wizard wizard = new Wizard();
-        wizard.setNombre("Harry Potter");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        Wizard wizard = new Wizard("Harry Potter", 90, 130);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -181,10 +178,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard();
-        wizard.setNombre("Ron Weasley");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Ron Weasley", 90, 130);
         wizard.setEdad(18);
         wizard.setMagoOscuro(false);
 
@@ -208,10 +202,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard();
-        wizard.setNombre("Hermione Granger");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Hermione Granger", 90, 130);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -235,10 +226,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard();
-        wizard.setNombre("Ginny Weasley");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Ginny Weasley", 90, 130);
         wizard.setEdad(16);
         wizard.setMagoOscuro(false);
 
@@ -262,10 +250,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard();
-        wizard.setNombre("Draco Malfoy");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Draco Malfoy", 90, 130);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -289,10 +274,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard();
-        wizard.setNombre("Luna Lovegood");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Luna Lovegood", 90, 130);
         wizard.setEdad(16);
         wizard.setMagoOscuro(false);
 
@@ -316,10 +298,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard();
-        wizard.setNombre("Neville Longbottom");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Neville Longbottom", 90, 130);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -341,10 +320,7 @@ public class JuegoHP {
         artefacto.setPoder(poder);
         wizard.setArtefacto(artefacto);
 
-        wizard = new Wizard();
-        wizard.setNombre("Cedric Diggory");
-        wizard.setEnergiaMagica(130);
-        wizard.setSalud(90);
+        wizard = new Wizard("Cedric Diggory", 90, 130);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -368,10 +344,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        Elfo elfo = new Elfo();
-        elfo.setNombre("Winky");
-        elfo.setEnergiaMagica(145);
-        elfo.setSalud(92);
+        Elfo elfo = new Elfo("Winky", 92, 145);
         elfo.setEdad(30);
 
         poderInicial = new Poder("Invisibilidad");
@@ -389,10 +362,7 @@ public class JuegoHP {
 
         this.personajes.add(elfo);
 
-        elfo = new Elfo();
-        elfo.setNombre("Dobby");
-        elfo.setEnergiaMagica(145);
-        elfo.setSalud(92);
+        elfo = new Elfo("Dobby", 92, 145);
         elfo.setEdad(15);
 
         poderInicial = new Poder("Invisibilidad");

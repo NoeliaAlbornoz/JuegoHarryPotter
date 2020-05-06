@@ -11,6 +11,11 @@ public abstract class Personaje {
     private int salud;
     private int edad;
 
+    public Personaje(String nombre, int salud) {
+        this.nombre = nombre;
+        this.salud = salud;
+    }
+
     public String getNombre() {
         return nombre;
     }
