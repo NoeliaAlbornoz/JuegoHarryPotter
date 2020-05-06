@@ -88,20 +88,11 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
 
-        this.disminuirEnergiaMagica(energiaMagica, hechizo);
+        hechizo.disminuirEnergiaMagica(energiaMagica);
 
-        personaje.disminuirSalud(hechizo, artefacto);
-
-        this.aumentarSaludConCuracion(hechizo, artefacto);
+        hechizo.disminuirSalud(personaje, artefacto);
 
         this.atacar(personaje, hechizo.getNombre());
-
-        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
-                + this.utilizarDanioDeArtefacto(hechizo, artefacto) + " puntos. ");
-
-        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera una curación adicional de "
-                + this.utilizarCuracionDeArtefacto(hechizo, artefacto) + " puntos. ");
-
     }
 
     @Override
@@ -110,15 +101,6 @@ public class Elfo extends Criatura implements IHaceMagia {
         System.out.println("Has atacado con " + hechizo);
 
         System.out.println("Te quedan " + this.energiaMagica + " puntos de energía mágica.");
-
-    }
-
-    public void aumentarSaludConCuracion(Hechizo hechizo, Artefacto artefacto) {
-
-        int saludAumentada = this.getSalud() + hechizo.getNivelCuracion()
-                + this.utilizarCuracionDeArtefacto(hechizo, artefacto);
-
-        this.setSalud(saludAumentada);
 
     }
 

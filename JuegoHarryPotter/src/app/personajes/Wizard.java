@@ -125,7 +125,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
             case "Sectumsempra":
 
-            System.out.println(
+                System.out.println(
                         "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
 
                 System.out.print("Resolver: " + numero1 + "-" + numero2 + "= ");
@@ -153,7 +153,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
             case "Vulnera Sanentur":
 
-            System.out.println(
+                System.out.println(
                         "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
 
                 System.out.print("Resolver: " + numero1 + " * " + numero2 + "= ");
@@ -181,9 +181,9 @@ public class Wizard extends Persona implements IHaceMagia {
 
             case "Cavelnimicum":
 
-            int numero3 = rand.nextInt(100);
+                int numero3 = rand.nextInt(100);
 
-            System.out.println(
+                System.out.println(
                         "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
 
                 System.out.print("Resolver: " + numero1 + " * " + numero2 + " + " + numero3 + "= ");
@@ -207,7 +207,6 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 }
 
-
                 break;
 
         }
@@ -219,28 +218,11 @@ public class Wizard extends Persona implements IHaceMagia {
 
         this.confirmarHechizoOscuro(hechizo);
 
-        this.disminuirEnergiaMagica(energiaMagica, hechizo);
+        hechizo.disminuirEnergiaMagica(energiaMagica);
 
-        personaje.disminuirSalud(hechizo, artefacto);
-
-        this.aumentarSaludConCuracion(hechizo, artefacto);
+        hechizo.disminuirSalud(personaje, artefacto);
 
         this.atacar(personaje, hechizo.getNombre());
-
-        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
-                + this.utilizarDanioDeArtefacto(hechizo, artefacto) + " puntos. ");
-
-        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera una curación adicional de "
-                + this.utilizarCuracionDeArtefacto(hechizo, artefacto) + " puntos. ");
-
-    }
-
-    public void aumentarSaludConCuracion(Hechizo hechizo, Artefacto artefacto) {
-
-        int saludAumentada = this.getSalud() + hechizo.getNivelCuracion()
-                + this.utilizarCuracionDeArtefacto(hechizo, artefacto);
-
-        this.setSalud(saludAumentada);
 
     }
 
@@ -271,14 +253,6 @@ public class Wizard extends Persona implements IHaceMagia {
         System.out.println("Has atacado con " + hechizo);
 
         System.out.println("Te quedan " + this.energiaMagica + " puntos de energía mágica.");
-
-    }
-
-    public void disminuirEnergiaMagica(int energiaMagica, Hechizo hechizo) {
-
-        int energiaMagicaResultante = this.energiaMagica - hechizo.getEnergiaMagica();
-
-        this.setEnergiaMagica(energiaMagicaResultante);
 
     }
 
