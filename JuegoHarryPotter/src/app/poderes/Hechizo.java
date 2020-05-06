@@ -1,5 +1,10 @@
 package app.poderes;
 
+import app.artefactos.Artefacto;
+import app.personajes.Elfo;
+import app.personajes.Personaje;
+import app.personajes.Wizard;
+
 public abstract class Hechizo extends Poder {
 
     private boolean esOscuro;
@@ -41,6 +46,59 @@ public abstract class Hechizo extends Poder {
 
     public void setEnergiaMagica(int energiaMgica) {
         this.energiaMagica = energiaMgica;
+    }
+
+    public void disminuirEnergiaMagica(int energiaMagica) {
+
+        int energiaMagicaResultante = this.energiaMagica - this.energiaMagica;
+
+        this.setEnergiaMagica(energiaMagicaResultante);
+
+    }
+
+    public void disminuirSalud(Personaje personaje, Artefacto artefacto) {
+
+        int saludRestante = personaje.getSalud() - (this.nivelDanio + this.activarDanioDeArtefacto(artefacto));
+
+        personaje.setSalud(saludRestante);
+
+        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
+                + this.activarDanioDeArtefacto(artefacto) + " puntos. ");
+
+    }
+
+    public int activarDanioDeArtefacto(Artefacto artefacto) {
+        return (int) (this.nivelDanio * artefacto.getAmplificadorDeDanio());
+
+    }
+
+    public int activarCuracionDeArtefacto(double amplificadorDeCuracion) {
+        return (int) (this.nivelCuracion * amplificadorDeCuracion);
+
+    }
+
+    public void curar(Wizard wizard) {
+
+        int saludAumentada = wizard.getSalud() + this.nivelCuracion
+                + this.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion());
+
+        wizard.setSalud(saludAumentada);
+
+        System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera una curación adicional de "
+                + this.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
+
+    }
+
+    public void curar(Elfo elfo) {
+
+        int saludAumentada = elfo.getSalud() + this.nivelCuracion
+                + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion());
+
+        elfo.setSalud(saludAumentada);
+
+        System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera una curación adicional de "
+                + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
+
     }
 
 }
