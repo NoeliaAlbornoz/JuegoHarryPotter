@@ -1,6 +1,7 @@
 package app.poderes;
 
 import app.artefactos.Artefacto;
+import app.artefactos.Horrocrux;
 import app.personajes.Elfo;
 import app.personajes.Personaje;
 import app.personajes.Wizard;
@@ -58,7 +59,19 @@ public abstract class Hechizo extends Poder {
 
     public void disminuirSalud(Personaje personaje, Artefacto artefacto) {
 
-        int saludRestante = personaje.getSalud() - (this.nivelDanio + this.activarDanioDeArtefacto(artefacto));
+        int saludDisminuida = 1;
+
+        if (artefacto instanceof Horrocrux) { //Refactorizar??
+            saludDisminuida = 0;
+
+        } else {
+
+            System.out.println("\nTu artefacto es una Reliquia de la Muerte. Tu enemigo pierde un punto de salud.\n");
+
+        }
+
+        int saludRestante = personaje.getSalud()
+                - (this.nivelDanio + this.activarDanioDeArtefacto(artefacto) - saludDisminuida);
 
         personaje.setSalud(saludRestante);
 
