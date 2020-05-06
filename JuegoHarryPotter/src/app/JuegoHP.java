@@ -634,8 +634,9 @@ public class JuegoHP {
 
                         masEnergiaMagica = wizi.getEnergiaMagica() + 2;
                         wizi.setEnergiaMagica(masEnergiaMagica);
+                        wizi.setEscoba(escoba);
 
-                        System.out.print(" Has comprado la escoba " + escoba.getNombre()
+                        System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
                                 + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica()
                                 + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
 
@@ -644,8 +645,9 @@ public class JuegoHP {
                         wizi.setSalud(menosSalud);
                         masEnergiaMagica = wizi.getEnergiaMagica() + 1;
                         wizi.setEnergiaMagica(masEnergiaMagica);
+                        wizi.setEscoba(escoba);
 
-                        System.out.print(" Has comprado la escoba " + escoba.getNombre()
+                        System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
                                 + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica()
                                 + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
 
