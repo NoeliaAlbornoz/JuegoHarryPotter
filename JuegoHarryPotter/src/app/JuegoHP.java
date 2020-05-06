@@ -561,13 +561,14 @@ public class JuegoHP {
             Wizard wizard = (Wizard) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoWizard(jugadorAtacante);
             wizard.atacar(jugadorAtacado, hechizo);
+            hechizo.curar(wizard);
         }
 
         else if (jugadorAtacante instanceof Elfo) {
             Elfo elfo = (Elfo) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoElfo(jugadorAtacante);
             elfo.atacar(jugadorAtacado, hechizo);
-
+            hechizo.curar(elfo);
         }
 
     }
@@ -582,7 +583,7 @@ public class JuegoHP {
 
         if (tren.esInvisibleAMuggles()) {
 
-            int masSalud = tren.getAmplificadorDeSalud(); 
+            int masSalud = tren.getAmplificadorDeSalud();
 
             int saludIncrementada = jugador.getSalud() + masSalud;
 
