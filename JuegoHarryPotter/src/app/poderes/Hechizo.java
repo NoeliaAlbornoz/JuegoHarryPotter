@@ -72,7 +72,7 @@ public abstract class Hechizo extends Poder {
 
         int danioTotal = this.nivelDanio + this.activarDanioDeArtefacto(artefacto) - saludDisminuida;
 
-        personaje.decrementarSalud(danioTotal);//recibe efecto del daño
+        personaje.decrementarSalud(danioTotal);
 
         System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
                 + this.activarDanioDeArtefacto(artefacto) + " puntos. ");
@@ -91,10 +91,8 @@ public abstract class Hechizo extends Poder {
 
     public void curar(Wizard wizard) {
 
-        int saludAumentada = wizard.getSalud() + this.nivelCuracion
-                + this.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion());
-
-        wizard.setSalud(saludAumentada);
+        int saludAumentada = this.nivelCuracion + this.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion());
+        wizard.aumentarSalud(saludAumentada);
 
         System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera una curación adicional de "
                 + this.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
@@ -103,10 +101,8 @@ public abstract class Hechizo extends Poder {
 
     public void curar(Elfo elfo) {
 
-        int saludAumentada = elfo.getSalud() + this.nivelCuracion
-                + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion());
-
-        elfo.setSalud(saludAumentada);
+        int saludAumentada = this.nivelCuracion + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion());
+        elfo.aumentarSalud(saludAumentada);
 
         System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera una curación adicional de "
                 + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");

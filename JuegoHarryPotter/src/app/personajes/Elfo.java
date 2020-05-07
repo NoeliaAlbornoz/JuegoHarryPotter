@@ -111,13 +111,13 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         if (this.esInvisibleAMuggles()) {
 
-            this.energiaMagica++;
+            this.incrementarEnergiaMagica(1);
 
             this.mostrarMensajeEdad();
 
         } else if (this.esInvisible()) {
 
-            this.energiaMagica += 3;
+            this.incrementarEnergiaMagica(3);
 
             this.mostrarMensajeEdad();
 

@@ -77,7 +77,6 @@ public class Wizard extends Persona implements IHaceMagia {
 
     @Override
     public void setPoder(Poder poder) {
-        
 
     }
 
@@ -99,8 +98,7 @@ public class Wizard extends Persona implements IHaceMagia {
         int numero1 = rand.nextInt(100);
         int numero2 = rand.nextInt(100);
 
-        System.out.println(
-                        "Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
+        System.out.println("Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
 
         switch (hechizo.getNombre()) {
 
@@ -112,17 +110,15 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 if (resultado == numero1 + numero2) {
 
-                    this.energiaMagica++;
+                    this.incrementarEnergiaMagica(1);
 
                     this.mostrarEnergiaMagica();
 
                 } else {
 
-                    this.energiaMagica--;
+                    this.decrementarEnergiaMagica(1);
 
-                    System.out.println(
-                            "Al profesor Flitwick de Encantamientos no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
-                                    + this.energiaMagica);
+                    this.mostrarMensajeDeMiniJuegos();
 
                 }
 
@@ -136,17 +132,15 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 if (resultado == numero1 - numero2) {
 
-                    this.energiaMagica++;
+                    this.incrementarEnergiaMagica(1);
 
                     this.mostrarEnergiaMagica();
 
                 } else {
 
-                    this.energiaMagica--;
+                    this.decrementarEnergiaMagica(1);
 
-                    System.out.println(
-                            "Al profesor Snape de Defensa contra las Artes Oscuras no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
-                                    + this.energiaMagica);
+                    this.mostrarMensajeDeMiniJuegos();
 
                 }
 
@@ -160,17 +154,15 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 if (resultado == numero1 * numero2) {
 
-                    this.energiaMagica++;
+                    this.incrementarEnergiaMagica(1);
 
                     this.mostrarEnergiaMagica();
 
                 } else {
 
-                    --this.energiaMagica;
+                    this.decrementarEnergiaMagica(1);
 
-                    System.out.println(
-                            "Al profesor Snape de Defensa contra las Artes Oscuras no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
-                                    + this.energiaMagica);
+                    this.mostrarMensajeDeMiniJuegos();
 
                 }
 
@@ -186,18 +178,15 @@ public class Wizard extends Persona implements IHaceMagia {
 
                 if (resultado == numero1 * numero2 + numero3) {
 
-                    this.energiaMagica++;
+                    this.incrementarEnergiaMagica(1);
 
                     this.mostrarEnergiaMagica();
 
                 } else {
 
-                    this.energiaMagica--;
+                    this.decrementarEnergiaMagica(1);
 
-                    System.out.println(
-                            "A la profesora McGonagall de Transformaciones no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
-                                    + this.energiaMagica);
-
+                    this.mostrarMensajeDeMiniJuegos();
                 }
 
                 break;
@@ -206,21 +195,28 @@ public class Wizard extends Persona implements IHaceMagia {
 
     }
 
-    public void mostrarEnergiaMagica(){
+    public void mostrarMensajeDeMiniJuegos() {
+        System.out
+                .println("Al profesor Flitwick no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
+                        + this.energiaMagica);
 
-        System.out.println(
-                            "Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
-                                    + this.energiaMagica);
+    }
+
+    public void mostrarEnergiaMagica() {
+
+        System.out
+                .println("Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
+                        + this.energiaMagica);
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
 
-        if(this.energiaMagica <= 0){
+        if (this.energiaMagica <= 0) {
             return;
         }
-         
+
         this.confirmarHechizoOscuro(hechizo);
 
         hechizo.disminuirEnergiaMagica(energiaMagica);
@@ -269,12 +265,12 @@ public class Wizard extends Persona implements IHaceMagia {
 
         }
         return this.energiaMagica -= decremento;
-        
+
     }
 
     public int incrementarEnergiaMagica(int incremento) {
 
-        if (this.energiaMagica + incremento >= 100) {
+        if (this.energiaMagica + incremento >= 150) {
 
             return 150;
 
