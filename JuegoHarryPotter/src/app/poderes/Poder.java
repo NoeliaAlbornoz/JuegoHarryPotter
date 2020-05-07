@@ -4,6 +4,7 @@ public class Poder {
 
     private String nombre;
     private String descripcion;
+    private int nivelDePoder;
 
     public Poder( String nombre){
         this.nombre = nombre;
@@ -23,6 +24,14 @@ public class Poder {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public int getNivelDePoder() {
+        return nivelDePoder;
+    }
+
+    public void setNivelDePoder(int nivelDePoder) {
+        this.nivelDePoder = nivelDePoder;
     }
 
 }
