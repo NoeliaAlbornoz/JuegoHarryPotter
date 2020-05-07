@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import app.artefactos.Artefacto;
+import app.artefactos.Horrocrux;
 import app.personajes.Elfo;
+import app.personajes.Muggle;
 import app.personajes.Personaje;
 import app.personajes.Wizard;
 import app.poderes.Cavelnimicum;
@@ -22,12 +24,11 @@ public class JuegoHP {
     public static Scanner Teclado = new Scanner(System.in);
     public List<Personaje> personajes = new ArrayList<>();
     public List<Hechizo> hechizos = new ArrayList<>();
-    public TrenExpresoHowards tren;
-    public Escoba escoba;
 
     public void inicializarJuego() {
 
         this.inicializarPersonajes();
+
         this.inicializarHechizos();
 
     }
@@ -40,6 +41,10 @@ public class JuegoHP {
 
         this.mostrarPoderInicial(jugador1);
 
+        this.comprarEscoba(jugador1);
+
+        this.molestarAlMuggle(jugador1);
+
         System.out.println(
                 "------------------------------------------------------------------------------------------------------------------------\n");
 
@@ -49,13 +54,17 @@ public class JuegoHP {
 
         this.mostrarPoderInicial(jugador2);
 
-        this.arrancarTren(jugador1, tren, jugador2);
+        this.comprarEscoba(jugador2);
+
+        this.molestarAlMuggle(jugador2);
+
+        this.arrancarTren(jugador1, jugador2);
 
         int jugada = 1;
 
         while (jugada < 9) {
 
-            if (jugada % 2 != 0) {
+            if (jugada % 2 != 0) { // boolean
 
                 System.out.println(
                         "------------------------------------------------------------------------------------------------------------------------\n");
@@ -99,8 +108,6 @@ public class JuegoHP {
 
                 this.iniciarAtaqueConHechizos(jugador1, jugador2);
 
-                this.comprarEscoba(escoba, jugador1, jugada);
-
             } else {
 
                 System.out.println(
@@ -114,7 +121,6 @@ public class JuegoHP {
 
                 this.iniciarAtaqueConHechizos(jugador2, jugador1);
 
-                this.comprarEscoba(escoba, jugador2, jugada);
             }
 
             jugada++;
@@ -128,8 +134,7 @@ public class JuegoHP {
 
             this.mostrarPropiedadesJugador(jugador1, jugador2);
 
-            System.out.println("\n!!!Felicidades!!! " + jugador1.getNombre()
-                    + " ha ganado la Copa de la Casa con una salud restante de " + jugador1.getSalud() + " puntos!");
+            this.mostrarMensajeGanador(jugador1);
 
         } else {
 
@@ -138,8 +143,7 @@ public class JuegoHP {
 
             this.mostrarPropiedadesJugador(jugador1, jugador2);
 
-            System.out.println("\n!!!Felicidades!!! " + jugador2.getNombre()
-                    + " ha ganado la Copa de la Casa con una salud restante de " + jugador2.getSalud() + " puntos!");
+            this.mostrarMensajeGanador(jugador2);
 
         }
 
@@ -153,9 +157,318 @@ public class JuegoHP {
 
     }
 
+    public void molestarAlMuggle(Personaje jugador) {
+
+        Muggle muggle = new Muggle("Dudley Dursley", 50);
+        muggle.setEdad(17);
+
+        if (jugador.esElfo()) {
+
+            Elfo elfi = (Elfo) jugador;
+
+            int saludMuggleRestante = muggle.getSalud() - 2;
+            muggle.setSalud(saludMuggleRestante);
+
+            int saludElfoObtenida = elfi.getSalud() + 2;
+            elfi.setSalud(saludElfoObtenida);
+
+            System.out.println(elfi.getNombre() + " es demasiado travieso y ha molestado con un hechizo a "
+                    + muggle.getNombre() + " a quien le roba 2 puntos de salud.");
+            System.out.println("Ahora tu salud es " + elfi.getSalud());
+
+        }
+
+    }
+
+    public Personaje seleccionarPersonaje() {
+
+        int i = 0;
+
+        System.out.print("Elegir personaje: ");
+
+        for (Personaje per : this.personajes) {
+            System.out.print(" " + (++i) + "-" + per.getNombre());
+        }
+
+        System.out.println();
+
+        i = Teclado.nextInt();
+
+        return this.personajes.get(--i);
+
+    }
+
+    public Hechizo seleccionarHechizo() {
+
+        int i = 0;
+
+        for (Hechizo hechizo : this.hechizos) {
+            System.out.print(" " + (++i) + "-" + hechizo.getNombre());
+        }
+
+        System.out.println();
+
+        i = Teclado.nextInt();
+
+        return this.hechizos.get(--i);
+
+    }
+
+    public void aprenderSegunPersonaje(Personaje jugadorAprendiz, Hechizo h) {
+
+        if (jugadorAprendiz instanceof Wizard) {
+            Wizard wizard = (Wizard) jugadorAprendiz;
+            wizard.aprender(h);
+
+        } else if (jugadorAprendiz instanceof Elfo) {
+            Elfo elfo = (Elfo) jugadorAprendiz;
+            elfo.aprender(h);
+
+        }
+
+    }
+
+    public void seleccionarHechizoParaPelear(Personaje personaje) {
+
+        if (personaje instanceof Wizard) {
+            this.seleccionarHechizoWizard(personaje);
+        } else if (personaje instanceof Elfo) {
+            this.seleccionarHechizoElfo(personaje);
+        }
+    }
+
+    public Hechizo seleccionarHechizoWizard(Personaje personaje) {
+        int i = 0;
+        Wizard wizi = null;
+        if (personaje instanceof Wizard) {
+            wizi = (Wizard) personaje;
+            for (Hechizo hechizo : wizi.getHechizos()) {
+                System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
+                        + "\tCuración " + hechizo.getNivelCuracion());
+            }
+
+        }
+        System.out.println();
+
+        i = Teclado.nextInt();
+
+        return wizi.getHechizos().get(--i);
+
+    }
+
+    public Hechizo seleccionarHechizoElfo(Personaje personaje) {
+
+        int i = 0;
+        Elfo elfi = null;
+        if (personaje instanceof Elfo) {
+            elfi = (Elfo) personaje;
+            for (Hechizo hechizo : elfi.getHechizos()) {
+                System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
+                        + "\tCuración " + hechizo.getNivelCuracion());
+
+            }
+        }
+        System.out.println();
+
+        i = Teclado.nextInt();
+
+        return elfi.getHechizos().get(--i);
+
+    }
+
+    public void iniciarAprendizajeDeHechizos(Personaje jugador) {
+
+        Hechizo hechizo = this.seleccionarHechizo();
+        bannerBonus();
+        this.aprenderSegunPersonaje(jugador, hechizo);
+    }
+
+    public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado) {
+
+        if (jugadorAtacante instanceof Wizard) {
+            Wizard wizard = (Wizard) jugadorAtacante;
+            Hechizo hechizo = this.seleccionarHechizoWizard(jugadorAtacante);
+            wizard.atacar(jugadorAtacado, hechizo);
+            hechizo.curar(wizard);
+        }
+
+        else if (jugadorAtacante instanceof Elfo) {
+            Elfo elfo = (Elfo) jugadorAtacante;
+            Hechizo hechizo = this.seleccionarHechizoElfo(jugadorAtacante);
+            elfo.atacar(jugadorAtacado, hechizo);
+            hechizo.curar(elfo);
+        }
+
+    }
+
+    public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren) {
+
+        int dado = jugador.tirarDado();
+
+        System.out.print("Has sacado un " + dado);
+
+        tren.setVelocidad(dado);
+
+        if (tren.esInvisibleAMuggles()) {
+
+            int saludIncrementada = jugador.getSalud() + tren.getAmplificadorDeSalud();
+
+            jugador.setSalud(saludIncrementada);
+
+            System.out.print(", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
+                    + " puntos. \n");
+
+        } else if (tren.esInvisible()) {
+
+            int saludIncrementada = jugador.getSalud() + tren.getAmplificadorDeSalud() + 1;
+
+            jugador.setSalud(saludIncrementada);
+
+            System.out.print(". Gran trabajo " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
+                    + " puntos. \n");
+
+        } else {
+
+            System.out.print(", mala suerte " + jugador.getNombre() + " tu salud aún es de " + jugador.getSalud()
+                    + " puntos. \n ");
+
+        }
+
+    }
+
+    public void arrancarTren(Personaje jugador1, Personaje jugador2) {
+
+        TrenExpresoHowards tren = new TrenExpresoHowards();
+
+        tren.setNombre("Tren Expreso Howards.");
+
+        tren.setDescripcion(
+                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 puntos de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.");
+
+        tren.setAmplificadorDeSalud(1);
+
+        System.out.print(tren.getNombre() + tren.getDescripcion());
+
+        bannerJugador1(jugador1);
+
+        this.iniciarMiniJuego(jugador1, tren);
+
+        bannerJugador2(jugador2);
+
+        this.iniciarMiniJuego(jugador2, tren);
+
+    }
+
+    public void comprarEscoba(Personaje jugador) {
+
+        int menosSalud = 0;
+        int masEnergiaMagica = 0;
+
+        Escoba escoba = new Escoba();
+        escoba.setNombre("Saeta de Fuego");
+        escoba.setDescripcion(
+                "Escoba de nivel internacional, fue lanzada en 1993 y con el tiempo, acabó siendo utilizada en los equipos internacionales búlgaro e irlandés de quidditch.");
+        escoba.setVelocidad(150);
+        escoba.setAmplificadorDeSalud(3);
+
+        if (jugador instanceof Wizard) {
+            Wizard wizi = (Wizard) jugador;
+
+            System.out.println("¡Bienvenido al Callejón Diagon! ¿Desea comprar una escoba nueva? 1)Sí 2)No");
+            int opcion = Teclado.nextInt();
+
+            if (opcion == 1) {
+
+                if (escoba.esInvisible()) {
+
+                    wizi.decrementarSalud(2);
+
+                    wizi.incrementarEnergiaMagica(2);
+
+                    masEnergiaMagica = wizi.getEnergiaMagica() + 2;
+                    wizi.setEnergiaMagica(masEnergiaMagica);
+                    wizi.setEscoba(escoba);
+
+                    System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
+                            + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica() + " puntos y tu salud es de "
+                            + wizi.getSalud() + " puntos. ");
+
+                } else if (escoba.esInvisibleAMuggles()) {
+                    menosSalud = wizi.getSalud() - 1;
+                    wizi.setSalud(menosSalud);
+                    masEnergiaMagica = wizi.getEnergiaMagica() + 1;
+                    wizi.setEnergiaMagica(masEnergiaMagica);
+                    wizi.setEscoba(escoba);
+
+                    System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
+                            + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica() + " puntos y tu salud es de "
+                            + wizi.getSalud() + " puntos. ");
+
+                }
+            }
+
+        }
+
+    }
+
+    private void mostrarPoderInicial(Personaje jugador) {
+
+        if (jugador instanceof Wizard) {
+            Wizard wizi = (Wizard) jugador;
+
+            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
+                    + wizi.getPoderInicial().getNombre() + ": " + wizi.getPoderInicial().getDescripcion() + "\n");
+
+        } else if (jugador instanceof Elfo) {
+            Elfo elfi = (Elfo) jugador;
+            
+            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
+                    + elfi.getPoderInicial().getNombre() + ": " + elfi.getPoderInicial().getDescripcion() + "\n");
+
+        }
+    }
+
+    public void mostrarMensajeGanador(Personaje jugador) {
+
+        System.out.println("\n!!!Felicidades!!! " + jugador.getNombre()
+                + " ha ganado la Copa de la Casa con una salud restante de " + jugador.getSalud() + " puntos!");
+
+    }
+
+    public static void bannerAprenderHechizos() {
+
+        System.out.println("\n Debes aprender tus hechizos. ");
+        System.out.println("  ¿Cuál quieres entrenar?: \n");
+        System.out.println("Elegir hechizo: ");
+
+    }
+
+    public static void bannerAtacarConHechizos() {
+
+        System.out.println("\nDebes elegir un hechizo para atacar a tu oponente: \n");
+
+    }
+
+    public void bannerJugador1(Personaje personaje) {
+
+        System.out.println("\nJUGADOR 1 " + personaje.getNombre() + "\n");
+
+    }
+
+    public void bannerJugador2(Personaje personaje) {
+
+        System.out.println("\nJUGADOR 2 " + personaje.getNombre() + "\n");
+
+    }
+
+    public void bannerBonus() {
+
+        System.out.println("\n***BONUS***\n");
+    }
+
     public void inicializarPersonajes() {
 
-        Wizard wizard = new Wizard("Harry Potter", 90, 130);
+        Wizard wizard = new Wizard("Harry Potter", 50, 50);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -171,11 +484,11 @@ public class JuegoHP {
         Poder poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
 
-        Artefacto artefacto = new Artefacto("Horrocrux");
-        artefacto.setAmplificadorDeDanio(0.5);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        Horrocrux horrocrux = new Horrocrux("Horrocrux");
+        horrocrux.setAmplificadorDeDanio(0.5);
+        horrocrux.setAmplificadorDeCuracion(0.5);
+        horrocrux.setPoder(poder);
+        wizard.setArtefacto(horrocrux);
 
         this.personajes.add(wizard);
 
@@ -195,7 +508,7 @@ public class JuegoHP {
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
 
-        artefacto = new Artefacto("Piedra de resurrección");
+        Artefacto artefacto = new Artefacto("Piedra de resurrección");
         artefacto.setAmplificadorDeDanio(0.3);
         artefacto.setAmplificadorDeCuracion(0.5);
         artefacto.setPoder(poder);
@@ -422,287 +735,6 @@ public class JuegoHP {
         cavelnimicum.setEsOscuro(false);
 
         this.hechizos.add(cavelnimicum);
-    }
-
-    public Personaje seleccionarPersonaje() {
-
-        int i = 0;
-
-        System.out.print("Elegir personaje: ");
-
-        for (Personaje per : this.personajes) {
-            System.out.print(" " + (++i) + "-" + per.getNombre());
-        }
-
-        System.out.println();
-
-        i = Teclado.nextInt();
-
-        return this.personajes.get(--i);
-
-    }
-
-    public Hechizo seleccionarHechizo() {
-
-        int i = 0;
-
-        for (Hechizo hechizo : this.hechizos) {
-            System.out.print(" " + (++i) + "-" + hechizo.getNombre());
-        }
-
-        System.out.println();
-
-        i = Teclado.nextInt();
-
-        return this.hechizos.get(--i);
-
-    }
-
-    public void aprenderSegunPersonaje(Personaje jugadorAprendiz, Hechizo h) {
-
-        if (jugadorAprendiz instanceof Wizard) {
-            Wizard wizard = (Wizard) jugadorAprendiz;
-            wizard.aprender(h);
-
-        } else if (jugadorAprendiz instanceof Elfo) {
-            Elfo elfo = (Elfo) jugadorAprendiz;
-            elfo.aprender(h);
-
-        }
-
-    }
-
-    public void seleccionarHechizoParaPelear(Personaje personaje) {
-
-        if (personaje instanceof Wizard) {
-            this.seleccionarHechizoWizard(personaje);
-        } else if (personaje instanceof Elfo) {
-            this.seleccionarHechizoElfo(personaje);
-        }
-
-    }
-
-    public Hechizo seleccionarHechizoWizard(Personaje personaje) {
-        int i = 0;
-        Wizard wizi = null;
-        if (personaje instanceof Wizard) {
-            wizi = (Wizard) personaje;
-            for (Hechizo hechizo : wizi.getHechizos()) {
-                System.out.print(" " + (++i) + "-" + hechizo.getNombre());
-            }
-
-        }
-        System.out.println();
-
-        i = Teclado.nextInt();
-
-        return wizi.getHechizos().get(--i);
-
-    }
-
-    public Hechizo seleccionarHechizoElfo(Personaje personaje) {
-
-        int i = 0;
-        Elfo elfi = null;
-        if (personaje instanceof Elfo) {
-            elfi = (Elfo) personaje;
-            for (Hechizo hechizo : elfi.getHechizos()) {
-                System.out.print(" " + (++i) + "-" + hechizo.getNombre());
-
-            }
-        }
-        System.out.println();
-
-        i = Teclado.nextInt();
-
-        return elfi.getHechizos().get(--i);
-
-    }
-
-    public void iniciarAprendizajeDeHechizos(Personaje jugador) {
-
-        Hechizo hechizo = this.seleccionarHechizo();
-        bannerBonus();
-        this.aprenderSegunPersonaje(jugador, hechizo);
-    }
-
-    public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado) {
-
-        if (jugadorAtacante instanceof Wizard) {
-            Wizard wizard = (Wizard) jugadorAtacante;
-            Hechizo hechizo = this.seleccionarHechizoWizard(jugadorAtacante);
-            wizard.atacar(jugadorAtacado, hechizo);
-            hechizo.curar(wizard);
-        }
-
-        else if (jugadorAtacante instanceof Elfo) {
-            Elfo elfo = (Elfo) jugadorAtacante;
-            Hechizo hechizo = this.seleccionarHechizoElfo(jugadorAtacante);
-            elfo.atacar(jugadorAtacado, hechizo);
-            hechizo.curar(elfo);
-        }
-
-    }
-
-    public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren) {
-
-        int dado = jugador.tirarDado();
-
-        System.out.print("Has sacado un " + dado);
-
-        tren.setVelocidad(dado);
-
-        if (tren.esInvisibleAMuggles()) {
-
-            int masSalud = tren.getAmplificadorDeSalud();
-
-            int saludIncrementada = jugador.getSalud() + masSalud;
-
-            jugador.setSalud(saludIncrementada);
-
-            System.out.print(", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
-                    + " puntos. \n");
-
-        } else if (tren.esInvisible()) {
-
-            int masSalud = tren.getAmplificadorDeSalud() + 1;
-
-            int saludIncrementada = jugador.getSalud() + masSalud;
-
-            jugador.setSalud(saludIncrementada);
-
-            System.out.print(". Gran trabajo " + jugador.getNombre() + "!!! Ahora salud es de " + jugador.getSalud()
-                    + " puntos. \n");
-
-        } else {
-
-            System.out.print(", mala suerte " + jugador.getNombre() + " tu salud aún es de " + jugador.getSalud()
-                    + " puntos. \n ");
-
-        }
-
-    }
-
-    public void arrancarTren(Personaje jugador1, TrenExpresoHowards tren, Personaje jugador2) {
-
-        tren = new TrenExpresoHowards();
-
-        tren.setNombre("\nTren Expreso Howards. ");
-
-        tren.setDescripcion(
-                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 puntos de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.\n");
-
-        tren.setAmplificadorDeSalud(1);
-
-        System.out.print(tren.getNombre() + tren.getDescripcion());
-
-        bannerJugador1(jugador1);
-
-        this.iniciarMiniJuego(jugador1, tren);
-
-        bannerJugador2(jugador2);
-
-        this.iniciarMiniJuego(jugador2, tren);
-
-    }
-
-    public void comprarEscoba(Escoba escoba, Personaje jugador, int jugada) {
-
-        int menosSalud = 0;
-        int masEnergiaMagica = 0;
-
-        escoba = new Escoba();
-        escoba.setNombre("Saeta de Fuego");
-        escoba.setDescripcion(
-                "Es una escoba de nivel internacional, fue lanzada en 1993 y con el tiempo, acabó siendo utilizada en los equipos internacionales búlgaro e irlandés de quidditch.");
-        escoba.setVelocidad(150);
-        escoba.setAmplificadorDeSalud(3);
-
-        if (jugador instanceof Wizard) {
-
-            Wizard wizi = (Wizard) jugador;
-
-            if (jugada == 3) {
-                System.out.print("Aca adentro va la descripcion");
-                int opcion = Teclado.nextInt();
-
-                if (opcion == 1) {
-
-                    if (escoba.esInvisible()) {
-                        menosSalud = wizi.getSalud() - 2;
-                        wizi.setSalud(menosSalud);
-
-                        masEnergiaMagica = wizi.getEnergiaMagica() + 2;
-                        wizi.setEnergiaMagica(masEnergiaMagica);
-                        wizi.setEscoba(escoba);
-
-                        System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
-                                + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica()
-                                + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
-
-                    } else if (escoba.esInvisibleAMuggles()) {
-                        menosSalud = wizi.getSalud() - 1;
-                        wizi.setSalud(menosSalud);
-                        masEnergiaMagica = wizi.getEnergiaMagica() + 1;
-                        wizi.setEnergiaMagica(masEnergiaMagica);
-                        wizi.setEscoba(escoba);
-
-                        System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
-                                + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica()
-                                + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
-
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    public static void bannerAprenderHechizos() {
-
-        System.out.println("\n Debes aprender tus hechizos. ");
-        System.out.println("  ¿Cuál quieres entrenar?: \n");
-        System.out.println("Elegir hechizo: ");
-
-    }
-
-    public static void bannerAtacarConHechizos() {
-
-        System.out.println("\nDebes elegir un hechizo para atacar a tu oponente: \n");
-
-    }
-
-    public void bannerJugador1(Personaje personaje) {
-
-        System.out.println("\nJUGADOR 1 " + personaje.getNombre() + "\n");
-
-    }
-
-    public void bannerJugador2(Personaje personaje) {
-
-        System.out.println("\nJUGADOR 2 " + personaje.getNombre() + "\n");
-
-    }
-
-    public void bannerBonus() {
-
-        System.out.println("\n***BONUS***\n");
-    }
-
-    private void mostrarPoderInicial(Personaje jugador) {
-
-        if (jugador instanceof Wizard) {
-            Wizard wizi = (Wizard) jugador;
-            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
-                    + wizi.getPoderInicial().getNombre() + ": " + wizi.getPoderInicial().getDescripcion() + "\n");
-
-        } else if (jugador instanceof Elfo) {
-            Elfo elfi = (Elfo) jugador;
-            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
-                    + elfi.getPoderInicial().getNombre() + ": " + elfi.getPoderInicial().getDescripcion() + "\n");
-
-        }
     }
 
 }
