@@ -18,7 +18,7 @@ public class Elfo extends Criatura implements IHaceMagia {
     public Elfo(String nombre, int salud, int energiaMagica) {
         super(nombre, salud);
         this.energiaMagica = energiaMagica;
-        
+
     }
 
     public int getEnergiaMagica() {
@@ -45,6 +45,14 @@ public class Elfo extends Criatura implements IHaceMagia {
         this.hechizos = hechizos;
     }
 
+    public Poder getPoderInicial() {
+        return poderInicial;
+    }
+
+    public void setPoderInicial(Poder poderInicial) {
+        this.poderInicial = poderInicial;
+    }
+
     @Override
     public void setPoder(Poder poder) {
 
@@ -53,7 +61,7 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void aprender(Hechizo h) {
 
-        this.aumentarEnergiaMagicaElfo();
+        this.obtenerEdadMagica();
 
         this.hechizos.add(h);
 
@@ -61,38 +69,12 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     }
 
-    public void aumentarEnergiaMagicaElfo() {
-
-        System.out.println(
-                "Puedes saber la edad de tu elfo al tirar el dado mágico. Si su edad es mayor o igual a 2 pero menor a 5, ganas 1 punto de energía mágica.\n");
-        System.out.println(
-                "Si su edad es mayor o igual a 5 pero menor o igual a 10, ganas 3 puntos de energía mágica.\n");
-
-        this.setEdad(this.tirarDado());
-
-        if (this.esInvisibleAMuggles()) {
-
-            this.energiaMagica++;
-
-            System.out.println("Tu elfo tiene " + this.getEdad() + " años. Su energía mágica es de  "
-                    + this.getEnergiaMagica() + " puntos.");
-
-        } else if (this.esInvisible()) {
-
-            this.energiaMagica += 3;
-
-            System.out.println("Tu elfo tiene " + this.getEdad() + " años. Su energía mágica es de  "
-                    + this.getEnergiaMagica() + " puntos.");
-
-        } else {
-
-            System.out.println("Tu elfo es demasiado joven para poder aumentar su energía mágica.");
-        }
-
-    }
-
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
+
+        if(this.energiaMagica <= 0){
+            return;
+        }
 
         hechizo.disminuirEnergiaMagica(energiaMagica);
 
@@ -110,20 +92,69 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     }
 
-    public void disminuirEnergiaMagica(int energiaMagica, Hechizo hechizo) {
+    public void mostrarConsignaMinijuego() {
 
-        int energiaMagicaResultante = this.energiaMagica - hechizo.getEnergiaMagica();
-
-        this.setEnergiaMagica(energiaMagicaResultante);
+        System.out.println(
+                "Puedes saber la edad de tu elfo al tirar el dado mágico. Si su edad es mayor o igual a 2 pero menor a 5, será capaz de invisibilizarse frente a muggles, ganas 1 punto de energía mágica.\n");
+        System.out.println(
+                "Si su edad es mayor o igual a 5 pero menor o igual a 10, es invisible también a los magos, ganas 3 puntos de energía mágica.\n");
 
     }
 
-    public Poder getPoderInicial() {
-        return poderInicial;
+    public void obtenerEdadMagica() {
+
+        this.mostrarConsignaMinijuego();
+
+        this.setEdad(this.tirarDado());
+
+        Teclado.nextLine();
+
+        if (this.esInvisibleAMuggles()) {
+
+            this.energiaMagica++;
+
+            this.mostrarMensajeEdad();
+
+        } else if (this.esInvisible()) {
+
+            this.energiaMagica += 3;
+
+            this.mostrarMensajeEdad();
+
+        } else {
+
+            System.out.println("Tu elfo es demasiado joven para poder aumentar su energía mágica.");
+        }
+
     }
 
-    public void setPoderInicial(Poder poderInicial) {
-        this.poderInicial = poderInicial;
+    public void mostrarMensajeEdad() {
+
+        System.out.println(this.getNombre() + " tiene " + this.getEdad() + " años de edad. Su energía mágica es de  "
+                + this.getEnergiaMagica() + " puntos.");
+
+    }
+
+    public int decrementarEnergiaMagica(int decremento) {
+
+        if (decremento >= this.energiaMagica) {
+
+            return 0;
+
+        }
+        return this.energiaMagica -= decremento;
+        
+    }
+
+    public int incrementarEnergiaMagica(int incremento) {
+
+        if (this.energiaMagica + incremento >= 100) {
+
+            return 150;
+
+        }
+        return this.energiaMagica += incremento;
+
     }
 
 }
