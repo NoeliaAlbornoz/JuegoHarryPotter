@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import app.artefactos.Artefacto;
+import app.artefactos.CapaInvisibilidad;
 import app.artefactos.Horrocrux;
+import app.artefactos.PiedraResurreccion;
+import app.artefactos.VaritaSauco;
 import app.personajes.Elfo;
 import app.personajes.Muggle;
 import app.personajes.Personaje;
@@ -166,11 +168,9 @@ public class JuegoHP {
 
             Elfo elfi = (Elfo) jugador;
 
-            int saludMuggleRestante = muggle.getSalud() - 2;
-            muggle.setSalud(saludMuggleRestante);
+            jugador.decrementarSalud(2);
 
-            int saludElfoObtenida = elfi.getSalud() + 2;
-            elfi.setSalud(saludElfoObtenida);
+            jugador.aumentarSalud(2);
 
             System.out.println(elfi.getNombre() + " es demasiado travieso y ha molestado con un hechizo a "
                     + muggle.getNombre() + " a quien le roba 2 puntos de salud.");
@@ -216,11 +216,11 @@ public class JuegoHP {
 
     public void aprenderSegunPersonaje(Personaje jugadorAprendiz, Hechizo h) {
 
-        if (jugadorAprendiz instanceof Wizard) {
+        if (jugadorAprendiz.esWizard()) {
             Wizard wizard = (Wizard) jugadorAprendiz;
             wizard.aprender(h);
 
-        } else if (jugadorAprendiz instanceof Elfo) {
+        } else if (jugadorAprendiz.esElfo()) {
             Elfo elfo = (Elfo) jugadorAprendiz;
             elfo.aprender(h);
 
@@ -230,9 +230,9 @@ public class JuegoHP {
 
     public void seleccionarHechizoParaPelear(Personaje personaje) {
 
-        if (personaje instanceof Wizard) {
+        if (personaje.esWizard()) {
             this.seleccionarHechizoWizard(personaje);
-        } else if (personaje instanceof Elfo) {
+        } else if (personaje.esElfo()) {
             this.seleccionarHechizoElfo(personaje);
         }
     }
@@ -240,7 +240,7 @@ public class JuegoHP {
     public Hechizo seleccionarHechizoWizard(Personaje personaje) {
         int i = 0;
         Wizard wizi = null;
-        if (personaje instanceof Wizard) {
+        if (personaje.esWizard()) {
             wizi = (Wizard) personaje;
             for (Hechizo hechizo : wizi.getHechizos()) {
                 System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
@@ -260,7 +260,7 @@ public class JuegoHP {
 
         int i = 0;
         Elfo elfi = null;
-        if (personaje instanceof Elfo) {
+        if (personaje.esElfo()) {
             elfi = (Elfo) personaje;
             for (Hechizo hechizo : elfi.getHechizos()) {
                 System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
@@ -285,14 +285,14 @@ public class JuegoHP {
 
     public void iniciarAtaqueConHechizos(Personaje jugadorAtacante, Personaje jugadorAtacado) {
 
-        if (jugadorAtacante instanceof Wizard) {
+        if (jugadorAtacante.esWizard()) {
             Wizard wizard = (Wizard) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoWizard(jugadorAtacante);
             wizard.atacar(jugadorAtacado, hechizo);
             hechizo.curar(wizard);
         }
 
-        else if (jugadorAtacante instanceof Elfo) {
+        else if (jugadorAtacante.esElfo()) {
             Elfo elfo = (Elfo) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoElfo(jugadorAtacante);
             elfo.atacar(jugadorAtacado, hechizo);
@@ -311,21 +311,15 @@ public class JuegoHP {
 
         if (tren.esInvisibleAMuggles()) {
 
-            int saludIncrementada = jugador.getSalud() + tren.getAmplificadorDeSalud();
-
-            jugador.setSalud(saludIncrementada);
-
-            System.out.print(", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
-                    + " puntos. \n");
+            jugador.aumentarSalud(tren.getAmplificadorDeSalud());
+            
+            this.mostrarMensajeGanadorSalud(jugador);
 
         } else if (tren.esInvisible()) {
 
-            int saludIncrementada = jugador.getSalud() + tren.getAmplificadorDeSalud() + 1;
+            jugador.aumentarSalud(tren.getAmplificadorDeSalud() + 1);
 
-            jugador.setSalud(saludIncrementada);
-
-            System.out.print(". Gran trabajo " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
-                    + " puntos. \n");
+            this.mostrarMensajeGanadorSalud(jugador);
 
         } else {
 
@@ -334,6 +328,11 @@ public class JuegoHP {
 
         }
 
+    }
+
+    public void mostrarMensajeGanadorSalud(Personaje jugador){
+        System.out.print(", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
+        + " puntos. \n");
     }
 
     public void arrancarTren(Personaje jugador1, Personaje jugador2) {
@@ -361,9 +360,6 @@ public class JuegoHP {
 
     public void comprarEscoba(Personaje jugador) {
 
-        int menosSalud = 0;
-        int masEnergiaMagica = 0;
-
         Escoba escoba = new Escoba();
         escoba.setNombre("Saeta de Fuego");
         escoba.setDescripcion(
@@ -371,7 +367,7 @@ public class JuegoHP {
         escoba.setVelocidad(150);
         escoba.setAmplificadorDeSalud(3);
 
-        if (jugador instanceof Wizard) {
+        if (jugador.esWizard()) {
             Wizard wizi = (Wizard) jugador;
 
             System.out.println("¡Bienvenido al Callejón Diagon! ¿Desea comprar una escoba nueva? 1)Sí 2)No");
@@ -385,24 +381,18 @@ public class JuegoHP {
 
                     wizi.incrementarEnergiaMagica(2);
 
-                    masEnergiaMagica = wizi.getEnergiaMagica() + 2;
-                    wizi.setEnergiaMagica(masEnergiaMagica);
                     wizi.setEscoba(escoba);
 
-                    System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
-                            + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica() + " puntos y tu salud es de "
-                            + wizi.getSalud() + " puntos. ");
+                    this.mostrarMensajeDeCompra(wizi);
 
                 } else if (escoba.esInvisibleAMuggles()) {
-                    menosSalud = wizi.getSalud() - 1;
-                    wizi.setSalud(menosSalud);
-                    masEnergiaMagica = wizi.getEnergiaMagica() + 1;
-                    wizi.setEnergiaMagica(masEnergiaMagica);
+                    wizi.decrementarSalud(1);
+
+                    wizi.incrementarEnergiaMagica(2);
+
                     wizi.setEscoba(escoba);
 
-                    System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre()
-                            + ", ahora tu energía mágica es de " + wizi.getEnergiaMagica() + " puntos y tu salud es de "
-                            + wizi.getSalud() + " puntos. ");
+                    this.mostrarMensajeDeCompra(wizi);
 
                 }
             }
@@ -411,17 +401,23 @@ public class JuegoHP {
 
     }
 
+    public void mostrarMensajeDeCompra(Wizard wizi) {
+        System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre() + ", ahora tu energía mágica es de "
+                + wizi.getEnergiaMagica() + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
+
+    }
+
     private void mostrarPoderInicial(Personaje jugador) {
 
-        if (jugador instanceof Wizard) {
+        if (jugador.esWizard()) {
             Wizard wizi = (Wizard) jugador;
 
             System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
                     + wizi.getPoderInicial().getNombre() + ": " + wizi.getPoderInicial().getDescripcion() + "\n");
 
-        } else if (jugador instanceof Elfo) {
+        } else if (jugador.esElfo()) {
             Elfo elfi = (Elfo) jugador;
-            
+
             System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
                     + elfi.getPoderInicial().getNombre() + ": " + elfi.getPoderInicial().getDescripcion() + "\n");
 
@@ -508,11 +504,11 @@ public class JuegoHP {
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
 
-        Artefacto artefacto = new Artefacto("Piedra de resurrección");
-        artefacto.setAmplificadorDeDanio(0.3);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        PiedraResurreccion piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
+        piedraResurreccion.setAmplificadorDeDanio(0.3);
+        piedraResurreccion.setAmplificadorDeCuracion(0.5);
+        piedraResurreccion.setPoder(poder);
+        wizard.setArtefacto(piedraResurreccion);
 
         this.personajes.add(wizard);
 
@@ -532,11 +528,11 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
-        artefacto = new Artefacto("Varita de Sauco");
-        artefacto.setAmplificadorDeDanio(0.3);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        VaritaSauco varitaSauco = new VaritaSauco("Varita de Sauco");
+        varitaSauco.setAmplificadorDeDanio(0.3);
+        varitaSauco.setAmplificadorDeCuracion(0.5);
+        varitaSauco.setPoder(poder);
+        wizard.setArtefacto(varitaSauco);
 
         this.personajes.add(wizard);
 
@@ -556,11 +552,11 @@ public class JuegoHP {
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
 
-        artefacto = new Artefacto("Piedra de resurrección");
-        artefacto.setAmplificadorDeDanio(0.3);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
+        piedraResurreccion.setAmplificadorDeDanio(0.3);
+        piedraResurreccion.setAmplificadorDeCuracion(0.5);
+        piedraResurreccion.setPoder(poder);
+        wizard.setArtefacto(piedraResurreccion);
 
         this.personajes.add(wizard);
 
@@ -580,11 +576,11 @@ public class JuegoHP {
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
 
-        artefacto = new Artefacto("Horrocrux");
-        artefacto.setAmplificadorDeDanio(0.5);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        horrocrux = new Horrocrux("Horrocrux");
+        horrocrux.setAmplificadorDeDanio(0.5);
+        horrocrux.setAmplificadorDeCuracion(0.5);
+        horrocrux.setPoder(poder);
+        wizard.setArtefacto(horrocrux);
 
         this.personajes.add(wizard);
 
@@ -604,11 +600,11 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
-        artefacto = new Artefacto("Capa de Invisibilidad");
-        artefacto.setAmplificadorDeDanio(0.5);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        CapaInvisibilidad capaInvisibilidad = new CapaInvisibilidad("Capa de Invisibilidad");
+        capaInvisibilidad.setAmplificadorDeDanio(0.5);
+        capaInvisibilidad.setAmplificadorDeCuracion(0.5);
+        capaInvisibilidad.setPoder(poder);
+        wizard.setArtefacto(capaInvisibilidad);
 
         this.personajes.add(wizard);
 
@@ -628,11 +624,11 @@ public class JuegoHP {
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
 
-        artefacto = new Artefacto("Horrocrux");
-        artefacto.setAmplificadorDeDanio(0.5);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        horrocrux = new Horrocrux("Horrocrux");
+        horrocrux.setAmplificadorDeDanio(0.5);
+        horrocrux.setAmplificadorDeCuracion(0.5);
+        horrocrux.setPoder(poder);
+        wizard.setArtefacto(horrocrux);
 
         wizard = new Wizard("Cedric Diggory", 90, 130);
         wizard.setEdad(17);
@@ -650,11 +646,11 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
-        artefacto = new Artefacto("Capa de invisibilidad");
-        artefacto.setAmplificadorDeDanio(0.5);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        wizard.setArtefacto(artefacto);
+        capaInvisibilidad = new CapaInvisibilidad("Capa de invisibilidad");
+        capaInvisibilidad.setAmplificadorDeDanio(0.5);
+        capaInvisibilidad.setAmplificadorDeCuracion(0.5);
+        capaInvisibilidad.setPoder(poder);
+        wizard.setArtefacto(capaInvisibilidad);
 
         this.personajes.add(wizard);
 
@@ -668,11 +664,11 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
-        artefacto = new Artefacto("Varita de Sauco");
-        artefacto.setAmplificadorDeDanio(0.3);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        elfo.setArtefacto(artefacto);
+        varitaSauco = new VaritaSauco("Varita de Sauco");
+        varitaSauco.setAmplificadorDeDanio(0.3);
+        varitaSauco.setAmplificadorDeCuracion(0.5);
+        varitaSauco.setPoder(poder);
+        elfo.setArtefacto(varitaSauco);
 
         this.personajes.add(elfo);
 
@@ -686,11 +682,11 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
 
-        artefacto = new Artefacto("Horrocrux");
-        artefacto.setAmplificadorDeDanio(0.5);
-        artefacto.setAmplificadorDeCuracion(0.5);
-        artefacto.setPoder(poder);
-        elfo.setArtefacto(artefacto);
+        horrocrux = new Horrocrux("Horrocrux");
+        horrocrux.setAmplificadorDeDanio(0.5);
+        horrocrux.setAmplificadorDeCuracion(0.5);
+        horrocrux.setPoder(poder);
+        elfo.setArtefacto(horrocrux);
 
         this.personajes.add(elfo);
 
