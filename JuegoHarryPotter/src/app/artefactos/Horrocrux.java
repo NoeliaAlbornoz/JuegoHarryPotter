@@ -15,4 +15,14 @@ public class Horrocrux extends Artefacto implements IReliquiaMuerte {
         return false;
     }
 
+    @Override
+    public boolean esInvisibleAMuggles(){
+        return false;
+    }
+
+    @Override
+    public boolean esInvisible(){
+        return false;
+    }
+
 }

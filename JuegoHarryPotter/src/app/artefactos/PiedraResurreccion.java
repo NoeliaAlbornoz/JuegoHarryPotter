@@ -11,7 +11,16 @@ public class PiedraResurreccion extends Artefacto implements IReliquiaMuerte{
 
     @Override
     public boolean esReliquiaMuerte() {
-    
+        return true;
+    }
+
+    @Override
+    public boolean esInvisibleAMuggles(){
+        return true;
+    }
+
+    @Override
+    public boolean esInvisible(){
         return true;
     }
 
