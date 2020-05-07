@@ -44,8 +44,6 @@ public abstract class Personaje {
         return salud > 0;
     }
 
- 
-
     public int tirarDado() {
 
         System.out.print("Dado mágico: ingrese enter para arrojar el dado.");
@@ -56,6 +54,39 @@ public abstract class Personaje {
 
         return rand.nextInt(10);
 
+    }
+
+    public int decrementarSalud(int danio) {
+
+        if (danio >= this.salud) {
+
+            return 0;
+
+        }
+        return this.salud -= danio;
+
+    }
+
+    public int aumentarSalud(int curacion) {
+
+        if (this.salud + curacion >= 100) {
+
+            return 100;
+
+        }
+        return this.salud += curacion;
+
+    }
+
+    public boolean esWizard() {
+
+        return this instanceof Wizard;
+        
+    }
+
+    public boolean esElfo() {
+
+        return this instanceof Elfo;
     }
 
 }
