@@ -479,6 +479,7 @@ public class JuegoHP {
 
         Poder poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder.setNivelDePoder(4);
 
         Horrocrux horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
@@ -503,6 +504,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder.setNivelDePoder(2);
 
         PiedraResurreccion piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
         piedraResurreccion.setAmplificadorDeDanio(0.3);
@@ -527,6 +529,7 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poder.setNivelDePoder(1);
 
         VaritaSauco varitaSauco = new VaritaSauco("Varita de Sauco");
         varitaSauco.setAmplificadorDeDanio(0.3);
@@ -551,6 +554,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder.setNivelDePoder(2);
 
         piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
         piedraResurreccion.setAmplificadorDeDanio(0.3);
@@ -575,6 +579,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder.setNivelDePoder(3);
 
         horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
@@ -599,7 +604,8 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-
+        poder.setNivelDePoder(3);
+    
         CapaInvisibilidad capaInvisibilidad = new CapaInvisibilidad("Capa de Invisibilidad");
         capaInvisibilidad.setAmplificadorDeDanio(0.5);
         capaInvisibilidad.setAmplificadorDeCuracion(0.5);
@@ -623,6 +629,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder.setNivelDePoder(3);
 
         horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
@@ -645,6 +652,7 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poder.setNivelDePoder(3);
 
         capaInvisibilidad = new CapaInvisibilidad("Capa de invisibilidad");
         capaInvisibilidad.setAmplificadorDeDanio(0.5);
@@ -663,6 +671,7 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poder.setNivelDePoder(1);
 
         varitaSauco = new VaritaSauco("Varita de Sauco");
         varitaSauco.setAmplificadorDeDanio(0.3);
@@ -681,7 +690,8 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-
+        poder.setNivelDePoder(3);
+        
         horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
         horrocrux.setAmplificadorDeCuracion(0.5);
