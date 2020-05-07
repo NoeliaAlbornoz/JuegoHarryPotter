@@ -61,7 +61,7 @@ public abstract class Hechizo extends Poder {
 
         int saludDisminuida = 1;
 
-        if (artefacto instanceof Horrocrux) { //Refactorizar??
+        if (artefacto instanceof Horrocrux) { 
             saludDisminuida = 0;
 
         } else {
@@ -70,10 +70,9 @@ public abstract class Hechizo extends Poder {
 
         }
 
-        int saludRestante = personaje.getSalud()
-                - (this.nivelDanio + this.activarDanioDeArtefacto(artefacto) - saludDisminuida);
+        int danioTotal = this.nivelDanio + this.activarDanioDeArtefacto(artefacto) - saludDisminuida;
 
-        personaje.setSalud(saludRestante);
+        personaje.decrementarSalud(danioTotal);//recibe efecto del daño
 
         System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
                 + this.activarDanioDeArtefacto(artefacto) + " puntos. ");
