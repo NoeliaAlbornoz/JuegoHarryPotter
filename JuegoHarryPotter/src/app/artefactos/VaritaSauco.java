@@ -6,7 +6,6 @@ public class VaritaSauco extends Varita implements IReliquiaMuerte {
 
     public VaritaSauco(String nombre) {
         super(nombre);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -17,12 +16,12 @@ public class VaritaSauco extends Varita implements IReliquiaMuerte {
 
     @Override
     public boolean esInvisibleAMuggles(){
-        return false;
+        return this.getPoder().getNivelDePoder() == 0;
     }
 
     @Override
     public boolean esInvisible(){
-        return true;
+        return this.getPoder().getNivelDePoder() > 7;
     }
 
 }

@@ -6,7 +6,6 @@ public class PiedraResurreccion extends Artefacto implements IReliquiaMuerte{
 
     public PiedraResurreccion(String nombre) {
         super(nombre);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -16,12 +15,12 @@ public class PiedraResurreccion extends Artefacto implements IReliquiaMuerte{
 
     @Override
     public boolean esInvisibleAMuggles(){
-        return true;
+        return this.getPoder().getNivelDePoder() < 2;
     }
 
     @Override
     public boolean esInvisible(){
-        return true;
+        return this.getPoder().getNivelDePoder() > 5;
     }
 
 }

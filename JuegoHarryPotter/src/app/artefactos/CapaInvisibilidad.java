@@ -15,12 +15,12 @@ public class CapaInvisibilidad extends Artefacto implements IReliquiaMuerte {
 
     @Override
     public boolean esInvisibleAMuggles(){
-        return true;
+        return this.getPoder().getNivelDePoder() > 5;
     }
 
     @Override
     public boolean esInvisible(){
-        return false;
+        return this.getPoder().getNivelDePoder() <= 5;
     }
 
 }

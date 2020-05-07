@@ -6,23 +6,22 @@ public class Horrocrux extends Artefacto implements IReliquiaMuerte {
 
     public Horrocrux(String nombre) {
         super(nombre);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public boolean esReliquiaMuerte() {
-        
+
         return false;
     }
 
     @Override
-    public boolean esInvisibleAMuggles(){
-        return false;
+    public boolean esInvisibleAMuggles() {
+        return this.getPoder().getNivelDePoder() == 4;
     }
 
     @Override
-    public boolean esInvisible(){
-        return false;
+    public boolean esInvisible() {
+        return this.getPoder().getNivelDePoder() != 4;
     }
 
 }
