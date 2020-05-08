@@ -139,7 +139,7 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         if (decremento >= this.energiaMagica) {
 
-            return 0;
+            return this.energiaMagica = 0;
 
         }
         return this.energiaMagica -= decremento;
@@ -148,9 +148,9 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     public int incrementarEnergiaMagica(int incremento) {
 
-        if (this.energiaMagica + incremento >= 100) {
+        if (this.energiaMagica + incremento >= 150) {
 
-            return 150;
+            return this.energiaMagica = 150;
 
         }
         return this.energiaMagica += incremento;
