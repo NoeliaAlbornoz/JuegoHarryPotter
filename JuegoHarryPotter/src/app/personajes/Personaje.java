@@ -60,7 +60,7 @@ public abstract class Personaje {
 
         if (danio >= this.salud) {
 
-            return 0;
+            return this.salud = 0;
 
         }
         return this.salud -= danio;
@@ -71,7 +71,7 @@ public abstract class Personaje {
 
         if (this.salud + curacion >= 100) {
 
-            return 100;
+            return this.salud = 100;
 
         }
         return this.salud += curacion;
