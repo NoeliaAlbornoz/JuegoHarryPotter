@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import app.IHaceMagia;
+import app.Minijuego;
 import app.artefactos.Artefacto;
 import app.poderes.Hechizo;
 import app.poderes.Poder;
@@ -83,115 +84,24 @@ public class Wizard extends Persona implements IHaceMagia {
     @Override
     public void aprender(Hechizo h) {
 
-        this.jugarMinijuegos(h);
-
         this.hechizos.add(h);
 
         System.out.println("Has aprendido el hechizo " + h.getNombre());
 
     }
 
-    private void jugarMinijuegos(Hechizo hechizo) {
+    public void jugarMinijuegos(Hechizo hechizo, Wizard wizard) {
 
         Random rand = new Random(System.nanoTime());
 
         int numero1 = rand.nextInt(100);
         int numero2 = rand.nextInt(100);
 
-        System.out.println("Resuelve el acertijo para obtener tu recompensa y aprender correctamente el hechizo.");
+        Minijuego minijuego = hechizo.getMinijuego();
 
-        switch (hechizo.getNombre()) {
+        minijuego.mostrarConsignaGeneral();
 
-            case "Wingwardum Leviosa":
-
-                System.out.print("Resolver: " + numero1 + "+" + numero2 + "= ");
-
-                int resultado = Teclado.nextInt();
-
-                if (resultado == numero1 + numero2) {
-
-                    this.incrementarEnergiaMagica(1);
-
-                    this.mostrarEnergiaMagica();
-
-                } else {
-
-                    this.decrementarEnergiaMagica(1);
-
-                    this.mostrarMensajeDeMiniJuegos();
-
-                }
-
-                break;
-
-            case "Sectumsempra":
-
-                System.out.print("Resolver: " + numero1 + "-" + numero2 + "= ");
-
-                resultado = Teclado.nextInt();
-
-                if (resultado == numero1 - numero2) {
-
-                    this.incrementarEnergiaMagica(1);
-
-                    this.mostrarEnergiaMagica();
-
-                } else {
-
-                    this.decrementarEnergiaMagica(1);
-
-                    this.mostrarMensajeDeMiniJuegos();
-
-                }
-
-                break;
-
-            case "Vulnera Sanentur":
-
-                System.out.print("Resolver: " + numero1 + " * " + numero2 + "= ");
-
-                resultado = Teclado.nextInt();
-
-                if (resultado == numero1 * numero2) {
-
-                    this.incrementarEnergiaMagica(1);
-
-                    this.mostrarEnergiaMagica();
-
-                } else {
-
-                    this.decrementarEnergiaMagica(1);
-
-                    this.mostrarMensajeDeMiniJuegos();
-
-                }
-
-                break;
-
-            case "Cavelnimicum":
-
-                int numero3 = rand.nextInt(100);
-
-                System.out.print("Resolver: " + numero1 + " * " + numero2 + " + " + numero3 + "= ");
-
-                resultado = Teclado.nextInt();
-
-                if (resultado == numero1 * numero2 + numero3) {
-
-                    this.incrementarEnergiaMagica(1);
-
-                    this.mostrarEnergiaMagica();
-
-                } else {
-
-                    this.decrementarEnergiaMagica(1);
-
-                    this.mostrarMensajeDeMiniJuegos();
-                }
-
-                break;
-
-        }
+        minijuego.iniciarMinijuegos(hechizo, numero1, numero2, wizard);
 
     }
 
@@ -231,17 +141,15 @@ public class Wizard extends Persona implements IHaceMagia {
 
         if (hechizo.isEsOscuro() && this.magoOscuro == false) {
 
-            int nuevoDanio = hechizo.getNivelDanio() * 2;
-            hechizo.setNivelDanio(nuevoDanio);
+            hechizo.multiplicarDanioHechizoOscuro();
 
-            int nuevoCuracion = hechizo.getNivelCuracion() * 2;
-            hechizo.setNivelCuracion(nuevoCuracion);
+            hechizo.multiplicarCuracionHechizoOscuro();
 
             this.magoOscuro = true;
 
             hechizo.setEsOscuro(false);
 
-            System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2."
+            System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2. "
                     + this.getNombre() + " es ahora un mago oscuro.");
 
         }
@@ -261,7 +169,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
         if (decremento >= this.energiaMagica) {
 
-            return 0;
+            return this.energiaMagica = 0;
 
         }
         return this.energiaMagica -= decremento;
@@ -272,7 +180,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
         if (this.energiaMagica + incremento >= 150) {
 
-            return 150;
+            return this.energiaMagica = 150;
 
         }
         return this.energiaMagica += incremento;
