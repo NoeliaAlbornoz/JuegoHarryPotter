@@ -2,6 +2,7 @@ package app;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import app.artefactos.CapaInvisibilidad;
@@ -24,6 +25,7 @@ import app.transportes.TrenExpresoHowards;
 public class JuegoHP {
 
     public static Scanner Teclado = new Scanner(System.in);
+    public static Random rand = new Random(System.nanoTime());
     public List<Personaje> personajes = new ArrayList<>();
     public List<Hechizo> hechizos = new ArrayList<>();
 
@@ -218,6 +220,7 @@ public class JuegoHP {
 
         if (jugadorAprendiz.esWizard()) {
             Wizard wizard = (Wizard) jugadorAprendiz;
+            wizard.jugarMinijuegos(h, wizard);
             wizard.aprender(h);
 
         } else if (jugadorAprendiz.esElfo()) {
@@ -228,20 +231,21 @@ public class JuegoHP {
 
     }
 
-    public void seleccionarHechizoParaPelear(Personaje personaje) {
+    public Hechizo seleccionarHechizoParaPelear(Personaje jugadorAtacante) {
 
-        if (personaje.esWizard()) {
-            this.seleccionarHechizoWizard(personaje);
-        } else if (personaje.esElfo()) {
-            this.seleccionarHechizoElfo(personaje);
+        if (jugadorAtacante.esWizard()) {
+            return this.seleccionarHechizoWizard(jugadorAtacante);
+        } else if (jugadorAtacante.esElfo()) {
+            return this.seleccionarHechizoElfo(jugadorAtacante);
         }
+        return null;
     }
 
-    public Hechizo seleccionarHechizoWizard(Personaje personaje) {
+    public Hechizo seleccionarHechizoWizard(Personaje jugadorAtacante) {
         int i = 0;
         Wizard wizi = null;
-        if (personaje.esWizard()) {
-            wizi = (Wizard) personaje;
+        if (jugadorAtacante.esWizard()) {
+            wizi = (Wizard) jugadorAtacante;
             for (Hechizo hechizo : wizi.getHechizos()) {
                 System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
                         + "\tCuración " + hechizo.getNivelCuracion());
@@ -287,14 +291,14 @@ public class JuegoHP {
 
         if (jugadorAtacante.esWizard()) {
             Wizard wizard = (Wizard) jugadorAtacante;
-            Hechizo hechizo = this.seleccionarHechizoWizard(jugadorAtacante);
+            Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
             wizard.atacar(jugadorAtacado, hechizo);
             hechizo.curar(wizard);
         }
 
         else if (jugadorAtacante.esElfo()) {
             Elfo elfo = (Elfo) jugadorAtacante;
-            Hechizo hechizo = this.seleccionarHechizoElfo(jugadorAtacante);
+            Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
             elfo.atacar(jugadorAtacado, hechizo);
             hechizo.curar(elfo);
         }
@@ -312,7 +316,7 @@ public class JuegoHP {
         if (tren.esInvisibleAMuggles()) {
 
             jugador.aumentarSalud(tren.getAmplificadorDeSalud());
-            
+
             this.mostrarMensajeGanadorSalud(jugador);
 
         } else if (tren.esInvisible()) {
@@ -330,9 +334,9 @@ public class JuegoHP {
 
     }
 
-    public void mostrarMensajeGanadorSalud(Personaje jugador){
-        System.out.print(", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud()
-        + " puntos. \n");
+    public void mostrarMensajeGanadorSalud(Personaje jugador) {
+        System.out.print(
+                ", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud() + " puntos. \n");
     }
 
     public void arrancarTren(Personaje jugador1, Personaje jugador2) {
@@ -464,7 +468,7 @@ public class JuegoHP {
 
     public void inicializarPersonajes() {
 
-        Wizard wizard = new Wizard("Harry Potter", 50, 50);
+        Wizard wizard = new Wizard("Harry Potter", 1, 50);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -479,7 +483,7 @@ public class JuegoHP {
 
         Poder poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
-        poder.setNivelDePoder(4);
+        poder.setNivelDePoder(2);
 
         Horrocrux horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
@@ -489,7 +493,7 @@ public class JuegoHP {
 
         this.personajes.add(wizard);
 
-        wizard = new Wizard("Ron Weasley", 90, 130);
+        wizard = new Wizard("Ron Weasley", 50, 50);
         wizard.setEdad(18);
         wizard.setMagoOscuro(false);
 
@@ -529,7 +533,7 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        poder.setNivelDePoder(1);
+        poder.setNivelDePoder(3);
 
         VaritaSauco varitaSauco = new VaritaSauco("Varita de Sauco");
         varitaSauco.setAmplificadorDeDanio(0.3);
@@ -554,7 +558,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
-        poder.setNivelDePoder(2);
+        poder.setNivelDePoder(3);
 
         piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
         piedraResurreccion.setAmplificadorDeDanio(0.3);
@@ -579,7 +583,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
-        poder.setNivelDePoder(3);
+        poder.setNivelDePoder(2);
 
         horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
@@ -605,7 +609,7 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
         poder.setNivelDePoder(3);
-    
+
         CapaInvisibilidad capaInvisibilidad = new CapaInvisibilidad("Capa de Invisibilidad");
         capaInvisibilidad.setAmplificadorDeDanio(0.5);
         capaInvisibilidad.setAmplificadorDeCuracion(0.5);
@@ -629,7 +633,7 @@ public class JuegoHP {
 
         poder = new Poder("Parse Tongue");
         poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
-        poder.setNivelDePoder(3);
+        poder.setNivelDePoder(2);
 
         horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
@@ -650,9 +654,9 @@ public class JuegoHP {
         escoba.setDescripcion("La Nimbus 2001 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        poder.setNivelDePoder(3);
+        poder = new Poder("Metamorfosis");
+        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poder.setNivelDePoder(1);
 
         capaInvisibilidad = new CapaInvisibilidad("Capa de invisibilidad");
         capaInvisibilidad.setAmplificadorDeDanio(0.5);
@@ -671,7 +675,7 @@ public class JuegoHP {
 
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        poder.setNivelDePoder(1);
+        poder.setNivelDePoder(3);
 
         varitaSauco = new VaritaSauco("Varita de Sauco");
         varitaSauco.setAmplificadorDeDanio(0.3);
@@ -691,7 +695,7 @@ public class JuegoHP {
         poder = new Poder("Invisibilidad");
         poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
         poder.setNivelDePoder(3);
-        
+
         horrocrux = new Horrocrux("Horrocrux");
         horrocrux.setAmplificadorDeDanio(0.5);
         horrocrux.setAmplificadorDeCuracion(0.5);
@@ -707,38 +711,54 @@ public class JuegoHP {
         WingwardumLeviosa wingwardumLeviosa = new WingwardumLeviosa("Wingwardum Leviosa");
         wingwardumLeviosa
                 .setDescripcion("Wingwardum Leviosa es un hechizo que permite levitar objetos o pequeños seres vivos.");
-        wingwardumLeviosa.setEnergiaMagica(2);
-        wingwardumLeviosa.setNivelDanio(5);
-        wingwardumLeviosa.setNivelCuracion(2);
+        wingwardumLeviosa.setEnergiaMagica(3);
+        wingwardumLeviosa.setNivelDanio(3);
+        wingwardumLeviosa.setNivelCuracion(1);
         wingwardumLeviosa.setEsOscuro(false);
+
+        Minijuego minijuego = new Minijuego("Suma Mágica.");
+        minijuego.setDescripcion("Si resuelves con éxito la suma, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        wingwardumLeviosa.setMinijuego(minijuego);
 
         this.hechizos.add(wingwardumLeviosa);
 
         SectumSempra sectumsempra = new SectumSempra("Sectumsempra");
         sectumsempra.setDescripcion("La maldición Sectumsempra genera cortes profundos en la víctima.");
-        sectumsempra.setEnergiaMagica(7);
-        sectumsempra.setNivelDanio(7);
+        sectumsempra.setEnergiaMagica(6);
+        sectumsempra.setNivelDanio(6);
         sectumsempra.setNivelCuracion(1);
         sectumsempra.setEsOscuro(true);
+
+        minijuego = new Minijuego("Resta Mágica.");
+        minijuego.setDescripcion("Si resuelves con éxito la resta, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        sectumsempra.setMinijuego(minijuego);
 
         this.hechizos.add(sectumsempra);
 
         VulneraSanentur vulnerasanentur = new VulneraSanentur("Vulnera Sanentur");
         vulnerasanentur
                 .setDescripcion("Hechizo sanador que corresponde al contrahechizo de la maldición sectumsempra.");
-        vulnerasanentur.setEnergiaMagica(4);
-        vulnerasanentur.setNivelDanio(2);
+        vulnerasanentur.setEnergiaMagica(1);
+        vulnerasanentur.setNivelDanio(1);
         vulnerasanentur.setNivelCuracion(4);
         vulnerasanentur.setEsOscuro(false);
+
+        minijuego = new Minijuego("Multiplicación Mágica.");
+        minijuego.setDescripcion("Si resuelves con éxito la multiplicación, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        vulnerasanentur.setMinijuego(minijuego);
 
         this.hechizos.add(vulnerasanentur);
 
         Cavelnimicum cavelnimicum = new Cavelnimicum("Cavelnimicum");
         cavelnimicum.setDescripcion("Hechizo de protección, mantiene alejado a los enemigos.");
         cavelnimicum.setEnergiaMagica(3);
-        cavelnimicum.setNivelDanio(4);
-        cavelnimicum.setNivelCuracion(3);
+        cavelnimicum.setNivelDanio(3);
+        cavelnimicum.setNivelCuracion(1);
         cavelnimicum.setEsOscuro(false);
+
+        minijuego = new Minijuego("Combinación Mágica.");
+        minijuego.setDescripcion("Si resuelves con éxito el cálculo combinado, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        cavelnimicum.setMinijuego(minijuego);
 
         this.hechizos.add(cavelnimicum);
     }
