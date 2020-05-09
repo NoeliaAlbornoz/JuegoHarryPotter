@@ -15,6 +15,10 @@ public abstract class Hechizo extends Poder {
     private int energiaMagica;
     private Minijuego minijuego;
 
+    public Hechizo(){
+        
+    }
+
     public Hechizo(String nombre) {
         super(nombre);
     }
