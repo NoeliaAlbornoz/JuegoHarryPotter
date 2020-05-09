@@ -56,6 +56,8 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void setPoder(Poder poder) {
 
+        poder.setNivelDePoder(3);
+        this.artefacto.setPoder(poder);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
 
-        if(this.energiaMagica <= 0){
+        if (this.energiaMagica <= 0) {
             return;
         }
 
@@ -85,6 +87,9 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     @Override
     public void atacar(Personaje personaje, String hechizo) {
+
+        System.out.print(this.artefacto.getNombre() + this.artefacto.getPoder().getNombre()
+                + this.artefacto.getPoder().getNivelDePoder());
 
         System.out.println("Has atacado con " + hechizo);
 
@@ -143,7 +148,7 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         }
         return this.energiaMagica -= decremento;
-        
+
     }
 
     public int incrementarEnergiaMagica(int incremento) {
