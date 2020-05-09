@@ -15,8 +15,8 @@ public abstract class Hechizo extends Poder {
     private int energiaMagica;
     private Minijuego minijuego;
 
-    public Hechizo(){
-        
+    public Hechizo() {
+
     }
 
     public Hechizo(String nombre) {
@@ -66,34 +66,36 @@ public abstract class Hechizo extends Poder {
     public void disminuirSalud(Personaje personaje, Artefacto artefacto) {
 
         int danioReliquia = 1;
-        int curacionEnemiga = 0;
 
         if (artefacto instanceof Horrocrux) {
-            Horrocrux horri = (Horrocrux)artefacto;
-            if(horri.esReliquiaMuerte()){
+            Horrocrux horri = (Horrocrux) artefacto;
+            if (horri.esReliquiaMuerte()) {
+
+            } else {
                 danioReliquia = 0;
-                System.out.println("\nTu artefacto no es una Reliquia de la Muerte. No ganas puntos adicionales.\n");
+                System.out.print("\nTu artefacto no es una Reliquia de la Muerte. No ganas puntos adicionales.\n");
+
             }
-
-        } 
-
-        if (personaje instanceof Wizard) {
-            Wizard wizi = (Wizard) personaje;
-
-            curacionEnemiga = this.activarCuracionDeArtefacto(wizi.getArtefacto().getAmplificadorDeCuracion());
 
         }
 
-        int danioTotal = this.nivelDanio + this.activarDanioDeArtefacto(artefacto) + danioReliquia - curacionEnemiga;
+        System.out.print("\nPuntos adicionales de daño por Reliquia de la Muerte " + danioReliquia + "\n");
+
+        int danioTotal = this.nivelDanio + this.activarDanioDeArtefacto(artefacto) + danioReliquia
+                - this.curarEnemigo(personaje);
 
         personaje.decrementarSalud(danioTotal);
 
-        System.out.println("Tu artefacto " + artefacto.getNombre() + " genera un daño adicional de "
-                + this.activarDanioDeArtefacto(artefacto) + " puntos.");
+    }
 
-        System.out.println("La curación del artefacto enemigo " + artefacto.getNombre() + " atenúa el ataque en "
-                + curacionEnemiga + " puntos.");
+    public int curarEnemigo(Personaje personaje) {
+        if (personaje instanceof Wizard) {
+            Wizard wizi = (Wizard) personaje;
 
+            return this.activarCuracionDeArtefacto(wizi.getArtefacto().getAmplificadorDeCuracion());
+
+        }
+        return 0;
     }
 
     public int activarDanioDeArtefacto(Artefacto artefacto) {
@@ -113,9 +115,6 @@ public abstract class Hechizo extends Poder {
 
         wizard.aumentarSalud(saludAumentada);
 
-        System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera una curación adicional de "
-                + this.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
-
     }
 
     public void curar(Elfo elfo) {
@@ -124,10 +123,6 @@ public abstract class Hechizo extends Poder {
                 + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion());
 
         elfo.aumentarSalud(saludAumentada);
-
-        System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera una curación adicional de "
-                + this.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
-
     }
 
     public int multiplicarDanioHechizoOscuro() {
