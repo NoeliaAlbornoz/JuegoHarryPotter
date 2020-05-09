@@ -95,6 +95,8 @@ public class JuegoHP {
 
         }
 
+        bannerComienzaBatalla();
+
         jugada = 1;
 
         while (jugador1.estaVivo() && jugador2.estaVivo()) {
@@ -151,6 +153,12 @@ public class JuegoHP {
 
         }
 
+    }
+
+    private void bannerComienzaBatalla() {
+        System.out.println("*********************************************************************************************************************");
+        System.out.println("\n                                             ¡¡¡COMIENZA EL DUELO!!!                                             \n");
+        System.out.println("*********************************************************************************************************************");
     }
 
     public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2) {
@@ -220,11 +228,13 @@ public class JuegoHP {
 
         if (jugadorAprendiz.esWizard()) {
             Wizard wizard = (Wizard) jugadorAprendiz;
+            this.mostrarEnergiaMagicaWizard(wizard);
             wizard.jugarMinijuegos(h, wizard);
             wizard.aprender(h);
 
         } else if (jugadorAprendiz.esElfo()) {
             Elfo elfo = (Elfo) jugadorAprendiz;
+            this.mostrarEnergiaMagicaElfo(elfo);
             elfo.aprender(h);
 
         }
@@ -292,18 +302,56 @@ public class JuegoHP {
         if (jugadorAtacante.esWizard()) {
             Wizard wizard = (Wizard) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
+            this.mostrarEnergiaMagicaWizard(wizard);
             wizard.atacar(jugadorAtacado, hechizo);
             hechizo.curar(wizard);
+            this.mostrarResultadosWizard(wizard, hechizo);
         }
 
         else if (jugadorAtacante.esElfo()) {
             Elfo elfo = (Elfo) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
+            this.mostrarEnergiaMagicaElfo(elfo);
             elfo.atacar(jugadorAtacado, hechizo);
             hechizo.curar(elfo);
+            this.mostrarResultadosElfo(elfo, hechizo);
         }
 
     }
+
+    private void mostrarEnergiaMagicaWizard(Wizard wizard) {
+        System.out.println("Energía Mágica " + wizard.getEnergiaMagica());
+    }
+
+    private void mostrarEnergiaMagicaElfo(Elfo elfo) {
+        System.out.println("Energía Mágica " + elfo.getEnergiaMagica());
+    }
+
+    private void mostrarResultadosWizard(Wizard wizard, Hechizo hechizo) {
+
+        System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera un daño adicional de "
+                + hechizo.activarDanioDeArtefacto(wizard.getArtefacto()) + " puntos.");
+
+        System.out.println("La curación del artefacto enemigo " + wizard.getArtefacto().getNombre()
+                + " atenúa el ataque en " + hechizo.curarEnemigo(wizard) + " puntos.");
+
+        System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera una curación adicional de "
+                + hechizo.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
+
+        System.out.println("Energía mágica restante: " + wizard.getEnergiaMagica());
+    }
+
+    private void mostrarResultadosElfo(Elfo elfo, Hechizo hechizo) {
+
+        System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera un daño adicional de "
+                + hechizo.activarDanioDeArtefacto(elfo.getArtefacto()) + " puntos.");
+
+        System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera una curación adicional de "
+                + hechizo.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
+
+        System.out.println("Energía mágica restante: " + elfo.getEnergiaMagica());
+    }
+
 
     public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren) {
 
@@ -717,7 +765,8 @@ public class JuegoHP {
         wingwardumLeviosa.setEsOscuro(false);
 
         Minijuego minijuego = new Minijuego("Suma Mágica.");
-        minijuego.setDescripcion("Si resuelves con éxito la suma, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        minijuego.setDescripcion(
+                "Si resuelves con éxito la suma, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
         wingwardumLeviosa.setMinijuego(minijuego);
 
         this.hechizos.add(wingwardumLeviosa);
@@ -730,7 +779,8 @@ public class JuegoHP {
         sectumsempra.setEsOscuro(true);
 
         minijuego = new Minijuego("Resta Mágica.");
-        minijuego.setDescripcion("Si resuelves con éxito la resta, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        minijuego.setDescripcion(
+                "Si resuelves con éxito la resta, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
         sectumsempra.setMinijuego(minijuego);
 
         this.hechizos.add(sectumsempra);
@@ -744,7 +794,8 @@ public class JuegoHP {
         vulnerasanentur.setEsOscuro(false);
 
         minijuego = new Minijuego("Multiplicación Mágica.");
-        minijuego.setDescripcion("Si resuelves con éxito la multiplicación, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        minijuego.setDescripcion(
+                "Si resuelves con éxito la multiplicación, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
         vulnerasanentur.setMinijuego(minijuego);
 
         this.hechizos.add(vulnerasanentur);
@@ -757,7 +808,8 @@ public class JuegoHP {
         cavelnimicum.setEsOscuro(false);
 
         minijuego = new Minijuego("Combinación Mágica.");
-        minijuego.setDescripcion("Si resuelves con éxito el cálculo combinado, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
+        minijuego.setDescripcion(
+                "Si resuelves con éxito el cálculo combinado, ganas un punto de energía mágica. Si fallas, lo pierdes, y aprendes el hechizo con dificultades.");
         cavelnimicum.setMinijuego(minijuego);
 
         this.hechizos.add(cavelnimicum);
