@@ -78,7 +78,7 @@ public class Elfo extends Criatura implements IHaceMagia {
             return;
         }
 
-        hechizo.disminuirEnergiaMagica(energiaMagica);
+        this.decrementarEnergiaMagica(hechizo.getEnergiaMagica());
 
         hechizo.disminuirSalud(personaje, artefacto);
 
@@ -88,13 +88,10 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void atacar(Personaje personaje, String hechizo) {
 
-        System.out.print(this.artefacto.getNombre() + this.artefacto.getPoder().getNombre()
-                + this.artefacto.getPoder().getNivelDePoder());
+        System.out.print("Tu artefacto " + this.artefacto.getNombre() + " tiene el poder de " + this.artefacto.getPoder().getNombre()
+                + " que te otorga " + this.artefacto.getPoder().getNivelDePoder()+ " puntos de poder.\n");
 
         System.out.println("Has atacado con " + hechizo);
-
-        System.out.println("Te quedan " + this.energiaMagica + " puntos de energía mágica.");
-
     }
 
     public void mostrarConsignaMinijuego() {
