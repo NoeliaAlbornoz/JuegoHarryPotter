@@ -468,7 +468,7 @@ public class JuegoHP {
 
     public void inicializarPersonajes() {
 
-        Wizard wizard = new Wizard("Harry Potter", 20, 50);
+        Wizard wizard = new Wizard("Harry Potter", 50, 50);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
