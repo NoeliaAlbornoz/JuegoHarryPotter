@@ -130,17 +130,18 @@ public class Wizard extends Persona implements IHaceMagia {
             return;
         }
 
-        hechizo = this.confirmarHechizoOscuro(hechizo);
+        hechizo = this.confirmarHechizoOscuro(personaje, hechizo);
 
-        hechizo.disminuirEnergiaMagica(energiaMagica);
+        System.out.print(
+                hechizo.getNombre() + " te ha consumido " + hechizo.getEnergiaMagica() + " puntos de energía mágica.");
+
+        this.decrementarEnergiaMagica(hechizo.getEnergiaMagica());
 
         hechizo.disminuirSalud(personaje, artefacto);
 
-        this.atacar(personaje, hechizo.getNombre());
-
     }
 
-    public Hechizo confirmarHechizoOscuro(Hechizo hechizo) {
+    public Hechizo confirmarHechizoOscuro(Personaje personaje, Hechizo hechizo) {
 
         if (hechizo.isEsOscuro() && this.magoOscuro == false) {
 
@@ -158,12 +159,16 @@ public class Wizard extends Persona implements IHaceMagia {
 
             h1.setEsOscuro(false);
 
+            this.atacar(personaje, hechizo.getNombre());
+
             System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2. "
                     + this.getNombre() + " es ahora un mago oscuro.");
 
             return h1;
 
         }
+
+        this.atacar(personaje, hechizo.getNombre());
 
         return hechizo;
 
@@ -172,9 +177,7 @@ public class Wizard extends Persona implements IHaceMagia {
     @Override
     public void atacar(Personaje personaje, String hechizo) {
 
-        System.out.println("Has atacado con " + hechizo);
-
-        System.out.println("Te quedan " + this.energiaMagica + " puntos de energía mágica.");
+        System.out.println(this.getNombre() + " ha atacado con " + hechizo);
 
     }
 
