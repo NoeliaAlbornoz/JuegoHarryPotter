@@ -156,9 +156,12 @@ public class JuegoHP {
     }
 
     private void bannerComienzaBatalla() {
-        System.out.println("*********************************************************************************************************************");
-        System.out.println("\n                                             ¡¡¡COMIENZA EL DUELO!!!                                             \n");
-        System.out.println("*********************************************************************************************************************");
+        System.out.println(
+                "*********************************************************************************************************************");
+        System.out.println(
+                "\n                                             ¡¡¡COMIENZA EL DUELO!!!                                             \n");
+        System.out.println(
+                "*********************************************************************************************************************");
     }
 
     public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2) {
@@ -351,7 +354,6 @@ public class JuegoHP {
 
         System.out.println("Energía mágica restante: " + elfo.getEnergiaMagica());
     }
-
 
     public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren) {
 
