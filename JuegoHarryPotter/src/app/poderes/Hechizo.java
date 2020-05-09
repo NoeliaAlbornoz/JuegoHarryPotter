@@ -69,13 +69,13 @@ public abstract class Hechizo extends Poder {
         int curacionEnemiga = 0;
 
         if (artefacto instanceof Horrocrux) {
-            danioReliquia = 0;
+            Horrocrux horri = (Horrocrux)artefacto;
+            if(horri.esReliquiaMuerte()){
+                danioReliquia = 0;
+                System.out.println("\nTu artefacto no es una Reliquia de la Muerte. No ganas puntos adicionales.\n");
+            }
 
-        } else {
-
-            System.out.println("\nTu artefacto es una Reliquia de la Muerte. Incrementa el daño total en un punto.\n");
-
-        }
+        } 
 
         if (personaje instanceof Wizard) {
             Wizard wizi = (Wizard) personaje;
