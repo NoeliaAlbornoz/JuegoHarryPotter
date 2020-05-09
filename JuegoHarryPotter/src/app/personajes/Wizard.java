@@ -9,6 +9,7 @@ import app.Minijuego;
 import app.artefactos.Artefacto;
 import app.poderes.Hechizo;
 import app.poderes.Poder;
+import app.poderes.SectumSempra;
 import app.transportes.Escoba;
 
 public class Wizard extends Persona implements IHaceMagia {
@@ -127,7 +128,7 @@ public class Wizard extends Persona implements IHaceMagia {
             return;
         }
 
-        this.confirmarHechizoOscuro(hechizo);
+        hechizo = this.confirmarHechizoOscuro(hechizo);
 
         hechizo.disminuirEnergiaMagica(energiaMagica);
 
@@ -137,22 +138,32 @@ public class Wizard extends Persona implements IHaceMagia {
 
     }
 
-    public void confirmarHechizoOscuro(Hechizo hechizo) {
+    public Hechizo confirmarHechizoOscuro(Hechizo hechizo) {
 
         if (hechizo.isEsOscuro() && this.magoOscuro == false) {
 
-            hechizo.multiplicarDanioHechizoOscuro();
+            SectumSempra s = new SectumSempra();
 
-            hechizo.multiplicarCuracionHechizoOscuro();
+            Hechizo h1 = this.hechizos.get(1);
+
+            h1 = s;
+
+            h1.setNivelDanio(hechizo.multiplicarDanioHechizoOscuro());
+
+            h1.setNivelCuracion(hechizo.multiplicarCuracionHechizoOscuro());
 
             this.magoOscuro = true;
 
-            hechizo.setEsOscuro(false);
+            h1.setEsOscuro(false);
 
             System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2. "
                     + this.getNombre() + " es ahora un mago oscuro.");
 
+            return h1;
+
         }
+
+        return hechizo;
 
     }
 
