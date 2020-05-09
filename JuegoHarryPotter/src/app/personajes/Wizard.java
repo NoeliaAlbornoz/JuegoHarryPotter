@@ -80,6 +80,8 @@ public class Wizard extends Persona implements IHaceMagia {
     @Override
     public void setPoder(Poder poder) {
 
+        this.artefacto.setPoder(poder);
+
     }
 
     @Override
