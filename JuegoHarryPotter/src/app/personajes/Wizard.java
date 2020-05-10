@@ -14,6 +14,12 @@ import app.transportes.Escoba;
 
 public class Wizard extends Persona implements IHaceMagia {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+
     public Random rand = new Random(System.nanoTime());
 
     private int energiaMagica;
@@ -89,7 +95,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
         this.hechizos.add(h);
 
-        System.out.println("Has aprendido el hechizo " + h.getNombre());
+        System.out.println("Has aprendido el hechizo " + ANSI_RED + h.getNombre() + ANSI_RESET);
 
     }
 
@@ -109,31 +115,25 @@ public class Wizard extends Persona implements IHaceMagia {
     }
 
     public void mostrarMensajeDeMiniJuegos() {
-        System.out
-                .println("Al profesor Flitwick no le gustará esto! Restas un punto de energia mágica. \nEnergía Mágica "
-                        + this.energiaMagica);
+        
+        System.out.println("Al profesor Flitwick no le gustará esto! Restas un punto de energia mágica.");
+
+        System.out.println(ANSI_CYAN + "Energía Mágica " + this.energiaMagica + ANSI_RESET);
 
     }
 
     public void mostrarEnergiaMagica() {
 
-        System.out
-                .println("Tu calificación en esta clase es una +S. Sumas un punto de energia mágica. \nEnergía Mágica "
-                        + this.energiaMagica);
+        System.out.println("Tu calificación en esta clase es una +S. Sumas un punto de energia mágica.");
+
+        System.out.println(ANSI_CYAN + "Energía Mágica " + this.energiaMagica + ANSI_RESET);
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
 
-        if (this.energiaMagica <= 0) {
-            return;
-        }
-
         hechizo = this.confirmarHechizoOscuro(personaje, hechizo);
-
-        System.out.print(
-                hechizo.getNombre() + " te ha consumido " + hechizo.getEnergiaMagica() + " puntos de energía mágica.");
 
         this.decrementarEnergiaMagica(hechizo.getEnergiaMagica());
 
@@ -161,8 +161,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
             this.atacar(personaje, hechizo.getNombre());
 
-            System.out.println("Sectumsempra es un hechizo oscuro. Su daño y curación se multiplican por 2. "
-                    + this.getNombre() + " es ahora un mago oscuro.");
+            this.mostrarMensajeHechizoOscuro(h1);
 
             return h1;
 
@@ -170,14 +169,26 @@ public class Wizard extends Persona implements IHaceMagia {
 
         this.atacar(personaje, hechizo.getNombre());
 
+        System.out.println(ANSI_YELLOW + hechizo.getNombre() + ANSI_RESET + " te ha consumido " + hechizo.getEnergiaMagica() + " puntos de Energía Mágica.");
+
         return hechizo;
+
+    }
+
+    public void mostrarMensajeHechizoOscuro(Hechizo h1){
+
+        System.out.print(ANSI_RED + "\nSectumsempra" + ANSI_RESET + " es un hechizo oscuro. Su daño y curación se multiplican por 2 (por única vez).");
+        System.out.println(ANSI_RED + " Daño " + ANSI_RESET + h1.getNivelDanio() + ANSI_RED + " Curación " + ANSI_RESET + h1.getNivelCuracion());
+        System.out.println(ANSI_BLUE + this.getNombre() + ANSI_RESET + " es ahora un mago oscuro.");
+
+        System.out.println(ANSI_YELLOW + h1.getNombre() + ANSI_RESET + " te ha consumido " + h1.getEnergiaMagica() + " puntos de Energía Mágica.");
 
     }
 
     @Override
     public void atacar(Personaje personaje, String hechizo) {
 
-        System.out.println(this.getNombre() + " ha atacado con " + hechizo);
+        System.out.println("\n" + ANSI_BLUE + this.getNombre() + ANSI_RESET + " ha atacado con " + ANSI_BLUE + hechizo + ANSI_RESET + "\n");
 
     }
 
@@ -200,6 +211,16 @@ public class Wizard extends Persona implements IHaceMagia {
 
         }
         return this.energiaMagica += incremento;
+
+    }
+
+    public int seleccionarOpcionComprar(int opcion, Wizard wizard) {
+
+        System.out.println(ANSI_YELLOW + "¡Bienvenido al Callejón Diagon!" + ANSI_RESET + " Tienes que cambiar tu escoba vieja por una nueva.");
+        System.out.println("Gastarás puntos de salud pero ganarás energía mágica.");
+        System.out.println("¿Deseas comprar una escoba nueva?" + ANSI_YELLOW + " 1)Sí 2)No" + ANSI_RESET);
+
+        return Teclado.nextInt();
 
     }
 
