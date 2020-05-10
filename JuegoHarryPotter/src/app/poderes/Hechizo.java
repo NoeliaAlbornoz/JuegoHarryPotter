@@ -65,31 +65,48 @@ public abstract class Hechizo extends Poder {
 
     public void disminuirSalud(Personaje personaje, Artefacto artefacto) {
 
-        int danioReliquia = 1;
+        int danioReliquia = this.verificarSiEsReliquia(artefacto);
 
-        if (artefacto instanceof Horrocrux) {
-            Horrocrux horri = (Horrocrux) artefacto;
-            if (horri.esReliquiaMuerte()) {
-
-            } else {
-                danioReliquia = 0;
-                System.out.print("\nTu artefacto no es una Reliquia de la Muerte. No ganas puntos adicionales.\n");
-
-            }
-
-        }
-
-        System.out.print("\nPuntos adicionales de daño por Reliquia de la Muerte " + danioReliquia + "\n");
-
-        int danioTotal = this.nivelDanio + this.activarDanioDeArtefacto(artefacto) + danioReliquia
-                - this.curarEnemigo(personaje);
+        int danioTotal = this.calcularDanioTotal(artefacto, danioReliquia, personaje);
 
         personaje.decrementarSalud(danioTotal);
 
     }
 
+    public int calcularDanioTotal(Artefacto artefacto, int danioReliquia, Personaje personaje) {
+        return this.nivelDanio + this.activarDanioDeArtefacto(artefacto) + danioReliquia - this.curarEnemigo(personaje);
+    }
+
+    public int verificarSiEsReliquia(Artefacto artefacto) {
+
+        int danioReliquia = 1;
+
+        if (artefacto instanceof Horrocrux) {
+            Horrocrux horri = (Horrocrux) artefacto;
+
+            if (horri.esReliquiaMuerte()) {
+
+                System.out.println("Puntos adicionales de daño por Reliquia de la Muerte " + danioReliquia + "\n");
+                return danioReliquia = 1;
+
+            } else {
+
+                System.out.println("\nTu artefacto no es una Reliquia de la Muerte. No ganas puntos adicionales.");
+                return danioReliquia = 0;
+
+            }
+
+        }
+
+        System.out.println("Puntos adicionales de daño por Reliquia de la Muerte " + danioReliquia + "\n");
+
+        return danioReliquia;
+
+    }
+
     public int curarEnemigo(Personaje personaje) {
-        if (personaje instanceof Wizard) {
+
+        if (personaje.esWizard()) {
             Wizard wizi = (Wizard) personaje;
 
             return this.activarCuracionDeArtefacto(wizi.getArtefacto().getAmplificadorDeCuracion());
@@ -133,7 +150,7 @@ public abstract class Hechizo extends Poder {
 
     public int multiplicarCuracionHechizoOscuro() {
 
-        return this.nivelCuracion *= 2;
+        return this.nivelCuracion * 2;
 
     }
 
