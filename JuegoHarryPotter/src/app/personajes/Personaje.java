@@ -5,11 +5,15 @@ import java.util.Scanner;
 
 public abstract class Personaje {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+
     public static Scanner Teclado = new Scanner(System.in);
 
     private String nombre;
     private int salud;
     private int edad;
+    private String casaHowarts;
 
     public Personaje(String nombre, int salud) {
         this.nombre = nombre;
@@ -40,13 +44,21 @@ public abstract class Personaje {
         this.edad = edad;
     }
 
+    public String getCasaHowarts() {
+        return casaHowarts;
+    }
+
+    public void setCasaHowarts(String casaHowarts) {
+        this.casaHowarts = casaHowarts;
+    }
+
     public boolean estaVivo() {
         return salud > 0;
     }
 
     public int tirarDado() {
 
-        System.out.print("Dado mágico: ingrese enter para arrojar el dado.");
+        System.out.println(ANSI_PURPLE + "Dado mágico:" + ANSI_RESET + "(ENTER)");
 
         Random rand = new Random(System.nanoTime());
 
