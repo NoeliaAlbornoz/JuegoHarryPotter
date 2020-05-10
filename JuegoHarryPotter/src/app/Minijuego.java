@@ -8,6 +8,11 @@ import app.poderes.Hechizo;
 
 public class Minijuego {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+
     public static Scanner Teclado = new Scanner(System.in);
     public Random rand = new Random(System.nanoTime());
 
@@ -26,9 +31,9 @@ public class Minijuego {
 
             case "Wingwardum Leviosa":
 
-                this.mostrarConsignaMinijuego(hechizo);
+                this.mostrarConsignaMinijuego(hechizo, wizard);
 
-                System.out.print("Resolver: " + numero1 + "+" + numero2 + "= ");
+                System.out.print(numero1 + " + " + numero2 + " = ");
 
                 int resultado = Teclado.nextInt();
 
@@ -49,9 +54,9 @@ public class Minijuego {
 
             case "Sectumsempra":
 
-                this.mostrarConsignaMinijuego(hechizo);
+                this.mostrarConsignaMinijuego(hechizo, wizard);
 
-                System.out.print("Resolver: " + numero1 + "-" + numero2 + "= ");
+                System.out.print(numero1 + " - " + numero2 + " = ");
 
                 resultado = Teclado.nextInt();
 
@@ -73,9 +78,9 @@ public class Minijuego {
 
             case "Vulnera Sanentur":
 
-                this.mostrarConsignaMinijuego(hechizo);
+                this.mostrarConsignaMinijuego(hechizo, wizard);
 
-                System.out.print("Resolver: " + numero1 + "x" + numero2 + "= ");
+                System.out.print(numero1 + " x " + numero2 + " = ");
 
                 resultado = Teclado.nextInt();
 
@@ -97,9 +102,9 @@ public class Minijuego {
 
             case "Cavelnimicum":
 
-                this.mostrarConsignaMinijuego(hechizo);
+                this.mostrarConsignaMinijuego(hechizo, wizard);
 
-                System.out.print("Resolver: " + numero1 + "x" + numero2 + "+" + numero3 + "= ");
+                System.out.print(numero1 + " x " + numero2 + " + " + numero3 + " = ");
 
                 resultado = Teclado.nextInt();
 
@@ -125,13 +130,15 @@ public class Minijuego {
 
     public void mostrarConsignaGeneral() {
 
-        System.out.println("Para aprender el hechizo debes resolver un cálculo mágico.");
+        System.out.println("Para aprender el hechizo debes resolver un cálculo mágico.\n");
 
     }
 
-    public void mostrarConsignaMinijuego(Hechizo hechizo) {
+    public void mostrarConsignaMinijuego(Hechizo hechizo, Wizard wizard) {
 
-        System.out.println(hechizo.getMinijuego().getNombre() + hechizo.getMinijuego().getDescripcion());
+        System.out.println(ANSI_CYAN + "Energía Mágica " + wizard.getEnergiaMagica() + "\n");
+
+        System.out.println(ANSI_RED + hechizo.getMinijuego().getNombre() + ANSI_RESET + " " + hechizo.getMinijuego().getDescripcion());
 
     }
 
