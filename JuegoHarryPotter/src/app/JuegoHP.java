@@ -437,14 +437,14 @@ public class JuegoHP {
     private void mostrarResultadosWizard(Wizard wizard, Hechizo hechizo) {
 
         System.out.println("\n" + ANSI_PURPLE + hechizo.getNombre() + ": " + ANSI_RESET);
-        System.out.println(" Daño " + hechizo.getNivelDanio());
-        System.out.println(" Curación " + hechizo.getNivelCuracion());
+        System.out.println("Daño " + hechizo.getNivelDanio());
+        System.out.println("Curación " + hechizo.getNivelCuracion());
         System.out.println("Energía Mágica " + hechizo.getEnergiaMagica() + "\n");
 
         System.out.println("Tu Artefacto: \n");
         System.out.println(ANSI_RED + wizard.getArtefacto().getNombre() + ANSI_RESET);
-        System.out.println(" Daño " + hechizo.activarDanioDeArtefacto(wizard.getArtefacto()));
-        System.out.println(" Curación "
+        System.out.println("Daño " + hechizo.activarDanioDeArtefacto(wizard.getArtefacto()));
+        System.out.println("Curación "
                 + hechizo.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + "\n");
 
         System.out.println(
@@ -458,14 +458,14 @@ public class JuegoHP {
     private void mostrarResultadosElfo(Elfo elfo, Hechizo hechizo) {
 
         System.out.println("\n" + ANSI_PURPLE + hechizo.getNombre() + ": " + ANSI_RESET);
-        System.out.println(" Daño " + hechizo.getNivelDanio());
-        System.out.println(" Curación " + hechizo.getNivelCuracion());
+        System.out.println("Daño " + hechizo.getNivelDanio());
+        System.out.println("Curación " + hechizo.getNivelCuracion());
         System.out.println("Energía Mágica " + hechizo.getEnergiaMagica() + "\n");
 
         System.out.println("Tu Artefacto: \n");
         System.out.println(ANSI_RED + elfo.getArtefacto().getNombre() + ANSI_RESET);
-        System.out.println(" Daño " + hechizo.activarDanioDeArtefacto(elfo.getArtefacto()));
-        System.out.println(" Curación "
+        System.out.println("Daño " + hechizo.activarDanioDeArtefacto(elfo.getArtefacto()));
+        System.out.println("Curación "
                 + hechizo.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + "\n");
 
         System.out.println(ANSI_GREEN + "Salud restante: " + ANSI_RESET + elfo.getSalud());
@@ -688,7 +688,7 @@ public class JuegoHP {
 
     public void inicializarPersonajes() {
 
-        Wizard wizard = new Wizard("Harry Potter", 50, 50);
+        Wizard wizard = new Wizard("Harry Potter", 90, 120);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
@@ -926,7 +926,7 @@ public class JuegoHP {
 
         this.personajes.add(elfo);
 
-        elfo = new Elfo("Dobby", 50, 50);
+        elfo = new Elfo("Dobby", 90, 120);
         elfo.setEdad(15);
 
         poderInicial = new Poder("Invisibilidad.");
