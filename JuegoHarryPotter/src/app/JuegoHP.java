@@ -24,6 +24,16 @@ import app.transportes.TrenExpresoHowards;
 
 public class JuegoHP {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     public static Scanner Teclado = new Scanner(System.in);
     public static Random rand = new Random(System.nanoTime());
     public List<Personaje> personajes = new ArrayList<>();
@@ -39,7 +49,9 @@ public class JuegoHP {
 
     public void start() {
 
-        System.out.println("JUGADOR 1 ");
+        bannerTorneo();
+
+        System.out.println(ANSI_CYAN + "JUGADOR 1 \n" + ANSI_RESET);
 
         Personaje jugador1 = this.seleccionarPersonaje();
 
@@ -49,10 +61,7 @@ public class JuegoHP {
 
         this.molestarAlMuggle(jugador1);
 
-        System.out.println(
-                "------------------------------------------------------------------------------------------------------------------------\n");
-
-        System.out.println("JUGADOR 2 ");
+        System.out.println(ANSI_CYAN + "JUGADOR 2 \n" + ANSI_RESET);
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
@@ -62,7 +71,11 @@ public class JuegoHP {
 
         this.molestarAlMuggle(jugador2);
 
+        bannerViajeTren();
+
         this.arrancarTren(jugador1, jugador2);
+
+        bannerHowarts();
 
         int jugada = 1;
 
@@ -142,6 +155,8 @@ public class JuegoHP {
 
             this.mostrarMensajeGanador(jugador1);
 
+            this.reclamarPremio(jugador1);
+
         } else {
 
             System.out.println(
@@ -151,24 +166,85 @@ public class JuegoHP {
 
             this.mostrarMensajeGanador(jugador2);
 
+            this.reclamarPremio(jugador2);
+
         }
 
     }
 
-    private void bannerComienzaBatalla() {
+    private void reclamarPremio(Personaje personaje) {
+
+        System.out.println(ANSI_BLUE + "\nDumbledore" + ANSI_RESET + " te entrega un premio especial: ENTER");
+        Teclado.nextLine();
+        Teclado.nextLine();
+
+        if (personaje.esWizard()) {
+            this.mostrarPocion();
+            System.out.println("¡Úsala bien! ¡Buena Suerte!");
+
+        } else if (personaje.esElfo()) {
+            Elfo elfi = (Elfo) personaje;
+            if (elfi.getArtefacto().getPoder().getNivelDePoder() >= 50) {
+                System.out.println("!Canjeaste tus puntos de poder! El profesor te obsequia 2 premios.\n");
+                this.mostrarPocion();
+            }
+
+            System.out.println("¡Un calcetín mágico!");
+            System.out.println("¡Eres un elfo libre! ¡Buena suerte!");
+
+        }
+
+    }
+
+    public void mostrarPocion() {
+
+        System.out.println(ANSI_RED + "FELIX FELICIS: " + ANSI_RESET
+                + "Suerte Líquida. Poción que hace al bebedor un ser afortunado durante un cierto tiempo, en el cual todo aquello que intente o emprenda tendrá un resultado exitoso.");
+
+    }
+
+    private void bannerHowarts() {
+
+        System.out.println(ANSI_GREEN
+                + "\n***************************************************************************************************************************");
         System.out.println(
-                "*********************************************************************************************************************");
+                "\n                                             ¡¡¡Bienvenido a Howarts!!!                                             \n");
+        System.out.println(
+                "***************************************************************************************************************************"
+                        + ANSI_RESET);
+        System.out.println(
+                "\nPrepárate para la clase de Encantamientos del profesor Flitwick, en la que aprenderás todos los hechizos que usarás en el Torneo.");
+    }
+
+    private void bannerTorneo() {
+
+        System.out.println("¡Este año escolar deberás prepararte para participar en el Torneo de las Cuatro Casas!");
+        System.out.println(ANSI_GREEN + "\n***La aventura comienza...***\n" + ANSI_RESET);
+
+    }
+
+    private void bannerViajeTren() {
+        System.out.println(ANSI_YELLOW
+                + "Luego de realizar tus compras escolares en el Callejón Diagon, debes dirigirte a la plataforma 9 3/4 para tomar el tren que te llevará al Colegio Hogwarts de Magia y Hechicería.\n"
+                + ANSI_RESET);
+    }
+
+    private void bannerComienzaBatalla() {
+        System.out.println(ANSI_GREEN
+                + "\n***************************************************************************************************************************");
         System.out.println(
                 "\n                                             ¡¡¡COMIENZA EL DUELO!!!                                             \n");
         System.out.println(
-                "*********************************************************************************************************************");
+                "***************************************************************************************************************************" + ANSI_RESET);
     }
 
     public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2) {
 
-        System.out.print(jugador1.getNombre() + " Salud " + jugador1.getSalud() + " | ");
+        System.out.print(ANSI_YELLOW + jugador1.getNombre() + ANSI_RESET + ANSI_GREEN + " Salud " + ANSI_RESET
+                + jugador1.getSalud() + " | ");
 
-        System.out.println(jugador2.getNombre() + " Salud " + jugador2.getSalud());
+        System.out.println(ANSI_YELLOW + jugador2.getNombre() + ANSI_RESET + ANSI_GREEN + " Salud " + ANSI_RESET
+                + jugador2.getSalud());
 
     }
 
@@ -181,26 +257,35 @@ public class JuegoHP {
 
             Elfo elfi = (Elfo) jugador;
 
-            jugador.decrementarSalud(2);
+            bannerCasaDursley();
+
+            muggle.decrementarSalud(2);
 
             jugador.aumentarSalud(2);
 
-            System.out.println(elfi.getNombre() + " es demasiado travieso y ha molestado con un hechizo a "
-                    + muggle.getNombre() + " a quien le roba 2 puntos de salud.");
-            System.out.println("Ahora tu salud es " + elfi.getSalud());
+            System.out.println(ANSI_BLUE + elfi.getNombre() + ANSI_RESET
+                    + " es demasiado travieso y ha molestado con un hechizo a " + ANSI_BLUE + muggle.getNombre()
+                    + ANSI_RESET + " a quien le roba 2 puntos de salud.");
+            System.out.println(ANSI_GREEN + "Salud " + ANSI_RESET + elfi.getSalud() + "\n");
 
         }
 
+    }
+
+    public void bannerCasaDursley() {
+        System.out.println(ANSI_YELLOW
+                + "Los elfos han escuchado sobre la pedantería de una familia de muggles, los Dursley, quienes odian a los seres mágicos. Antes de tomar el tren a Howarts, tu elfo se divierte infiltrándose en le casa de los Dursley y les juega una mala pasada.\n"
+                + ANSI_RESET);
     }
 
     public Personaje seleccionarPersonaje() {
 
         int i = 0;
 
-        System.out.print("Elegir personaje: ");
+        System.out.println(ANSI_YELLOW + "Elegir personaje: \n" + ANSI_RESET);
 
         for (Personaje per : this.personajes) {
-            System.out.print(" " + (++i) + "-" + per.getNombre());
+            System.out.println(" " + (++i) + "-" + per.getNombre());
         }
 
         System.out.println();
@@ -231,7 +316,6 @@ public class JuegoHP {
 
         if (jugadorAprendiz.esWizard()) {
             Wizard wizard = (Wizard) jugadorAprendiz;
-            this.mostrarEnergiaMagicaWizard(wizard);
             wizard.jugarMinijuegos(h, wizard);
             wizard.aprender(h);
 
@@ -306,7 +390,7 @@ public class JuegoHP {
             Wizard wizard = (Wizard) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
             this.mostrarEnergiaMagicaWizard(wizard);
-            wizard.atacar(jugadorAtacado, hechizo);
+            this.verificarEnergiaMagicaWizard(wizard, jugadorAtacado, hechizo);
             hechizo.curar(wizard);
             this.mostrarResultadosWizard(wizard, hechizo);
         }
@@ -315,51 +399,87 @@ public class JuegoHP {
             Elfo elfo = (Elfo) jugadorAtacante;
             Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
             this.mostrarEnergiaMagicaElfo(elfo);
-            elfo.atacar(jugadorAtacado, hechizo);
+            this.verificarEnergiaMagicaElfo(elfo, jugadorAtacado, hechizo);
             hechizo.curar(elfo);
             this.mostrarResultadosElfo(elfo, hechizo);
         }
 
     }
 
+    public void verificarEnergiaMagicaWizard(Wizard wizard, Personaje jugadorAtacado, Hechizo hechizo) {
+
+        if (wizard.getEnergiaMagica() > 0) {
+            wizard.atacar(jugadorAtacado, hechizo);
+        } else {
+            System.out.println("No tienes suficiente Energía Mágica para atacar.");
+        }
+
+    }
+
+    public void verificarEnergiaMagicaElfo(Elfo elfo, Personaje jugadorAtacado, Hechizo hechizo) {
+
+        if (elfo.getEnergiaMagica() > 0) {
+            elfo.atacar(jugadorAtacado, hechizo);
+        }else {
+            System.out.println("No tienes suficiente Energía Mágica para atacar.");
+        }
+
+    }
+
     private void mostrarEnergiaMagicaWizard(Wizard wizard) {
-        System.out.println("Energía Mágica " + wizard.getEnergiaMagica());
+        System.out.println(ANSI_CYAN + "Energía Mágica " + ANSI_RESET + wizard.getEnergiaMagica());
     }
 
     private void mostrarEnergiaMagicaElfo(Elfo elfo) {
-        System.out.println("Energía Mágica " + elfo.getEnergiaMagica());
+        System.out.println(ANSI_CYAN + "Energía Mágica " + elfo.getEnergiaMagica() + ANSI_RESET);
     }
 
     private void mostrarResultadosWizard(Wizard wizard, Hechizo hechizo) {
 
-        System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera un daño adicional de "
-                + hechizo.activarDanioDeArtefacto(wizard.getArtefacto()) + " puntos.");
+        System.out.println("\n" + ANSI_PURPLE + hechizo.getNombre() + ": " + ANSI_RESET);
+        System.out.println(" Daño " + hechizo.getNivelDanio());
+        System.out.println(" Curación " + hechizo.getNivelCuracion());
+        System.out.println("Energía Mágica " + hechizo.getEnergiaMagica() + "\n");
 
-        System.out.println("La curación del artefacto enemigo " + wizard.getArtefacto().getNombre()
-                + " atenúa el ataque en " + hechizo.curarEnemigo(wizard) + " puntos.");
+        System.out.println("Tu Artefacto: \n");
+        System.out.println(ANSI_RED + wizard.getArtefacto().getNombre() + ANSI_RESET);
+        System.out.println(" Daño " + hechizo.activarDanioDeArtefacto(wizard.getArtefacto()));
+        System.out.println(" Curación "
+                + hechizo.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + "\n");
 
-        System.out.println("Tu artefacto " + wizard.getArtefacto().getNombre() + " genera una curación adicional de "
-                + hechizo.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
+        System.out.println(
+                "La curación del artefacto enemigo atenúa el ataque en " + hechizo.curarEnemigo(wizard) + " puntos.\n");
 
-        System.out.println("Energía mágica restante: " + wizard.getEnergiaMagica());
+        System.out.println(ANSI_GREEN + "Salud restante: " + ANSI_RESET + wizard.getSalud());
+        System.out.println(ANSI_CYAN + "Energía mágica restante: " + ANSI_RESET + wizard.getEnergiaMagica());
+
     }
 
     private void mostrarResultadosElfo(Elfo elfo, Hechizo hechizo) {
 
-        System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera un daño adicional de "
-                + hechizo.activarDanioDeArtefacto(elfo.getArtefacto()) + " puntos.");
+        System.out.println("\n" + ANSI_PURPLE + hechizo.getNombre() + ": " + ANSI_RESET);
+        System.out.println(" Daño " + hechizo.getNivelDanio());
+        System.out.println(" Curación " + hechizo.getNivelCuracion());
+        System.out.println("Energía Mágica " + hechizo.getEnergiaMagica() + "\n");
 
-        System.out.println("Tu artefacto " + elfo.getArtefacto().getNombre() + " genera una curación adicional de "
-                + hechizo.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + " puntos. ");
+        System.out.println("Tu Artefacto: \n");
+        System.out.println(ANSI_RED + elfo.getArtefacto().getNombre() + ANSI_RESET);
+        System.out.println(" Daño " + hechizo.activarDanioDeArtefacto(elfo.getArtefacto()));
+        System.out.println(" Curación "
+                + hechizo.activarCuracionDeArtefacto(elfo.getArtefacto().getAmplificadorDeCuracion()) + "\n");
 
-        System.out.println("Energía mágica restante: " + elfo.getEnergiaMagica());
+        System.out.println(ANSI_GREEN + "Salud restante: " + ANSI_RESET + elfo.getSalud());
+        System.out.println(ANSI_CYAN + "Energía mágica restante: " + ANSI_RESET + elfo.getEnergiaMagica());
     }
 
     public void iniciarMiniJuego(Personaje jugador, TrenExpresoHowards tren) {
 
         int dado = jugador.tirarDado();
 
-        System.out.print("Has sacado un " + dado);
+        System.out.println("Has sacado un " + ANSI_YELLOW + dado + ANSI_RESET + ".");
+
+        Teclado.nextLine();
+        Teclado.nextLine();
 
         tren.setVelocidad(dado);
 
@@ -377,30 +497,31 @@ public class JuegoHP {
 
         } else {
 
-            System.out.print(", mala suerte " + jugador.getNombre() + " tu salud aún es de " + jugador.getSalud()
-                    + " puntos. \n ");
+            this.mostrarMensajePerdedorSalud(jugador);
 
         }
 
     }
 
     public void mostrarMensajeGanadorSalud(Personaje jugador) {
-        System.out.print(
-                ", genial " + jugador.getNombre() + "!!! Ahora tu salud es de " + jugador.getSalud() + " puntos. \n");
+
+        System.out.println("Genial, " + jugador.getNombre() + "!!!");
+        System.out.println(ANSI_GREEN + "Salud " + jugador.getSalud() + ANSI_RESET);
+
+    }
+
+    public void mostrarMensajePerdedorSalud(Personaje personaje) {
+
+        System.out.print(ANSI_YELLOW + "Mala suerte, " + personaje.getNombre() + "." + ANSI_RESET
+                + " Tu salud aún es de " + personaje.getSalud() + " puntos.\n");
+
     }
 
     public void arrancarTren(Personaje jugador1, Personaje jugador2) {
 
-        TrenExpresoHowards tren = new TrenExpresoHowards();
+        TrenExpresoHowards tren = null;
 
-        tren.setNombre("Tren Expreso Howards.");
-
-        tren.setDescripcion(
-                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 puntos de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.");
-
-        tren.setAmplificadorDeSalud(1);
-
-        System.out.print(tren.getNombre() + tren.getDescripcion());
+        tren = this.crearTrenExpresoHowards();
 
         bannerJugador1(jugador1);
 
@@ -412,20 +533,34 @@ public class JuegoHP {
 
     }
 
+    public TrenExpresoHowards crearTrenExpresoHowards() {
+
+        TrenExpresoHowards tren = new TrenExpresoHowards();
+
+        tren.setNombre("Tren Expreso Hogwarts.");
+
+        tren.setDescripcion(
+                "Tira el dado mágico. Si sacas un 5 o número menor, el tren será invisible frente a muggles y ganas 1 puntos de salud. Si sacas un 10, el tren aumentará tanto su velocidad que será invisible también ante magos oscuros que quieran interceptarlo. Ganarás 2 puntos de salud.");
+
+        tren.setAmplificadorDeSalud(1);
+
+        System.out.print(ANSI_YELLOW + tren.getNombre() + ANSI_RESET + " " + tren.getDescripcion() + "\n");
+
+        return tren;
+
+    }
+
     public void comprarEscoba(Personaje jugador) {
 
-        Escoba escoba = new Escoba();
-        escoba.setNombre("Saeta de Fuego");
-        escoba.setDescripcion(
-                "Escoba de nivel internacional, fue lanzada en 1993 y con el tiempo, acabó siendo utilizada en los equipos internacionales búlgaro e irlandés de quidditch.");
-        escoba.setVelocidad(150);
-        escoba.setAmplificadorDeSalud(3);
+        Escoba escoba = null;
+        int opcion = 0;
+
+        escoba = this.crearEscobaNueva(escoba);
 
         if (jugador.esWizard()) {
             Wizard wizi = (Wizard) jugador;
 
-            System.out.println("¡Bienvenido al Callejón Diagon! ¿Desea comprar una escoba nueva? 1)Sí 2)No");
-            int opcion = Teclado.nextInt();
+            opcion = wizi.seleccionarOpcionComprar(opcion, wizi);
 
             if (opcion == 1) {
 
@@ -440,6 +575,7 @@ public class JuegoHP {
                     this.mostrarMensajeDeCompra(wizi);
 
                 } else if (escoba.esInvisibleAMuggles()) {
+
                     wizi.decrementarSalud(1);
 
                     wizi.incrementarEnergiaMagica(2);
@@ -453,11 +589,30 @@ public class JuegoHP {
 
         }
 
+        System.out.println(
+                "------------------------------------------------------------------------------------------------------------------------\n");
+
+    }
+
+    public Escoba crearEscobaNueva(Escoba escoba) {
+
+        escoba = new Escoba();
+        escoba.setNombre("Saeta de Fuego.");
+        escoba.setDescripcion(
+                "Escoba de nivel internacional, fue lanzada en 1993 y con el tiempo, acabó siendo utilizada en los equipos internacionales búlgaro e irlandés de Quidditch.");
+        escoba.setVelocidad(150);
+        escoba.setAmplificadorDeSalud(3);
+
+        return escoba;
     }
 
     public void mostrarMensajeDeCompra(Wizard wizi) {
-        System.out.print(" Has comprado la escoba " + wizi.getEscoba().getNombre() + ", ahora tu energía mágica es de "
-                + wizi.getEnergiaMagica() + " puntos y tu salud es de " + wizi.getSalud() + " puntos. ");
+
+        System.out.print(ANSI_GREEN + "\nSalud " + ANSI_RESET + wizi.getSalud() + " | ");
+        System.out.println(ANSI_GREEN + "Energía Mágica " + ANSI_RESET + wizi.getEnergiaMagica() + "\n");
+        System.out.println("\nCompraste la escoba: \n");
+        System.out.println(
+                ANSI_YELLOW + wizi.getEscoba().getNombre() + ANSI_RESET + " " + wizi.getEscoba().getDescripcion());
 
     }
 
@@ -466,30 +621,45 @@ public class JuegoHP {
         if (jugador.esWizard()) {
             Wizard wizi = (Wizard) jugador;
 
-            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
-                    + wizi.getPoderInicial().getNombre() + ": " + wizi.getPoderInicial().getDescripcion() + "\n");
+            System.out.println("\n" + ANSI_BLUE + jugador.getNombre() + ANSI_RESET + "\n");
+            System.out.println(ANSI_PURPLE + "Poder " + ANSI_RESET + wizi.getPoderInicial().getNombre() + ". "
+                    + wizi.getPoderInicial().getDescripcion());
+            System.out.println(ANSI_GREEN + "Salud " + ANSI_RESET + wizi.getSalud());
+            System.out.println(ANSI_CYAN + "Energía Mágica " + ANSI_RESET + wizi.getEnergiaMagica());
+            System.out.println(ANSI_RED + "Artefacto " + ANSI_RESET + wizi.getArtefacto().getNombre());
+            System.out.println(
+                    ANSI_RED + "Poder de Artefacto " + ANSI_RESET + wizi.getArtefacto().getPoder().getNombre() + "\n");
 
         } else if (jugador.esElfo()) {
             Elfo elfi = (Elfo) jugador;
 
-            System.out.print("Has seleccionado a " + jugador.getNombre() + ". Ha nacido con el poder de "
-                    + elfi.getPoderInicial().getNombre() + ": " + elfi.getPoderInicial().getDescripcion() + "\n");
+            System.out.println("\n" + ANSI_BLUE + jugador.getNombre() + ANSI_RESET + "\n");
+            System.out.println(ANSI_PURPLE + "Poder " + ANSI_RESET + elfi.getPoderInicial().getNombre() + ". "
+                    + elfi.getPoderInicial().getDescripcion());
+            System.out.println(ANSI_GREEN + "Salud " + ANSI_RESET + elfi.getSalud());
+            System.out.println(ANSI_CYAN + "Energía Mágica " + ANSI_RESET + elfi.getEnergiaMagica());
+            System.out.println(ANSI_RED + "Artefacto " + ANSI_RESET + elfi.getArtefacto().getNombre());
+            System.out.println(
+                    ANSI_RED + "Poder de Artefacto " + ANSI_RESET + elfi.getArtefacto().getPoder().getNombre() + "\n");
 
         }
+
     }
 
     public void mostrarMensajeGanador(Personaje jugador) {
 
-        System.out.println("\n!!!Felicidades!!! " + jugador.getNombre()
-                + " ha ganado la Copa de la Casa con una salud restante de " + jugador.getSalud() + " puntos!");
+        System.out.println(ANSI_PURPLE + "\n!!!" + ANSI_RESET + "Felicidades" + ANSI_PURPLE + "!!!" + ANSI_RESET + "\n");
+        System.out.println("El " + ANSI_PURPLE + "Sombrero Seleccionador" + ANSI_RESET + " grita enérgico: ");
+        System.out.println(ANSI_BLUE + jugador.getNombre() + ANSI_RESET + " ha ganado la " + ANSI_YELLOW
+                + "Copa de la Casa " + jugador.getCasaHowarts() + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "Salud restante: " + jugador.getSalud() + ANSI_RESET);
 
     }
 
     public static void bannerAprenderHechizos() {
 
-        System.out.println("\n Debes aprender tus hechizos. ");
-        System.out.println("  ¿Cuál quieres entrenar?: \n");
-        System.out.println("Elegir hechizo: ");
+        System.out.println(ANSI_YELLOW + "\n Debes aprender tus hechizos en el siguiente orden:\n");
+        System.out.println("Elegir hechizo: " + ANSI_RESET);
 
     }
 
@@ -501,19 +671,19 @@ public class JuegoHP {
 
     public void bannerJugador1(Personaje personaje) {
 
-        System.out.println("\nJUGADOR 1 " + personaje.getNombre() + "\n");
+        System.out.println(ANSI_BLUE + "\nJUGADOR 1 " + ANSI_RESET + personaje.getNombre() + "\n");
 
     }
 
     public void bannerJugador2(Personaje personaje) {
 
-        System.out.println("\nJUGADOR 2 " + personaje.getNombre() + "\n");
+        System.out.println(ANSI_BLUE + "\nJUGADOR 2 " + ANSI_RESET + personaje.getNombre() + "\n");
 
     }
 
     public void bannerBonus() {
 
-        System.out.println("\n***BONUS***\n");
+        System.out.println(ANSI_PURPLE + "\n***BONUS***\n" + ANSI_RESET);
     }
 
     public void inicializarPersonajes() {
@@ -522,17 +692,18 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        Poder poderInicial = new Poder("Parse Tongue");
-        poderInicial.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        Poder poderInicial = new Poder("Parse Tongue.");
+        poderInicial
+                .setDescripcion("El Parsel es la legua de las serpientes y de aquellos que pueden hablar con ellas.");
         wizard.setPoderInicial(poderInicial);
 
         Escoba escoba = new Escoba();
-        escoba.setNombre("Nimbus 2000");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        Poder poder = new Poder("Parse Tongue");
-        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        Poder poder = new Poder("Parse Tongue.");
+        poder.setDescripcion("El Parsel es la legua de las serpientes y de aquellos que pueden hablar con ellas.");
         poder.setNivelDePoder(2);
 
         Horrocrux horrocrux = new Horrocrux("Horrocrux");
@@ -541,30 +712,34 @@ public class JuegoHP {
         horrocrux.setPoder(poder);
         wizard.setArtefacto(horrocrux);
 
+        wizard.setCasaHowarts("Gryffindor");
+
         this.personajes.add(wizard);
 
-        wizard = new Wizard("Ron Weasley", 50, 50);
+        wizard = new Wizard("Ron Weasley", 90, 120);
         wizard.setEdad(18);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Metamorfosis");
-        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poderInicial = new Poder("Metamorfosis.");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2000 ");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Parse Tongue");
-        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder = new Poder("Parse Tongue.");
+        poder.setDescripcion("El Parsel es la legua de las serpientes y de aquellos que pueden hablar con ellas.");
         poder.setNivelDePoder(2);
 
-        PiedraResurreccion piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
+        PiedraResurreccion piedraResurreccion = new PiedraResurreccion("Piedra de Resurrección");
         piedraResurreccion.setAmplificadorDeDanio(0.3);
         piedraResurreccion.setAmplificadorDeCuracion(0.5);
         piedraResurreccion.setPoder(poder);
         wizard.setArtefacto(piedraResurreccion);
+
+        wizard.setCasaHowarts("Gryffindor");
 
         this.personajes.add(wizard);
 
@@ -572,17 +747,17 @@ public class JuegoHP {
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Metamorfosis");
-        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poderInicial = new Poder("Metamorfosis.");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2000 ");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poder = new Poder("Invisibilidad.");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
         poder.setNivelDePoder(3);
 
         VaritaSauco varitaSauco = new VaritaSauco("Varita de Sauco");
@@ -591,48 +766,52 @@ public class JuegoHP {
         varitaSauco.setPoder(poder);
         wizard.setArtefacto(varitaSauco);
 
+        wizard.setCasaHowarts("Gryffindor");
+
         this.personajes.add(wizard);
 
-        wizard = new Wizard("Ginny Weasley", 90, 130);
+        wizard = new Wizard("Ginny Weasley", 90, 120);
         wizard.setEdad(16);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Invisibilidad");
-        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poderInicial = new Poder("Invisibilidad.");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2000 ");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Parse Tongue");
-        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder = new Poder("Parse Tongue.");
+        poder.setDescripcion("El Parsel es la legua de las serpientes y de aquellos que pueden hablar con ellas.");
         poder.setNivelDePoder(3);
 
-        piedraResurreccion = new PiedraResurreccion("Piedra de resurrección");
+        piedraResurreccion = new PiedraResurreccion("Piedra de Resurrección");
         piedraResurreccion.setAmplificadorDeDanio(0.3);
         piedraResurreccion.setAmplificadorDeCuracion(0.5);
         piedraResurreccion.setPoder(poder);
         wizard.setArtefacto(piedraResurreccion);
 
+        wizard.setCasaHowarts("Gryffindor");
+
         this.personajes.add(wizard);
 
-        wizard = new Wizard("Draco Malfoy", 90, 130);
+        wizard = new Wizard("Draco Malfoy", 90, 120);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Metamorfosis");
-        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poderInicial = new Poder("Metamorfosis.");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2000 ");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Parse Tongue");
-        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder = new Poder("Parse Tongue.");
+        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas.");
         poder.setNivelDePoder(2);
 
         horrocrux = new Horrocrux("Horrocrux");
@@ -641,23 +820,25 @@ public class JuegoHP {
         horrocrux.setPoder(poder);
         wizard.setArtefacto(horrocrux);
 
+        wizard.setCasaHowarts("Slytherin");
+
         this.personajes.add(wizard);
 
-        wizard = new Wizard("Luna Lovegood", 90, 130);
+        wizard = new Wizard("Luna Lovegood", 90, 120);
         wizard.setEdad(16);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Metamorfosis");
-        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poderInicial = new Poder("Metamorfosis.");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2000 ");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poder = new Poder("Invisibilidad.");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
         poder.setNivelDePoder(3);
 
         CapaInvisibilidad capaInvisibilidad = new CapaInvisibilidad("Capa de Invisibilidad");
@@ -666,23 +847,25 @@ public class JuegoHP {
         capaInvisibilidad.setPoder(poder);
         wizard.setArtefacto(capaInvisibilidad);
 
+        wizard.setCasaHowarts("Ravenclaw");
+
         this.personajes.add(wizard);
 
-        wizard = new Wizard("Neville Longbottom", 90, 130);
+        wizard = new Wizard("Neville Longbottom", 90, 120);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Metamorfosis");
-        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poderInicial = new Poder("Metamorfosis.");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2000 ");
-        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2000.");
+        escoba.setDescripcion("La Nimbus 2000 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Parse Tongue");
-        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas");
+        poder = new Poder("Parse Tongue.");
+        poder.setDescripcion("El Parse es la legua de las serpientes y de aquellos que pueden hablar con ellas.");
         poder.setNivelDePoder(2);
 
         horrocrux = new Horrocrux("Horrocrux");
@@ -691,21 +874,25 @@ public class JuegoHP {
         horrocrux.setPoder(poder);
         wizard.setArtefacto(horrocrux);
 
+        wizard.setCasaHowarts("Gryffindor");
+
+        this.personajes.add(wizard);
+
         wizard = new Wizard("Cedric Diggory", 90, 130);
         wizard.setEdad(17);
         wizard.setMagoOscuro(false);
 
-        poderInicial = new Poder("Metamorfosis");
-        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poderInicial = new Poder("Metamorfosis.");
+        poderInicial.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         wizard.setPoderInicial(poderInicial);
 
         escoba = new Escoba();
-        escoba.setNombre(" Nimbus 2001 ");
-        escoba.setDescripcion("La Nimbus 2001 se usa para jugar al Quidditch y es mas rápida que la escoba barredora");
+        escoba.setNombre("Nimbus 2001.");
+        escoba.setDescripcion("La Nimbus 2001 se usa para jugar al Quidditch y es mas rápida que la escoba barredora.");
         wizard.setEscoba(escoba);
 
-        poder = new Poder("Metamorfosis");
-        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro");
+        poder = new Poder("Metamorfosis.");
+        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
         poder.setNivelDePoder(1);
 
         capaInvisibilidad = new CapaInvisibilidad("Capa de invisibilidad");
@@ -714,18 +901,20 @@ public class JuegoHP {
         capaInvisibilidad.setPoder(poder);
         wizard.setArtefacto(capaInvisibilidad);
 
+        wizard.setCasaHowarts("Hufflepuff");
+
         this.personajes.add(wizard);
 
-        Elfo elfo = new Elfo("Winky", 92, 145);
+        Elfo elfo = new Elfo("Winky", 90, 120);
         elfo.setEdad(30);
 
-        poderInicial = new Poder("Invisibilidad");
-        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poderInicial = new Poder("Invisibilidad.");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
         elfo.setPoderInicial(poderInicial);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
-        poder.setNivelDePoder(3);
+        poder = new Poder("Invisibilidad.");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
+        poder.setNivelDePoder(1);
 
         varitaSauco = new VaritaSauco("Varita de Sauco");
         varitaSauco.setAmplificadorDeDanio(0.3);
@@ -733,17 +922,40 @@ public class JuegoHP {
         varitaSauco.setPoder(poder);
         elfo.setArtefacto(varitaSauco);
 
+        elfo.setCasaHowarts("Hufflepuff");
+
         this.personajes.add(elfo);
 
-        elfo = new Elfo("Dobby", 92, 145);
+        elfo = new Elfo("Dobby", 50, 50);
         elfo.setEdad(15);
 
-        poderInicial = new Poder("Invisibilidad");
-        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poderInicial = new Poder("Invisibilidad.");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
         elfo.setPoderInicial(poderInicial);
 
-        poder = new Poder("Invisibilidad");
-        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás");
+        poder = new Poder("Invisibilidad.");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
+        poder.setNivelDePoder(4);
+
+        horrocrux = new Horrocrux("Horrocrux");
+        horrocrux.setAmplificadorDeDanio(0.5);
+        horrocrux.setAmplificadorDeCuracion(0.5);
+        horrocrux.setPoder(poder);
+        elfo.setArtefacto(horrocrux);
+
+        elfo.setCasaHowarts("Gryffindor");
+
+        this.personajes.add(elfo);
+
+        elfo = new Elfo("Kreacher", 90, 120);
+        elfo.setEdad(15);
+
+        poderInicial = new Poder("Invisibilidad.");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
+        elfo.setPoderInicial(poderInicial);
+
+        poder = new Poder("Invisibilidad.");
+        poder.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
         poder.setNivelDePoder(3);
 
         horrocrux = new Horrocrux("Horrocrux");
@@ -751,6 +963,29 @@ public class JuegoHP {
         horrocrux.setAmplificadorDeCuracion(0.5);
         horrocrux.setPoder(poder);
         elfo.setArtefacto(horrocrux);
+
+        elfo.setCasaHowarts("Slytherin");
+
+        this.personajes.add(elfo);
+
+        elfo = new Elfo("Hokey", 90, 120);
+        elfo.setEdad(15);
+
+        poderInicial = new Poder("Invisibilidad.");
+        poderInicial.setDescripcion("La invisibilidad es un poder usado para desaparecer ante la vista de los demás.");
+        elfo.setPoderInicial(poderInicial);
+
+        poder = new Poder("Metamorfosis.");
+        poder.setDescripcion("La metamorfosis es un poder usado para la transformación de un animal en otro.");
+        poder.setNivelDePoder(2);
+
+        piedraResurreccion = new PiedraResurreccion("Piedra de Resurrección.");
+        horrocrux.setAmplificadorDeDanio(0.5);
+        horrocrux.setAmplificadorDeCuracion(0.5);
+        horrocrux.setPoder(poder);
+        elfo.setArtefacto(horrocrux);
+
+        elfo.setCasaHowarts("Ravenclaw");
 
         this.personajes.add(elfo);
 
