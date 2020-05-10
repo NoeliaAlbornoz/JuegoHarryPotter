@@ -1,6 +1,6 @@
 package app.transportes;
 
-public class Transporte {
+public abstract class Transporte {
 
     private String nombre;
     private String descripcion;
