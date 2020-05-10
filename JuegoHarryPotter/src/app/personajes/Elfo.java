@@ -10,6 +10,12 @@ import app.poderes.Poder;
 
 public class Elfo extends Criatura implements IHaceMagia {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+
     private int energiaMagica;
     private Artefacto artefacto;
     private List<Hechizo> hechizos = new ArrayList<>();
@@ -56,8 +62,10 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void setPoder(Poder poder) {
 
-        poder.setNivelDePoder(3);
-        this.artefacto.setPoder(poder);
+       poder.setNivelDePoder(this.acumularPuntosCanje(this.artefacto.getPoder().getNivelDePoder())); 
+
+       this.artefacto.setPoder(poder);
+        
     }
 
     @Override
@@ -67,16 +75,12 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         this.hechizos.add(h);
 
-        System.out.println("Has aprendido el hechizo " + h.getNombre());
+        System.out.println("Has aprendido el hechizo " + ANSI_RED + h.getNombre() + ANSI_RESET);
 
     }
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
-
-        if (this.energiaMagica <= 0) {
-            return;
-        }
 
         this.decrementarEnergiaMagica(hechizo.getEnergiaMagica());
 
@@ -88,18 +92,19 @@ public class Elfo extends Criatura implements IHaceMagia {
     @Override
     public void atacar(Personaje personaje, String hechizo) {
 
-        System.out.print("Tu artefacto " + this.artefacto.getNombre() + " tiene el poder de " + this.artefacto.getPoder().getNombre()
-                + " que te otorga " + this.artefacto.getPoder().getNivelDePoder()+ " puntos de poder.\n");
+        this.setPoder(this.artefacto.getPoder());
 
-        System.out.println("Has atacado con " + hechizo);
+        System.out.print("Tu artefacto " + ANSI_RED + this.artefacto.getNombre() + ANSI_RESET + " tiene el poder de " + ANSI_PURPLE + this.artefacto.getPoder().getNombre() + ANSI_RESET
+                + " que te otorga " + this.artefacto.getPoder().getNivelDePoder()+ " puntos de poder, acumulables para reclamar un premio al final del juego. (No dañan ni curan).\n");
+
+        System.out.println("\n" + ANSI_BLUE + this.getNombre() + ANSI_RESET + " ha atacado con " + ANSI_BLUE + hechizo + ANSI_RESET + "\n");
     }
 
     public void mostrarConsignaMinijuego() {
 
-        System.out.println(
-                "Puedes saber la edad de tu elfo al tirar el dado mágico. Si su edad es mayor o igual a 2 pero menor a 5, será capaz de invisibilizarse frente a muggles, ganas 1 punto de energía mágica.\n");
-        System.out.println(
-                "Si su edad es mayor o igual a 5 pero menor o igual a 10, es invisible también a los magos, ganas 3 puntos de energía mágica.\n");
+        System.out.println("\nPuedes saber la edad de tu elfo al tirar el dado mágico.");
+        System.out.println("Si su edad es mayor o igual a 2 pero menor a 5" + ANSI_RESET + " , será capaz de invisibilizarse frente a muggles y ganas 1 punto de energía mágica.");
+        System.out.println("Si su edad es mayor o igual a 5 pero menor o igual a 10" + ANSI_RESET + " , es invisible también a los magos y ganas 3 puntos de energía mágica.\n");
 
     }
 
@@ -107,9 +112,10 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         this.mostrarConsignaMinijuego();
 
-        this.setEdad(this.tirarDado());
+        int dado = this.tirarDado();
 
-        Teclado.nextLine();
+        this.setEdad(dado);
+        System.out.println("Has sacado un " + ANSI_YELLOW + dado + ANSI_RESET);
 
         if (this.esInvisibleAMuggles()) {
 
@@ -132,8 +138,9 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     public void mostrarMensajeEdad() {
 
-        System.out.println(this.getNombre() + " tiene " + this.getEdad() + " años de edad. Su energía mágica es de  "
-                + this.getEnergiaMagica() + " puntos.");
+        System.out.println(ANSI_BLUE + this.getNombre() + ANSI_RESET + " tiene " + this.getEdad() + " años de edad.");
+
+        System.out.println(ANSI_CYAN + "Energía Mágica " + this.getEnergiaMagica() + ANSI_RESET);
 
     }
 
@@ -156,6 +163,12 @@ public class Elfo extends Criatura implements IHaceMagia {
 
         }
         return this.energiaMagica += incremento;
+
+    }
+
+    public int acumularPuntosCanje(int puntosPoder){
+
+        return puntosPoder += 3;
 
     }
 
