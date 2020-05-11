@@ -2,6 +2,7 @@ package app.personajes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import app.IHaceMagia;
 import app.artefactos.Artefacto;
@@ -81,6 +82,12 @@ public class Elfo extends Criatura implements IHaceMagia {
 
     @Override
     public void atacar(Personaje personaje, Hechizo hechizo) {
+
+        Random rand = new Random(System.nanoTime());
+
+        hechizo.setNivelDanio(rand.nextInt(10));
+
+        hechizo.setNivelCuracion(rand.nextInt(5));
 
         this.decrementarEnergiaMagica(hechizo.getEnergiaMagica());
 
