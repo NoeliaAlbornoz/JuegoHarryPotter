@@ -71,9 +71,9 @@ public class JuegoHP {
 
         int jugada = 1;
 
-        while (jugada < 9) {
+        while (jugada < 9) { //podía dinamizarse comparando los size de las listas de hechizos
 
-            if (jugada % 2 != 0) { // boolean
+            if (jugada % 2 != 0) { //otra forma era con boolean
 
                 System.out.println(
                         "------------------------------------------------------------------------------------------------------------------------\n");
@@ -188,6 +188,8 @@ public class JuegoHP {
             if (elfi.getArtefacto().getPoder().getNivelDePoder() >= 50) {
                 System.out.println("!Canjeaste tus puntos de poder! El profesor te obsequia 2 premios.\n");
                 this.mostrarPocion();
+            } else {
+                System.out.println("No alcanzaste la cantidad de puntos necesaria para reclamar otro premio.");
             }
 
             System.out.println("¡Un calcetín mágico!");
