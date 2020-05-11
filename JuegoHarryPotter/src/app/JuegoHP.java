@@ -55,21 +55,13 @@ public class JuegoHP {
 
         Personaje jugador1 = this.seleccionarPersonaje();
 
-        this.mostrarPoderInicial(jugador1);
-
-        this.comprarEscoba(jugador1);
-
-        this.molestarAlMuggle(jugador1);
+       this.iniciarPrimeraEtapa(jugador1);
 
         System.out.println(ANSI_CYAN + "JUGADOR 2 \n" + ANSI_RESET);
 
         Personaje jugador2 = this.seleccionarPersonaje();
 
-        this.mostrarPoderInicial(jugador2);
-
-        this.comprarEscoba(jugador2);
-
-        this.molestarAlMuggle(jugador2);
+        this.iniciarPrimeraEtapa(jugador2);
 
         bannerViajeTren();
 
@@ -172,6 +164,15 @@ public class JuegoHP {
 
     }
 
+    public void iniciarPrimeraEtapa(Personaje jugador){
+
+        this.mostrarPoderInicial(jugador);
+
+        this.comprarEscoba(jugador);
+
+        this.molestarAlMuggle(jugador);
+    }
+
     private void reclamarPremio(Personaje personaje) {
 
         System.out.println(ANSI_BLUE + "\nDumbledore" + ANSI_RESET + " te entrega un premio especial: ENTER");
@@ -235,7 +236,8 @@ public class JuegoHP {
         System.out.println(
                 "\n                                             ¡¡¡COMIENZA EL DUELO!!!                                             \n");
         System.out.println(
-                "***************************************************************************************************************************" + ANSI_RESET);
+                "***************************************************************************************************************************"
+                        + ANSI_RESET);
     }
 
     public void mostrarPropiedadesJugador(Personaje jugador1, Personaje jugador2) {
@@ -339,13 +341,13 @@ public class JuegoHP {
     }
 
     public Hechizo seleccionarHechizoWizard(Personaje jugadorAtacante) {
+
         int i = 0;
         Wizard wizi = null;
         if (jugadorAtacante.esWizard()) {
             wizi = (Wizard) jugadorAtacante;
             for (Hechizo hechizo : wizi.getHechizos()) {
-                System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
-                        + "\tCuración " + hechizo.getNivelCuracion());
+                System.out.println((++i) + "-" + hechizo.getNombre());
             }
 
         }
@@ -364,9 +366,7 @@ public class JuegoHP {
         if (personaje.esElfo()) {
             elfi = (Elfo) personaje;
             for (Hechizo hechizo : elfi.getHechizos()) {
-                System.out.println((++i) + "-" + hechizo.getNombre() + "\tDaño " + hechizo.getNivelDanio()
-                        + "\tCuración " + hechizo.getNivelCuracion());
-
+                System.out.println((++i) + "-" + hechizo.getNombre());
             }
         }
         System.out.println();
@@ -391,7 +391,6 @@ public class JuegoHP {
             Hechizo hechizo = this.seleccionarHechizoParaPelear(jugadorAtacante);
             this.mostrarEnergiaMagicaWizard(wizard);
             this.verificarEnergiaMagicaWizard(wizard, jugadorAtacado, hechizo);
-            hechizo.curar(wizard);
             this.mostrarResultadosWizard(wizard, hechizo);
         }
 
@@ -420,7 +419,7 @@ public class JuegoHP {
 
         if (elfo.getEnergiaMagica() > 0) {
             elfo.atacar(jugadorAtacado, hechizo);
-        }else {
+        } else {
             System.out.println("No tienes suficiente Energía Mágica para atacar.");
         }
 
@@ -446,10 +445,6 @@ public class JuegoHP {
         System.out.println("Daño " + hechizo.activarDanioDeArtefacto(wizard.getArtefacto()));
         System.out.println("Curación "
                 + hechizo.activarCuracionDeArtefacto(wizard.getArtefacto().getAmplificadorDeCuracion()) + "\n");
-
-        System.out.println(
-                "La curación del artefacto enemigo atenúa el ataque en " + hechizo.curarEnemigo(wizard) + " puntos.\n");
-
         System.out.println(ANSI_GREEN + "Salud restante: " + ANSI_RESET + wizard.getSalud());
         System.out.println(ANSI_CYAN + "Energía mágica restante: " + ANSI_RESET + wizard.getEnergiaMagica());
 
@@ -648,7 +643,8 @@ public class JuegoHP {
 
     public void mostrarMensajeGanador(Personaje jugador) {
 
-        System.out.println(ANSI_PURPLE + "\n!!!" + ANSI_RESET + "Felicidades" + ANSI_PURPLE + "!!!" + ANSI_RESET + "\n");
+        System.out
+                .println(ANSI_PURPLE + "\n!!!" + ANSI_RESET + "Felicidades" + ANSI_PURPLE + "!!!" + ANSI_RESET + "\n");
         System.out.println("El " + ANSI_PURPLE + "Sombrero Seleccionador" + ANSI_RESET + " grita enérgico: ");
         System.out.println(ANSI_BLUE + jugador.getNombre() + ANSI_RESET + " ha ganado la " + ANSI_YELLOW
                 + "Copa de la Casa " + jugador.getCasaHowarts() + ANSI_RESET);
@@ -665,7 +661,7 @@ public class JuegoHP {
 
     public static void bannerAtacarConHechizos() {
 
-        System.out.println("\nDebes elegir un hechizo para atacar a tu oponente: \n");
+        System.out.println("\nDebes elegir un hechizo para atacar a tu oponente (el nivel de daño y curación de cada hechizo cambiarán mágicamente al azar en cada elección): \n");
 
     }
 
