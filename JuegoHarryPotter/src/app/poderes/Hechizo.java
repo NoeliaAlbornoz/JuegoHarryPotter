@@ -9,6 +9,9 @@ import app.personajes.Wizard;
 
 public abstract class Hechizo extends Poder {
 
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     private boolean esOscuro;
     private int nivelDanio;
     private int nivelCuracion;
@@ -67,14 +70,14 @@ public abstract class Hechizo extends Poder {
 
         int danioReliquia = this.verificarSiEsReliquia(artefacto);
 
-        int danioTotal = this.calcularDanioTotal(artefacto, danioReliquia, personaje);
+        int danioTotal = this.calcularDanioTotal(artefacto, danioReliquia);
 
         personaje.decrementarSalud(danioTotal);
 
     }
 
-    public int calcularDanioTotal(Artefacto artefacto, int danioReliquia, Personaje personaje) {
-        return this.nivelDanio + this.activarDanioDeArtefacto(artefacto) + danioReliquia - this.curarEnemigo(personaje);
+    public int calcularDanioTotal(Artefacto artefacto, int danioReliquia) {
+        return this.nivelDanio + this.activarDanioDeArtefacto(artefacto) + danioReliquia;
     }
 
     public int verificarSiEsReliquia(Artefacto artefacto) {
@@ -104,15 +107,16 @@ public abstract class Hechizo extends Poder {
 
     }
 
-    public int curarEnemigo(Personaje personaje) {
+    public void curarEnemigo(Personaje personaje) {
 
         if (personaje.esWizard()) {
             Wizard wizi = (Wizard) personaje;
 
-            return this.activarCuracionDeArtefacto(wizi.getArtefacto().getAmplificadorDeCuracion());
+            personaje.aumentarSalud(this.activarCuracionDeArtefacto(wizi.getArtefacto().getAmplificadorDeCuracion()));
+
+            System.out.println("\nLa curación del " + ANSI_PURPLE + "artefacto enemigo"  + ANSI_RESET + " atenúa el ataque en " + this.activarCuracionDeArtefacto(wizi.getArtefacto().getAmplificadorDeCuracion()) + " puntos.\n");
 
         }
-        return 0;
     }
 
     public int activarDanioDeArtefacto(Artefacto artefacto) {
