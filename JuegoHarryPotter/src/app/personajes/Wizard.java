@@ -148,7 +148,7 @@ public class Wizard extends Persona implements IHaceMagia {
 
     public Hechizo confirmarHechizoOscuro(Personaje personaje, Hechizo hechizo) {
 
-        if (hechizo.isEsOscuro() && this.magoOscuro == false) {
+        if (hechizo.isEsOscuro() && !this.magoOscuro) {
 
             SectumSempra h1 = new SectumSempra();
 
